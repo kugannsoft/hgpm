@@ -1,0 +1,4 @@
+Company,ProductCode,ProductName,Price
+
+H G P M Automobiles (pvt)Ltd.,100005, FILTER,200
+H G P M Automobiles (pvt)Ltd.,100005, FILTER,400
