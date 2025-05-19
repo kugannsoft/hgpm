@@ -110,6 +110,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </i> <span>All Job Cards</span>
                     </a>
                 </li>
+                 <li class="<?= active_link_controller('Job') ?>">
+                    <a href="<?php echo site_url('admin/job/pending_job'); ?>">
+                        <i class="fa fa-book">
+                        </i> <span>Pending Job Cards</span>
+                    </a>
+                </li>
 
 
                 <!-- <a href="#">
@@ -117,7 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a href="<?php echo site_url('admin/job/view_job'); ?>">All Job Cards</a>a></span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a> -->
-                <ul class="treeview-menu">
+                <!-- <ul class="treeview-menu">
                     <?php if (!in_array('view_job', $block_function)) { ?>
                         <li class="<?= active_link_function('view_job') ?>">
                             <a href="<?php echo site_url('admin/job/view_job'); ?>">All Jobs</a>
@@ -128,7 +134,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <a href="<?php echo site_url('admin/job/cancel_job/'); ?>">Cancel Job</a>
                         </li>
                     <?php } ?>
-                </ul>
+                </ul> -->
                 </li>
                 <?php
             } ?>
@@ -674,12 +680,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <ul class="treeview-menu">
                     <li class="<?= active_link_function('addgrn') ?>"><a
                                 href="<?php echo site_url('admin/grn/addgrn'); ?>">Add GRN</a></li>
-                    <li class="<?= active_link_function('all_grn') ?>"><a
-                                href="<?php echo site_url('admin/grn/all_grn'); ?>">All GRN</a></li>
-                    <li class="<?= active_link_function('cancel_grn') ?>"><a
-                                href="<?php echo site_url('admin/grn/cancel_grn'); ?>">Cancel GRN</a></li>
-                    <li class="<?= active_link_function('barcodeprint') ?>"><a
-                                href="<?php echo site_url('admin/grn/barcodeprint'); ?>">Barcode Print</a></li>
+                    <li class="<?= active_link_function('all_grn') ?>">
+                        <a href="<?php echo site_url('admin/grn/all_grn'); ?>">All GRN</a></li>
+                    <li class="<?= active_link_function('cancel_grn') ?>">
+                        <a href="<?php echo site_url('admin/grn/cancel_grn'); ?>">Cancel GRN</a></li>
+                     <li class="<?= active_link_function('cancel_grn') ?>">
+                        <a href="<?php echo site_url('admin/grn/all_cancelled_grn'); ?>">Canceled GRN</a></li>
+                    <li class="<?= active_link_function('barcodeprint') ?>">
+                        <a href="<?php echo site_url('admin/grn/barcodeprint'); ?>">Barcode Print</a></li>
                 </ul>
             </li>
             <?php } ?>

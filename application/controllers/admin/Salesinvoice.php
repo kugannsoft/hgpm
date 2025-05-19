@@ -1491,7 +1491,6 @@ $arr[] =null;
 
    //estimate types
     public function saveInvoices() {
-        // print_r($_POST);die;
         $totalCost = 0;
         $partInvType = $_POST['partInvType'];
         $action = $_POST['action'];
@@ -1633,6 +1632,7 @@ $arr[] =null;
             $flatQtyArr = json_decode($_POST['totalflatPrice']); 
             $EmployeeArr = json_decode($_POST['selectedEmployeesArr']); 
             $selectedEmployeesArr = $EmployeeArr;
+           
 
             $EstJobType=0;
             if($_POST['estimateNo']!='' || $_POST['estimateNo']!=0){
@@ -1641,6 +1641,7 @@ $arr[] =null;
             
             
             if($action==1){
+                echo var_dump('aaa');die;
                 if($EstJobType!=''){
                     //Insurance
                     $data['JobInvNo'] = $this->Job_model->get_max_code('JobInvoice'.$location);
@@ -1674,7 +1675,8 @@ $arr[] =null;
                             
                             $employeeData = str_replace(['[', ']', '"'], '', $employeeData);
                             // echo var_dump(json_encode($employeeData));die;
-                    // $employeeData1 = explode(',', trim($employeeData, '"'));
+                     $employeeData1 = explode(',', trim($employeeData, '"'));
+                     //echo var_dump($employeeData1);die;
                     $jobDtl = array(
                         'JobInvNo' => $data['JobInvNo'],
                         'JobCardNo' => $data['JobCardNo'],
@@ -1711,15 +1713,15 @@ $arr[] =null;
                     }
                     
                     
-                    if (!is_string($employeeData)) {
-                        $employeeList = $employeeData; 
+                    if (!is_string($employeeData1)) {
+                        $employeeList = $employeeData1; 
                     } else {
-                        $employeeList = json_decode($employeeData, true);
+                        $employeeList = json_decode($employeeData1, true);
                     }
-                    // echo var_dump($employeeList);die;
+                     //echo var_dump($employeeList);die;
                 
                     foreach ($employeeList as $employee) {
-                        //  echo var_dump( $employee );die;
+                         //echo var_dump( $employee );die;
                         $jobFlatDtl = array(
                             'Job_Inv_No' => $data['JobInvNo'],
                             'Emp_No' => $employee,
@@ -1959,8 +1961,8 @@ $arr[] =null;
             }elseif ($action==2) { 
                 // update goes here
                 $data['JobInvNo'] = $_POST['invoiceNo'];
-                //  echo var_dump( $data['JobInvNo']);die;
                 $this->db->where('Job_Inv_No', $data['JobInvNo'])->delete('main_jobflat_details');
+               
                 $data['IsPayment'] = 1;
                 $this->db->trans_start();
                 $this->db->update('jobinvoicehed',$data,array('JobInvNo' => $data['JobInvNo']));
@@ -1988,7 +1990,13 @@ $arr[] =null;
                
                     // $employeeData = str_replace(['[', ']', '"'], '', $employeeData);
                     // $employeeData1 = explode(',', trim($employeeData, '"'));
-                    
+                        $employeeData = isset($selectedEmployeesArr[$i]) ? $selectedEmployeesArr[$i] : [];
+                            
+                            $employeeData = str_replace(['[', ']', '"'], '', $employeeData);
+                            // $employeeData1 = explode(',', trim($employeeData, '"'));
+                            //  echo var_dump($employeeData);die;
+
+                    $flatQty = isset($flatQtyArr[$i]) ? $flatQtyArr[$i] : 0;                    
                     $jobDtl = array(
                         'JobInvNo' => $data['JobInvNo'],
                         'JobCardNo' => $data['JobCardNo'],
@@ -2014,9 +2022,8 @@ $arr[] =null;
                         'JobDiscountType' => $discountTypeArr[$i],
                         'JobNetAmount' => $net_priceArr[$i],
                         'JobinvoiceTimestamp' => $estTimestmp,
-                        // 'FlatQty' => $flatQty,
-                        // 'Employee' => json_encode($employeeData1),
-                        );
+                        'FlatQty' => $flatQty,
+                        'Employee' => json_encode($employeeData),                        );
                      $this->db->insert('jobinvoicedtl',$jobDtl);
                   
 
@@ -2042,6 +2049,28 @@ $arr[] =null;
                     
                         //     $this->db->insert('main_jobflat_details', $jobFlatDtl);
                         // }
+
+                           if (!is_string($employeeData)) {
+                                $employeeList = $employeeData; 
+                            } else {
+                                $employeeList = json_decode($employeeData, true);
+                            }
+                        
+                    
+                            foreach ($employeeList as $employee) {
+                                //echo var_dump( $employee );die;
+                                $jobFlatDtl = array(
+                                    'Job_Inv_No' => $data['JobInvNo'],
+                                    'Emp_No' => $employee,
+                                    'Qty' => $qtyArr[$i],
+                                    'FlatQty' => $flatQty,
+                                    'CostPrice' => $costPriceArr[$i],
+                                    'ProfitAmount' => ($costPriceArr[$i] * $qtyArr[$i]) - ($costPriceArr[$i] * $flatQty),
+                                    'Date' => date("Y-m-d H:i:s")
+                                );
+                        
+                                $this->db->insert('main_jobflat_details', $jobFlatDtl);
+                            }
                 }
 
                 //cancel return payment

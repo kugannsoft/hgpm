@@ -47,6 +47,21 @@ class Grn extends Admin_Controller {
         $this->template->admin_render('admin/grn/all-grn', $this->data);
     }
     
+     public function all_cancelled_grn() {
+        $this->page_title->push(('Canceled GRN'));
+
+        /* Breadcrumbs */
+        $this->breadcrumbs->unshift(1, 'Grn', 'admin/grn');
+        $this->breadcrumbs->unshift(1, 'All Grn', 'admin/grn/all-grn');
+
+        $this->data['pagetitle'] = $this->page_title->show();
+        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        $this->data['plv'] = $this->Grn_model->loadpricelevel();
+        $this->data['location'] = $this->Grn_model->loadlocations();
+        $this->template->admin_render('admin/grn/all_cancel_grn', $this->data);
+    }
+
+
     public function view_grn($gno=null) {
         $grnNo=base64_decode($gno);
         $this->page_title->push(('Goods receive note of '. $grnNo));
@@ -97,6 +112,14 @@ class Grn extends Admin_Controller {
     public function loadallgrns() {
         $this->datatables->select('*');
         $this->datatables->from('goodsreceivenotehed');
+        echo $this->datatables->generate();
+        die();
+    }
+
+      public function loadallgrns_cancel() {
+        $this->datatables->select('*');
+        $this->datatables->from('goodsreceivenotehed');
+        $this->datatables->where('GRN_IsCancel',1);
         echo $this->datatables->generate();
         die();
     }

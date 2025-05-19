@@ -179,7 +179,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         row.append($("<td>" + rowData.JRegNo + "</td>"));
         row.append($("<td>" + rowData.JobCardNo + "</td>"));
            
-        row.append($("<td class='finalamount'>" + accounting.formatMoney(rowData.InvAmount) + "</td>")); 
+        row.append($("<td class='finalamount'>" + accounting.formatMoney(rowData.NetAmount) + "</td>")); 
     }
     
     function sumcolumn(rclass) {
@@ -206,4 +206,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             title:'Date vise Sales Report'
         });
     }
+     $("#saletable").freezeHeader({'height': '600px'});
 </script>

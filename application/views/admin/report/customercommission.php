@@ -552,4 +552,6 @@ $(function() {
                 }
 
             };
+
+ $("#saletable").freezeHeader({'height': '600px'});
 </script>

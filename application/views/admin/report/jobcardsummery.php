@@ -132,10 +132,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             drawRow(data[i]);
         }
     }
-    function drawRow(rowData) {
+      function drawRow(rowData) {
         var row = $("<tr/>");
-        var statusText = rowData.iscom == 1 ? "Completed" : "Cancel";
-        var statusClass = rowData.iscom == 1 ? "bg-green" : "bg-yellow";
+        var statusText = rowData.iscom == 1 ? "Cancel" : "Completed";
+        var statusClass = rowData.iscom == 1 ? "bg-yellow" : "bg-green";
         $("#saletable").append(row);
         
         row.append($("<td>" + rowData.JobInvoiceDate + "</td>"));
@@ -176,4 +176,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             title:'Date vise Sales Report'
         });
     }
+     $("#saletable").freezeHeader({'height': '600px'});
 </script>

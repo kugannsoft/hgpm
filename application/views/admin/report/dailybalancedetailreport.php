@@ -651,14 +651,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             
             totalCashOut+=parseFloat(rowData.CashAmount);
            
-            row.append($("<td colspan='3' align='left'>" + rowData.TransactionName + " - " + rowData.RepName + " - " + rowData.Remark + "</td>"));
+            row.append($("<td colspan='3' align='left'>" + rowData.TransactionName + " - " + rowData.Remark + "</td>"));
             row.append($("<td class='nbtamount2'>" + accounting.formatMoney(0) + "</td>"));
             row.append($("<td class='profit2'>" + accounting.formatMoney(rowData.CashAmount) + "</td>"));
             row.append($("<td align='right'></td>"));
         }else if(rowData.Mode=='In'){
             totalCashIn+=parseFloat(rowData.CashAmount);
             
-            row.append($("<td colspan='3' align='left'>" + rowData.TransactionName + " - " + rowData.RepName + " - " + rowData.Remark+ "</td>"));
+            row.append($("<td colspan='3' align='left'>" + rowData.TransactionName + " - "  + rowData.Remark+ "</td>"));
             row.append($("<td class='nbtamount2'>" + accounting.formatMoney(rowData.CashAmount) + "</td>"));
             row.append($("<td class='profit2'>" + accounting.formatMoney(0) + "</td>"));
             row.append($("<td align='right'></td>"));
@@ -693,4 +693,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             title:'Daily Cash Balance Report '+datebalance
         });
     }
+     $("#saletable").freezeHeader({'height': '600px'});
 </script>
