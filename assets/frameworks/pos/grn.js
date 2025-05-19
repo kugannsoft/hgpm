@@ -15,7 +15,7 @@ $(document).ready(function() {
     $('#payView').hide();
     $("#dv_SN").hide();
     $("#dwnLink").hide();
-    $("#btnPrint").hide();
+    // $("#btnPrint").hide();
     $("#loadBarCode").hide();
 
     $("#lbl_lotNo").hide();
@@ -1118,7 +1118,7 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
     $("#btnPrint").click(function() {
      
         var link = $(this).attr('link');
-        window.location=link;
+            location=link;
     });
     $("#resetItems").click(function() {
         var r = confirm("Do you want to Reset.?");

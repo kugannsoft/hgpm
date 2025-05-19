@@ -35,10 +35,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <td> :</td>
                                             <td id="lblinvDate"><?php echo $po_hed->PRN_Date?></td>
                                             <td> &nbsp;</td>
-                                            <td colspan="3" style="text-align:center;font-size:20px;"> <b>Purchase Return Order</b></td>
+                                            <td colspan="3" style="text-align:center;font-size:20px;"> <b>Purchase Return Note</b></td>
                                         </tr>
                                         <tr style="text-align:left;font-size:13px;">
-                                            <td> PRO No</td>
+                                            <td> PRN No</td>
                                             <td> :</td>
                                             <td id="lblPoNo"><?php echo $po_hed->PRN_No?></td>
                                             <td> &nbsp;</td>
@@ -49,18 +49,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <td></td>
                                             <td id="lblPoNo"><?php echo $po_hed->JobNo?></td>
                                             <td> &nbsp;</td>
-                                            <td colspan="3">Ship to :</td>
+                                            <td colspan="3"></td>
                                         </tr>
                                         <tr style="text-align:left;font-size:13px;">
-                                            <td> Vendor</td>
+                                            <td> Supplier</td>
                                             <td></td>
                                             <td> &nbsp;</td>
                                             <td> &nbsp;</td>
-                                            <td colspan="3" rowspan="3" style="width:300px;font-size:14px;border: #000 solid 1px;padding:10px;">
+                                            <!-- <td colspan="3" rowspan="3" style="width:300px;font-size:14px;border: #000 solid 1px;padding:10px;">
                                                 <?php echo $company['CompanyName'] ?> <?php echo $company['CompanyName2'] ?><br>
                                                 <?php echo $company['AddressLine01'] ?><br><?php echo $company['AddressLine02'] ?><?php echo $company['AddressLine03'] ?><br>
                                                 Contact Us - <?php echo $company['LanLineNo'] ?>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                         <tr style="text-align:left;font-size:13px;">
                                             <td  id="lblSupplier" colspan="3"  style="width:300px;font-size:14px;border: #000 solid 1px;padding:5px;">
@@ -101,7 +101,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <?php  $i++; } ?>
                                         </tbody>
                                         <tfoot>
-                                        <tr><th colspan="3" style="border-left: 1px #fff solid;border-bottom: 1px #fff solid;"></th><th style="text-align:right">Total Amount  </th><th id="lbltotalEsAmount"   style='text-align:right'><?php echo number_format($po_hed->PO_Amount,2)?></th></tr>
+                                        <tr>
+                                            <th colspan="3" style="border-left: 1px #fff solid;border-bottom: 1px #fff solid;"></th><th style="text-align:right">Total Amount  </th>
+                                            <th id="lbltotalEsAmount"   style='text-align:right'><?php echo number_format($po_hed->PRN_Cost_Amount,2)?></th>
+                                        </tr>
                                         <?php if($po_hed->POVatAmount>0){?>
                                         <tr id="rowVat"><th colspan="3" style="border-left: 1px #fff solid;border-bottom: 1px #fff solid;"></th><th style="text-align:right">VAT Amount  </th><th id="lbltotalVat"   style='text-align:right'><?php echo number_format($po_hed->POVatAmount,2)?></th></tr><?php } ?>
                                         <?php if($po_hed->PONbtAmount>0){?><tr id="rowNbt"><th colspan="3" style="border-left: 1px #fff solid;border-bottom: 1px #fff solid;"></th><th style="text-align:right">NBT Amount  </th><th id="lbltotalNbt"   style='text-align:right'><?php echo number_format($po_hed->PONbtAmount,2)?></th></tr><?php } ?>
@@ -231,7 +234,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php  $i++; } ?>
             </tbody>
          <tfoot>
-            <tr><th colspan="4" style="border-left: 1px #fff solid;border-bottom: 1px #fff solid;"></th><th style="text-align:right">Total Amount  </th><th id="lbltotalEsAmount"   style='text-align:right'><?php echo $po_hed->PO_Amount?></th></tr>
+            <tr>
+                <th colspan="4" style="border-left: 1px #fff solid;border-bottom: 1px #fff solid;"></th><th style="text-align:right">Total Amount  </th>
+                <th id="lbltotalEsAmount"   style='text-align:right'><?php echo $po_hed->PRN_Cost_Amount?></th>
+            </tr>
             <?php if($po_hed->POVatAmount>0){?>
             <tr id="rowVat"><th colspan="4" style="border-left: 1px #fff solid;border-bottom: 1px #fff solid;"></th><th style="text-align:right">VAT Amount  </th><th id="lbltotalVat"   style='text-align:right'><?php echo $po_hed->POVatAmount?></th></tr><?php } ?>
             <?php if($po_hed->PONbtAmount>0){?><tr id="rowNbt"><th colspan="4" style="border-left: 1px #fff solid;border-bottom: 1px #fff solid;"></th><th style="text-align:right">NBT Amount  </th><th id="lbltotalNbt"   style='text-align:right'><?php echo $po_hed->PONbtAmount?></th></tr><?php } ?>

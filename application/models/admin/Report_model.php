@@ -381,11 +381,12 @@ class Report_model extends CI_Model {
             vehicledetail.Model, 
             vehicledetail.Make, 
             salespersons.RepName AS Emp,jobinvoicehed.IsCompelte AS iscom,
-            make.make AS MA, model.model AS MO");
+            make.make AS MA, model.model AS MO, job_status.status_name AS status_name");
 
 
             $this->db->from('jobcardhed');
             $this->db->join('jobinvoicehed', 'jobinvoicehed.JobCardNo = jobcardhed.JobCardNo', 'INNER');
+            $this->db->join('job_status','job_status.status_id=jobcardhed.IsCompelte', 'INNER');
             $this->db->join('customer', 'customer.CusCode = jobinvoicehed.JCustomer', 'INNER');
             $this->db->join('vehicledetail', 'vehicledetail.RegNo = jobinvoicehed.JRegNo', 'INNER');
             $this->db->join('make', 'make.make_id = vehicledetail.Make', 'INNER');
@@ -406,12 +407,13 @@ class Report_model extends CI_Model {
             customer.CusName, 
             vehicledetail.Model, 
             vehicledetail.Make, 
-            salespersons.RepName AS Emp,jobinvoicehed.IsCompelte AS iscom,
-            make.make AS MA, model.model AS MO");
+            salespersons.RepName AS Emp,jobcardhed.IsCompelte AS iscom,
+            make.make AS MA, model.model AS MO,job_status.status_name AS status_name");
 
 
             $this->db->from('jobcardhed');
-            $this->db->join('jobinvoicehed', 'jobinvoicehed.JobCardNo = jobcardhed.JobCardNo', 'INNER');
+            $this->db->join('jobinvoicehed', 'jobinvoicehed.JobCardNo = jobcardhed.JobCardNo', 'LEFT');
+            $this->db->join('job_status','job_status.status_id=jobcardhed.IsCompelte', 'INNER');
             $this->db->join('customer', 'customer.CusCode = jobinvoicehed.JCustomer', 'INNER');
             $this->db->join('vehicledetail', 'vehicledetail.RegNo = jobinvoicehed.JRegNo', 'INNER');
             $this->db->join('make', 'make.make_id = vehicledetail.Make', 'INNER');
@@ -419,7 +421,6 @@ class Report_model extends CI_Model {
             $this->db->join('salespersons', 'salespersons.RepID = jobcardhed.Jlabour', 'INNER');
             $this->db->where('DATE(jobinvoicehed.JobInvoiceDate) <=', $enddate);
             $this->db->where('DATE(jobinvoicehed.JobInvoiceDate) >=', $startdate);
-        
             $this->db->where('jobcardhed.IsCancel', 0);
          
             $this->db->order_by('jobcardhed.JobCardNo', 'DESC');
@@ -432,7 +433,7 @@ class Report_model extends CI_Model {
             $this->db->select("salespersons.*,main_jobflat_details.* ");
             $this->db->from('salespersons');
             $this->db->join('main_jobflat_details', 'main_jobflat_details.Emp_No = salespersons.RepId', 'INNER');
-            // $this->db->where('main_jobflat_details.Emp_No',$emp);
+            $this->db->where('main_jobflat_details.Emp_No',$emp);
             $this->db->where('DATE(main_jobflat_details.Date) <=', $enddate);
             $this->db->where('DATE(main_jobflat_details.Date) >=', $startdate);
           
@@ -2173,7 +2174,7 @@ foreach($row as $country => $cities) {
         $this->db->join('supplier', 'supplier.SupCode = creditgrndetails.SupCode', 'left');
         $this->db->where('creditgrndetails.IsCloseGRN', 0);
         $this->db->where('creditgrndetails.IsCancel', 0);
-    
+        $this->db->where('supplier.IsActive', 1);
         if ($isall == 1) {
        
             $this->db->group_by('creditgrndetails.SupCode');

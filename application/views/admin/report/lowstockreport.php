@@ -370,4 +370,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             title: 'Date vise Sales Report'
         });
     }
+     $("#saletable").freezeHeader({'height': '600px'});
 </script>

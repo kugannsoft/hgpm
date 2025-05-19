@@ -415,4 +415,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var strTime = hours + ':' + minutes + ' ' + ampm;
         return  date.getFullYear()+"-"+ month + "-" + day + " " + strTime;
       }
+
+       $("#saletable").freezeHeader({'height': '600px'});
 </script>

@@ -100,6 +100,40 @@ class Job extends Admin_Controller {
         }
     }
 
+
+        public function pending_job() {
+        if (!$this->ion_auth->logged_in() OR !$this->ion_auth->is_admin()) {
+            redirect('auth/login', 'refresh');
+        } else {
+            /* Title Page */
+            $this->page_title->push('All Job Cards');
+            $this->data['pagetitle'] = $this->page_title->show();
+
+            /* Breadcrumbs */
+            $this->breadcrumbs->unshift(1, 'Pending Job Card', 'admin/job/pending_job');
+            $this->breadcrumbs->unshift(1, 'Pending Job Card', 'admin/job/pending_job');
+            $this->data['breadcrumb'] = $this->breadcrumbs->show();
+
+            /* Data */
+            $location = $_SESSION['location'];
+            $this->load->model('admin/Job_model');
+            $id3 = array('CompanyID' => $location);
+            $this->data['company'] = $this->Job_model->get_data_by_where('company', $id3);
+
+            $this->data['custype'] = $this->db->select()->from('customer_type')->get()->result();
+            $this->data['jobdesc'] = $this->db->select()->from('jobdescription')->get()->result();
+            $this->data['jobcondtion'] = $this->db->select()->from('job_condition')->get()->result();
+            $this->data['jobsection'] = $this->db->select()->from('job_section')->get()->result();
+            $this->data['insCompany'] = $this->db->select()->from('insu_company')->get()->result();
+            $this->data['advisor']= $this->db->select('users.first_name,users.last_name,users.phone')->from('users')->where('role',4)->get()->result();
+            $this->data['vehicle_company'] = $this->db->select()->from('vehicle_company')->where('VComCategory', 3)->get()->result();
+            // $this->db->insert('insu_company', array('InsuranceName' => 'Union Insurance', ));
+
+            /* Load Template */
+            $this->template->admin_render('admin/job/pending_job', $this->data);
+        }
+    }
+
     public function edit_job($jno=null) {
         
         if (!$this->ion_auth->logged_in() OR !$this->ion_auth->is_admin()) {
@@ -874,6 +908,27 @@ class Job extends Admin_Controller {
         $this->datatables->join('job_location','job_location.id=jobcardhed.JobLocation', 'left');
         $this->datatables->join('salespersons','salespersons.RepID=jobcardhed.Jlabour', 'left');
         
+
+        if ($checkRole == 6) {
+            $this->datatables->where('jobcardhed.JCustomer', $cusCode);
+        }
+        //$this->datatables->where('jobcardhed.JLocation',$location);
+        echo $this->datatables->generate();
+        die;
+    }
+
+        public function allpendingjobs() {
+        $location = $_SESSION['location'];
+        $cusCode = $_SESSION['cus_code'];
+        $checkRole = $_SESSION['role'];
+        $this->load->library('Datatables');
+        $this->datatables->select('jobcardhed.*,customer.CusName, job_status.status_name, job_location.location_name, salespersons.RepName');
+        $this->datatables->from('jobcardhed');
+        $this->datatables->join('customer','customer.CusCode=jobcardhed.JCustomer', 'left');
+        $this->datatables->join('job_status','job_status.status_id=jobcardhed.IsCompelte', 'inner');
+        $this->datatables->join('job_location','job_location.id=jobcardhed.JobLocation', 'left');
+        $this->datatables->join('salespersons','salespersons.RepID=jobcardhed.Jlabour', 'left');
+         $this->datatables->where('jobcardhed.IsCompelte',0);
 
         if ($checkRole == 6) {
             $this->datatables->where('jobcardhed.JCustomer', $cusCode);

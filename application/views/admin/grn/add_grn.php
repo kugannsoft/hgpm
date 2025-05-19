@@ -300,7 +300,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <a class="btn btn-warning"  tabindex="20"  id="dwnLink" href="<?php echo base_url("admin/grn/downloadBarCode")?>">Download Barcode</a>&nbsp;
                                 <button id="loadBarCode" class="btn btn-info">Barcode Generate</button>&nbsp; <button  tabindex="19" id="saveItems" class="btn btn-success">Save</button>
                                 &nbsp;<button  tabindex="21" id="resetItems" class="btn btn-danger">Reset</button>
-                                &nbsp;<a id="btnPrint" link="#" class="btn btn-primary">Print</a>
+                                &nbsp;<a id="btnPrint" link="view_grn" class="btn btn-primary">Print</a>
                             </div>
                         </div>
                     </div>

@@ -94,48 +94,64 @@ $(document).ready(function() {
                 $("#pay").click(function() {
                     var payDate = $("#invDate").val();
                     var remark = $("#remark").val();
-                    var invUser = $("#invUser").val();
-                    location = $("#location").val();
-                    var sendItem_code = JSON.stringify(ItemCodeArr);
-                    
-                    var r = confirm("Do you want to cancel this invoice?");
-    if (r == true) {
-        if (paymentNo == '' || paymentNo == 0) {
-                        alert('Please select an invoice ');
-                        return false;
-                    } else { 
-                        $.ajax({
-                            type: "POST",
-                            url: "cancelGRN",
-                            data: {action: "cancelGRN", paymentNo: paymentNo, remark: remark, payDate: payDate, invUser: invUser, supCode: cusCode, invNo: invNo, Item_codeArr: sendItem_code,location:location},
-                            success: function(data)
-                            {   var resultData = JSON.parse(data);
-                                var feedback = resultData['fb'];
-                                var invNumber = resultData['InvNo'];
-                                var cancelNo = resultData['CancelNo'];
-                                if (feedback == 1) {
-                                    alert('Invoice successfully canceled.');
-                                    rid = 0;
-                                    paymentNo = 0;
-                                    clearPaymentDetails();
-                                    $("#customer").val('');
-                                    $("#remark").val('');
-                                    $("#lastTranaction").html("Last Cancel Invoice : "+invNumber+" <br> Last Cancel No : "+cancelNo );
-                                }else {
-                                    alert('Transaction not saved');
-//                                    $("#saveInvoice").prop('disabled', false);
-                                }
 
+                        var invUser = $("#invUser").val();
+                        location = $("#location").val();
+                        var sendItem_code = JSON.stringify(ItemCodeArr);
+                    if (remark== '' ) {
+                        $.notify("Please Add the Remark", "warning");
+                        return false;
+                    }else{
+                        var r = confirm("Do you want to cancel this invoice?");
+                        if (r == true) {
+                            if (paymentNo == '' || paymentNo == 0) {
+                                alert('Please select an invoice ');
+                                return false;
+                            } else {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "cancelGRN",
+                                    data: {
+                                        action: "cancelGRN",
+                                        paymentNo: paymentNo,
+                                        remark: remark,
+                                        payDate: payDate,
+                                        invUser: invUser,
+                                        supCode: cusCode,
+                                        invNo: invNo,
+                                        Item_codeArr: sendItem_code,
+                                        location: location
+                                    },
+                                    success: function (data) {
+                                        var resultData = JSON.parse(data);
+                                        var feedback = resultData['fb'];
+                                        var invNumber = resultData['InvNo'];
+                                        var cancelNo = resultData['CancelNo'];
+                                        if (feedback == 1) {
+                                            $.notify("Invoice successfully canceled.","succesfully");
+
+                                            rid = 0;
+                                            paymentNo = 0;
+                                            clearPaymentDetails();
+                                            $("#customer").val('');
+                                            $("#remark").val('');
+                                            $("#lastTranaction").html("Last Cancel Invoice : " + invNumber + " <br> Last Cancel No : " + cancelNo);
+                                        } else {
+                                            alert('Transaction not saved');
+//                                    $("#saveInvoice").prop('disabled', false);
+                                        }
+
+                                    }
+                                });
                             }
-                        });
+                        } else {
+                            return false;
+                        }
+
                     }
-    } else {
-        return false;
-    }
-    
-                    
 
                 });
+
 
                 function clearPaymentDetails() {
 

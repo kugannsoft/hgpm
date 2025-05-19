@@ -34,7 +34,7 @@ class Purchase extends Admin_Controller {
     }
 
     public function all_retnprn() {
-        $this->page_title->push(('All Return Purchase Order'));
+        $this->page_title->push(('All Return Purchase Note'));
 
         /* Breadcrumbs */
         $this->breadcrumbs->unshift(1, 'Purchase', 'admin/purchase');
@@ -72,7 +72,7 @@ class Purchase extends Admin_Controller {
     public function view_rtn_po($gno=null) {
         $grnNo=base64_decode($gno);
        
-        $this->page_title->push(('Purchase Return Order of '. $grnNo));
+        $this->page_title->push(('Purchase Return Note of '. $grnNo));
         
         /* Breadcrumbs */
         $this->breadcrumbs->unshift(1, 'Purchase', 'admin/purchase/all-rtn-po');
@@ -91,6 +91,7 @@ class Purchase extends Admin_Controller {
          ->join('supplier', 'supplier.SupCode = purchasereturnnotehed.PRN_SupCode')
          ->where('purchasereturnnotehed.PRN_No', $grnNo)
        ->get()->row();
+    //    echo var_dump($this->data['po_hed']);die;
        
         $this->data['location'] = $this->Purchase_model->loadlocations();
         $this->template->admin_render('admin/purchase/view-rtn-po', $this->data);

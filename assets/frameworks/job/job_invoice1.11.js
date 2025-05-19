@@ -2175,6 +2175,7 @@ $(document).ready(function() {
 
 //load edit grid data
     $("#tbl_job tbody").on('click', '.edit', function() {
+        alert('aaa');
         var jobtype = $(this).parent().parent().attr('jobid')
         var workid = $(this).parent().parent().attr('work_id');
         var jobdesc = $(this).parent().parent().attr('job');

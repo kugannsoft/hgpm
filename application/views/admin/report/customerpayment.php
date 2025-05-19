@@ -381,5 +381,5 @@ $("input[name='isall']").on('ifChanged', function(event){
         },
         minimumInputLength: 2
     });
-
+ $("#saletable").freezeHeader({'height': '600px'});
 </script>
