@@ -841,6 +841,7 @@ class Salesinvoice extends Admin_Controller {
             redirect('auth/login', 'refresh');
         } else {
             $user = $this->ion_auth->user()->row();
+       
             
             /* Title Page */
             $this->page_title->push('Job Invoice');
@@ -859,13 +860,13 @@ class Salesinvoice extends Admin_Controller {
             $this->data['company'] = $this->Job_model->get_data_by_where('company', $id3);
             $is_save = $this->db->select('is_save')
             ->from('system_permission_set')
-            ->where('role_id', $user->id)
+            ->where('role_id',$user->role)
             ->where('per_code', 'SM43')
-            ->get();     
-            $is_saved = $is_save->result();
+            ->get()->row();     
+          
+            $this->data['is_save'] =    $is_save;  
 
-            $this->data['is_save'] = (!empty($is_saved[0]->is_save)) ? $is_saved[0]->is_save : '0';     
-              // echo var_dump($this->data['is_save']);die;
+            // echo var_dump($this->data['is_save']);die;
             $this->data['worktype'] = $this->db->select()->from('jobtype')->get()->result();
             $this->data['jobdesc'] = $this->db->select()->from('jobdescription')->get()->result();
             $this->data['jobtype'] = $this->db->select()->from('estimate_jobtype')->get()->result();

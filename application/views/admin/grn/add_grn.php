@@ -218,6 +218,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <div class="col-sm-4">
                                                 <input type="number" tabindex="12"  min="0" step="1" class="form-control" required="required"  name="unitcost" id="unitcost" placeholder="Enter Qty"  value="0">
                                             </div>
+
+                                             <div class="col-sm-1">
+                                                <input class="prd_icheck" type="checkbox" name="isPer"  id="isPer" value="1"> PER
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <input type="text" tabindex="12"  min="0" step="1" class="form-control" required="required"  name="unitcostper" id="unitcostper" placeholder="Enter Qty"  value="0" style="display: none;">
+                                            </div>
+                                         
+                                        </div>
+
+                                        <div class="form-group">
+                                           
+                                           
                                         </div>
                                         <div class="form-group">
                                             <label for="sellingPrice"class="col-sm-4 control-label">Selling Price <span class="required">*</span></label>

@@ -626,11 +626,12 @@ $(document).ready(function() {
             $("#flatQty").hide();
             $("#dropdownMenuButton").hide();
             $("#stockSec").show();
+        }else if(workType == 4){
+            $("#flatQty").hide();
+            $("#dropdownMenuButton").hide();
         } else {
             $("#jobDescDiv").show();
             $("#spartDiv").hide();
-            $("#flatQty").hide();
-            $("#dropdownMenuButton").hide();
             $("#stockSec").hide();
         }
     });

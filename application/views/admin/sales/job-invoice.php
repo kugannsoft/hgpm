@@ -392,7 +392,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-1">&nbsp;</div>
-                                    <?php if ($is_save == "1") : ?>
+                                   <?php if ($is_save->is_save == "1") : ?>
                                     <div class="col-sm-10">
                                         <button  data-target="#modelPayment" data-toggle="modal"  class="btn btn-primary btn-lg btn-block" type="button" id="btnSaveInv">
                                          Save</button>&nbsp;

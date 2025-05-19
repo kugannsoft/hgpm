@@ -210,7 +210,25 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
 });
 
 
+    $("input[name='isPer']").on('ifChanged', function(event){
+        if ($(this).is(':checked')) {
+            $('#unitcostper').show();
+        } else {
+            $('#unitcostper').hide();
+        }
+    });
 
+  $("input[name='unitcostper']").on('change', function(event) {
+      let unicostValue = parseFloat($("#unitcost").val());
+    let uniPer = parseFloat($(this).val());
+
+    // Check if both values are valid numbers
+   
+        let newSellingPer = (unicostValue) * (uniPer / 100);
+        let newSellingPrice = unicostValue + newSellingPer;
+        $("#sellingPrice").val(newSellingPrice.toFixed(2));
+        // alert(newSellingPrice);
+    });
 
     function addProductVat(totalNet,vat,discount){
        
@@ -487,6 +505,8 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
     var proVat=0;
     var proNbt=0;
     function add_products() {
+        $("#unitcostper").val('');
+        $('#isPer').iCheck('uncheck');
         var serialQty = 0;
         sellingPrice = parseFloat($("#sellingPrice").val());
         var unit = $("#mUnit option:selected").val();
@@ -633,6 +653,7 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
                             } else {
                                 $("#serialNo").val('');
                                 $("#serialNo").focus();
+                               
                             }
                         }
                         setProductTable();
