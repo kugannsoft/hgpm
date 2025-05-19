@@ -107,6 +107,7 @@ class Cash extends Admin_Controller {
                     ->join('transactiontypes', 'transactiontypes.TransactionCode = maincashflot.TransactionCode', 'INNER')
                     ->where('Location' ,$location)
                     ->where('DATE(FlotDate)' ,$date)
+                   
                     ->get()->result_array();
             echo json_encode($data);
             die;

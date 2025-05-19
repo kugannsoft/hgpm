@@ -1,3 +1,12 @@
 Company,ProductCode,ProductName,Price
 
-H G P M Automobiles (pvt)Ltd.,100005, FILTER,150
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
+H G P M Automobiles (pvt)Ltd.,100008,EP-RADIUTOR FAN,4500
