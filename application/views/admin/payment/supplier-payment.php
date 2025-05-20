@@ -212,6 +212,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th class="text-right">GRN Amount</th>
                                         <th class="text-right">Credit Amount</th>
                                         <th class="text-right">Settle Amount</th>
+                                           <th class="text-right">Return Amount</th>
                                         <th class="text-right">Due Amount</th>
                                     </tr>
                                 </thead>

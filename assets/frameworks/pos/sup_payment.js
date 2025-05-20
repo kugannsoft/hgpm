@@ -103,6 +103,7 @@ $('.prd_icheck').iCheck({
                         var totalNetAmount = value.NetAmount;
                         var creditAmount = value.CreditAmount;
                         var settleAmount = value.SettledAmount;
+                        var ReturnAmount = value.ReturnAmount ?? '0';
                         var customerPayment = value.payAmount;
                         var dueAmount = 0;
                         total_due_amount += (creditAmount - settleAmount);
@@ -125,7 +126,7 @@ $('.prd_icheck').iCheck({
                             "<td>" + invDate + "</td><td class='text-right'>" + accounting.formatMoney(totalNetAmount) + "</td>" +
                             "<td class='text-right creditAmount'>" + accounting.formatMoney(creditAmount) + "</td>" +
                             "<td class='text-right settleAmount' invPay='0'>" + accounting.formatMoney(settleAmount) + "</td>" +
-                           
+                             "<td class='text-right returnAmount' invPay='0'>" + accounting.formatMoney(ReturnAmount) + "</td>" +
                             "<td class='text-right dueAmount' isColse='0'>" + accounting.formatMoney(creditAmount - settleAmount) + "</td>" +
                             
                             "<td></td></tr>");

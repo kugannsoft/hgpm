@@ -1050,9 +1050,10 @@ class Payment extends Admin_Controller {
                         ->where('supplier.SupCode', $supCode)
                         ->join('supplieroustanding', 'supplier.SupCode = supplieroustanding.SupCode')
                         ->get()->row();
-        $arr['credit_data'] =$this->db->select('*,goodsreceivenotehed.GRN_InvoiceNo AS invNo')
+        $arr['credit_data'] =$this->db->select('*,goodsreceivenotehed.GRN_InvoiceNo AS invNo,return_grn_details.ReturnAmount')
                         ->from('creditgrndetails')
                         ->join('goodsreceivenotehed','goodsreceivenotehed.GRN_No =creditgrndetails.GRNNo')
+                        ->join('return_grn_details', 'return_grn_details.GrnNo = creditgrndetails.GRNNo', 'left')
                         ->where('creditgrndetails.SupCode', $supCode)
                         ->where('creditgrndetails.IsCloseGRN', 0)
                         ->where('creditgrndetails.IsCancel', 0)
