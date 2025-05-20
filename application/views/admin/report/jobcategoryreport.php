@@ -1,6 +1,45 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<style>
+    <style>
+#reportTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#reportTable thead {
+    background-color: #007BFF;
+   
+}
+
+#reportTable th,
+#reportTable td {
+    padding: 12px 10px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+#reportTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#reportTable tbody tr:hover {
+    background-color: #e6f2ff;
+}
+
+#reportTable td:first-child {
+    text-align: left;
+    font-weight: 500;
+}
+
+</style>
+
+</style>
 <div class="content-wrapper">
     <section class="content-header">
         <?php echo $pagetitle; ?>
@@ -155,5 +194,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             title:'Date vise Sales Report'
         });
     }
-    
+   
 </script>
