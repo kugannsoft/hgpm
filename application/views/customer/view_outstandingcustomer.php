@@ -58,7 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     var customertbl = $('#customertbl').dataTable({
        "processing": true,
             "serverSide": true,
-            "order": [[1, "desc"]],
+            "order": [[3, "ASC"]],
             "language": {
                 "processing": "<div class='overlay'><i class='fa fa-refresh fa-spin'></i></div>"
             },

@@ -218,17 +218,38 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
         }
     });
 
-  $("input[name='unitcostper']").on('change', function(event) {
-      let unicostValue = parseFloat($("#unitcost").val());
-    let uniPer = parseFloat($(this).val());
+//   $("input[name='unitcostper']").on('change', function(event) {
+//       let unicostValue = parseFloat($("#unitcost").val());
+//     let uniPer = parseFloat($(this).val());
 
-    // Check if both values are valid numbers
+//     // Check if both values are valid numbers
    
-        let newSellingPer = (unicostValue) * (uniPer / 100);
-        let newSellingPrice = unicostValue + newSellingPer;
-        $("#sellingPrice").val(newSellingPrice.toFixed(2));
-        // alert(newSellingPrice);
-    });
+//         let newSellingPer = (unicostValue) * (uniPer / 100);
+//         let newSellingPrice = unicostValue + newSellingPer;
+//         $("#sellingPrice").val(newSellingPrice.toFixed(2));
+//         // alert(newSellingPrice);
+//     });
+
+
+
+    const costInput = document.getElementById("unitcost");
+    const disInput = document.getElementById("unitcostper");
+    const sellingInput = document.getElementById("sellingPrice");
+
+    function calculateSelling() {
+        const cost = parseFloat(costInput.value) || 0;
+        const dis = parseFloat(disInput.value) || 0;
+        const selling = cost + (cost * dis) / 100;
+        sellingInput.value = selling.toFixed(2);
+    }
+
+    if (costInput && disInput && sellingInput) {
+        costInput.addEventListener("input", calculateSelling);
+        disInput.addEventListener("input", calculateSelling);
+    }
+
+
+    
 
     function addProductVat(totalNet,vat,discount){
        
