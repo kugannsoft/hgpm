@@ -6,6 +6,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
+
+    <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -48,25 +54,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="saletable" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td>Date</td>
-                                    <td>Invoice No</td>
-                                    <td>Vehicle No</td>
-                                    <td>Job No</td>
-                                    <!-- <td>Total Amount</td>
-                                    <td>Dis Amount</td>
-                                    <td>Cash</td>
-                                    <td>Credit</td>
-                                    <td>Card</td>
-                                    <td>Cheque</td>
-                                    <td>Bank</td> -->
-                                
-                                    <!-- <td>Company Amount</td> -->
-                                    <!-- <td>Advance</td> -->
-                                    <td>Net Amount</td>
-                                    <!-- <td>VAT</td>
-                                    <td>NBT</td>
-                                    <td>net Amount</td> -->
-                                    <!-- <td>Return</td> -->
+                                      <th style="width: 200px;">Date</th>
+                                        <th style="width: 200px;">Invoice No</th>
+                                        <th style="width: 200px;">Vehicle No</th>
+                                        <th style="width: 200px;">Job No</th>
+                                        <th style="width: 200px;">Net Amount</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>

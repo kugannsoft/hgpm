@@ -23,6 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       padding-left: 0px;
       padding-right: 0px;
     }
+    
+            #customertbl thead {
+                background-color: rgb(202, 205, 245) !important;
+                }
+        
 </style>
 <div class="content-wrapper" id="app">
     <section class="content-header">
@@ -45,13 +50,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body table-responsive">
                         <table class="table table-bordered" id="customertbl">
                             <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Phone</td>
-                                    <td>Address</td>
-                                    <td>Vehicle No</td>
-                                    <td>Chassis No</td>
+                              <tr>
+                                    <td style="width: 150px;">Name</td>
+                                    <td style="width: 120px;">Phone</td>
+                                    <td style="width: 200px;">Address</td>
+                                    <td style="width: 140px;">Vehicle No</td>
+                                    <td style="width: 140px;">Chassis No</td>
                                 </tr>
+
                             </thead>
                             <tbody>
 
@@ -103,5 +109,5 @@ var inv =$("#inv").val();
 $("#btnPrint").click(function(){
 $('#customertbl').focus().print();
 });
-
+   $("#customertbl").freezeHeader({'height': '600px'});
 </script>

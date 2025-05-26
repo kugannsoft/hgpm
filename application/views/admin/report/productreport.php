@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+    <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -96,20 +100,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body  table-responsive">
                         <table id="saletable" class="table table-bordered  table-hover table-fixed">
                             <thead>
-                                <tr style="font-size: large">
-                                    <td>id</td>
-                                    <td>Product Code</td>
-                                    <td>Product Name</td>
-                                    <td>Location</td>
-                                    <td>Stock</td>
-                                    <td>ROL</td>
-                                    <td>ROQ</td>
-                                    <td>Cost Price</td>
-                                    <td>Selling Price</td>
-                                    <td>Total Value</td>
-                                    <td>Cost Value</td>
-                                    <td>Estimate Profit</td>
-                                    <td>Supplier</td>
+                               <tr style="font-size: large;">
+                                <td style="width: 50px;">id</td>
+                                <td style="width: 120px;">Product Code</td>
+                                <td style="width: 180px;">Product Name</td>
+                                <td style="width: 100px;">Location</td>
+                                <td style="width: 80px;">Stock</td>
+                                <td style="width: 80px;">ROL</td>
+                                <td style="width: 80px;">ROQ</td>
+                                <td style="width: 100px;">Cost Price</td>
+                                <td style="width: 100px;">Selling Price</td>
+                                <td style="width: 100px;">Total Value</td>
+                                <td style="width: 100px;">Cost Value</td>
+                                <td style="width: 100px;">Estimate Profit</td>
+                                <td style="width: 160px;">Supplier</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -196,7 +200,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         placeholder: "Select a product",
         allowClear: true,
         ajax: {
-            url: "productjson",
+            url: "productstockjson",
             dataType: 'json',
             delay: 250,
             data: function(params) {

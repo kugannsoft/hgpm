@@ -33,8 +33,8 @@
                     <input type="text" class="form-control" required="required"  name="productname" id="productname" placeholder="Enter product name">
                 </div>
                 <div class="form-group">
-                    <label for="remark" class="control-label">Appear name</label>
-                    <input class="form-control" name="appearname"  id="appearname" placeholder="Enter appear name"/>
+                    <label for="remark" class="control-label">Invoice name</label>
+                    <input class="form-control" name="appearname"  id="appearname" placeholder="Enter Invoice name"/>
                      
                 </div>
                 <div class="row">
@@ -201,18 +201,20 @@
                                 Is Open Price
                             </label>
                         </div>
-<!--                        <div class="form-group">-->
-<!--                            <label for="ispromotion" class="control-label">-->
-<!--                                <input class="prd_icheck" type="checkbox" name="ispromotion" value="1"> -->
-<!--                                Is Promotion-->
-<!--                            </label>-->
-<!--                        </div>-->
+                     
                     </div>
                    <div class="col-md-4">
                        <div class="form-group">
                            <label for="ismultiprice" class="control-label">
                                <input class="prd_icheck" type="checkbox" name="ismultiprice" value="1">
                                Is Multi Price
+                           </label>
+                       </div>
+
+                         <div class="form-group">
+                           <label for="ispromotion" class="control-label">
+                               <input class="prd_icheck" type="checkbox" name="ispromotion" value="1">
+                               Is Stock Report
                            </label>
                        </div>
 <!--                        <div class="form-group">-->
@@ -235,12 +237,12 @@
 <!--                                Is Fraction No-->
 <!--                            </label>-->
 <!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="isfreeissue" class="control-label">-->
-<!--                                <input class="prd_icheck" type="checkbox" name="isfreeissue" value="1"> -->
-<!--                                Is Free Issue-->
-<!--                            </label>-->
-<!--                        </div>-->
+                       <div class="form-group">
+                           <label for="isfreeissue" class="control-label">
+                               <input class="prd_icheck" type="checkbox" name="isfreeissue" value="1">
+                               Is Free Issue
+                           </label>
+                       </div>
                         <div class="form-group">
                             <label for="isfreeissue" class="control-label">
                                 <input class="prd_icheck" type="checkbox" name="isvat" value="1"> 

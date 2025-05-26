@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+    <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -72,24 +76,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body table-responsive">
                         <table id="saletable" class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <td>Inv. Date</td>
-                                    <td>Customer</td>
-                                    <td>Inv No</td>
-                                    <td>Total Amount</td>
-                                    <td>Dis Amount</td>
-                                    <td>Vat Amount</td>
-                                    <td>Nbt Amount</td>
-                                    <td>Net Amount</td>
-                                    <td>Cash Amount</td>
-                                    <td>Card Amount</td>
-                                    <td>Cheque Amount</td>
-                                    <td>Advance Amount</td>
-                                    <td>Credit Amount</td>  
-                                    <td>Bank Amount</td>                                    
-                                    <td>Return</td>
-                                    <td>Settled Amount</td>
-                                </tr>
+                          <tr>
+                            <th style="width: 100px;">Inv. Date</th>
+                            <th style="width: 140px;">Customer</th>
+                            <th style="width: 100px;">Inv No</th>
+                            <th style="width: 120px;">Total Amount</th>
+                            <th style="width: 100px;">Dis Amount</th>
+                            <th style="width: 100px;">Vat Amount</th>
+                            <th style="width: 100px;">Nbt Amount</th>
+                            <th style="width: 120px;">Net Amount</th>
+                            <th style="width: 100px;">Cash Amount</th>
+                            <th style="width: 100px;">Card Amount</th>
+                            <th style="width: 100px;">Cheque Amount</th>
+                            <th style="width: 120px;">Advance Amount</th>
+                            <th style="width: 100px;">Credit Amount</th>
+                            <th style="width: 100px;">Bank Amount</th>
+                            <th style="width: 100px;">Return</th>
+                            <th style="width: 100px;">Settled Amount</th>
+                        </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -407,5 +411,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
 
             };
-    
+  $("#saletable").freezeHeader({'height': '600px'});   
 </script>

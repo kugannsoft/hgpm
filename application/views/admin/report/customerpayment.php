@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+  <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -77,19 +81,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body table-responsive">
                         <table id="saletable" class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <td>Date</td>
-                                    <td>Payment No</td>
-                                    <td>Mode</td>
-                                    <td>Paid Amount</td>
-                                    <!-- <td>Cost Price</td> -->
-                                    <td>Cheque No</td>
-                                    <td>Cheque Date</td>
-                                    
-                                    <td>Received Date</td>
-                                    <td>Reference</td>
-                                    <td>Bank</td>
+                               <tr>
+                                    <td style="width: 100px;">Date</td>
+                                    <td style="width: 120px;">Payment No</td>
+                                    <td style="width: 100px;">Mode</td>
+                                    <td style="width: 120px;">Paid Amount</td>
+                                    <td style="width: 120px;">Cheque No</td>
+                                    <td style="width: 100px;">Cheque Date</td>
+                                    <td style="width: 100px;">Received Date</td>
+                                    <td style="width: 160px;">Reference</td>
+                                    <td style="width: 180px;">Bank</td>
                                 </tr>
+
                             </thead>
                             <tbody>
                             </tbody>

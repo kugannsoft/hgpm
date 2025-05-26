@@ -32,8 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <input type="text" class="form-control" required="required"  name="product" id="product" placeholder="Enter product name">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="remark" class="control-label">Appear name</label>
-                                                                    <input class="form-control" name="appearname"  id="appearname" placeholder="Enter appear name"/>
+                                                                    <label for="remark" class="control-label">Invoice name</label>
+                                                                    <input class="form-control" name="appearname"  id="appearname" placeholder="Enter Invoice name"/>
                                                                 </div>
                                                                 <div class="productmaparea">
                                                                     <h5 class="pull-right">Product mapping</h5><br/>

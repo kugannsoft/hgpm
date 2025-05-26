@@ -6,6 +6,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
+     <style>
+         #hdsaletable thead {
+            background-color: rgb(202, 205, 245) !important;
+            }
+    </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -45,15 +50,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="saletable" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td>Invoice No</td>
-                                    <td>Date </td>
-                                    <td>Working Hours</td>
-                                    <td>Flat Qty</td>
-                                    <td>Cost Price</td>
-                                    <td>Labour Rate</td>
-                                
-                                
+                                    <td style="width: 160px;">Invoice No</td>
+                                    <td style="width: 120px;">Date</td>
+                                    <td style="width: 120px;">Working Hours</td>
+                                    <td style="width: 100px;">Flat Qty</td>
+                                    <td style="width: 110px;">Cost Price</td>
+                                    <td style="width: 110px;">Labour Rate</td>
                                 </tr>
+
                             </thead>
                             <tbody>
                             </tbody>

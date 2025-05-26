@@ -170,6 +170,7 @@ $(document).ready(function() {
     
 // VAT
 var isProVat =0;
+var currentSellingPrice =0;
 var isProNbt =0;
 var proNbtRatio =0;
 var isTotalVat =0;
@@ -214,7 +215,13 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
         if ($(this).is(':checked')) {
             $('#unitcostper').show();
         } else {
+
             $('#unitcostper').hide();
+            $('#unitcostper').val('');
+            $('#sellingPrice').html('');
+            // $('#sellingPrice').val($currentSellingPrice);
+            
+            
         }
     });
 
@@ -235,15 +242,19 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
     const costInput = document.getElementById("unitcost");
     const disInput = document.getElementById("unitcostper");
     const sellingInput = document.getElementById("sellingPrice");
-
+    // alert(sellingInput);
     function calculateSelling() {
         const cost = parseFloat(costInput.value) || 0;
         const dis = parseFloat(disInput.value) || 0;
-        const selling = cost + (cost * dis) / 100;
-        sellingInput.value = selling.toFixed(2);
+        const selling = cost + ((cost * dis) / 100);
+        const sellingValue = selling.toFixed(2);
+
+        //  sellingInput.value = sellingValue;
+         console.log('sellingValue',sellingValue);
+        $("#sellingPrice").val(sellingValue);
     }
 
-    if (costInput && disInput && sellingInput) {
+    if (costInput && disInput) {
         costInput.addEventListener("input", calculateSelling);
         disInput.addEventListener("input", calculateSelling);
     }
@@ -372,7 +383,8 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
                     var resultData = JSON.parse(json);
 //                    alert(resultData.serial);
                     if (resultData) {
-
+                        $currentSellingPrice = resultData.productgrn.Prd_SetAPrice;
+                        $("#currentSellingPrice").val(currentSellingPrice);
                         $.each(resultData.serial, function(key, value) {
                             var serialNoArrIndex1 = $.inArray(value, serialnoarr);
                             if (serialNoArrIndex1 < 0) {
@@ -1147,6 +1159,7 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
                             $("#loadBarCode").hide();
                             $("#dwnLink").show();
                             $("#saveItems").attr('disabled', true);
+                            $("#addItem").attr('disabled', true);
                         }
                     }
                 });

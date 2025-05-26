@@ -1124,7 +1124,7 @@ console.log('key',key);
             // setTimeout(function(){$('#printArea').focus().print();},1000);
 
             var encodedInv = Base64.encode(invNumber);
-            var pdfUrl = "http://localhost/hgpm.nsoftsoft.com/admin/payment/view_customer_receipt?payNo=" + encodedInv;
+            var pdfUrl = "https://testhgpm.nsoftsoft.com/admin/payment/view_customer_receipt?payNo=" + encodedInv;
         
             console.log("Opening receipt PDF: ", pdfUrl);
         

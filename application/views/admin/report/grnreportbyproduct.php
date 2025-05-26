@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+ <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -93,26 +97,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body  table-responsive">
                         <table id="saletable" class="table table-bordered  table-hover">
                             <thead>
-                                <tr style="font-size: large">
-                                    <td>#</td>
-                                    <!-- <td>Date</td> -->
-                                    <td>Product Code</td>
-                                    <td>Product Name</td>
-                                    <td>Qty</td>
-                                    <!-- <td>Free Qty</td>
-                                    <td>Cost Price</td> -->
-                                    <!-- <td>Total Amount</td>
-                                    <td>Discount</td> -->
-                                    <td>Sales Qty</td>
-                                    <td>Blance Qty</td>
-                                    <td>Actual Qty</td>
-                                    <!-- <td>Selling Price</td> -->
-                                    <!-- <td>Profit</td>
-                                    <td>User</td>
-                                    <td>Stock In</td> -->
-                                    <!-- <td>Is Cancel</td>
-                                    <td>Serial no</td> -->
-                                </tr>
+                              <tr style="font-size: large;">
+                                <td style="width: 50px;">#</td>
+                                <td style="width: 140px;">Product Code</td>
+                                <td style="width: 280px;">Product Name</td>
+                                <td style="width: 80px;">Qty</td>
+                                <td style="width: 100px;">Sales Qty</td>
+                                <td style="width: 100px;">Blance Qty</td>
+                                <td style="width: 150px;">Actual Qty</td>
+                            </tr>
                             </thead>
                             <tbody>
                             </tbody>

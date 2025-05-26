@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+  <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -70,20 +74,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="saletable" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td>Paid Date</td>
-                                    <td>Payment No</td>
-                                    <td>GRN No</td>
-                                    <td>Supplier Name</td>
-                                    <td>Mode</td>
-                                    <td>Paid Amount</td>
-                                    <!-- <td>Cost Price</td> -->
-                                    <td>Cheque No</td>
-                                    <td>Cheque Date</td>
-                                    
-                                    <td>Received Date</td>
-                                    <td>Reference</td>
-                                    <td>Bank</td>
+                                    <td style="width: 90px;">Paid Date</td>
+                                    <td style="width: 100px;">Payment No</td>
+                                    <td style="width: 90px;">GRN No</td>
+                                    <td style="width: 150px;">Supplier Name</td>
+                                    <td style="width: 90px;">Mode</td>
+                                    <td style="width: 100px;">Paid Amount</td>
+                                    <td style="width: 100px;">Cheque No</td>
+                                    <td style="width: 90px;">Cheque Date</td>
+                                    <td style="width: 90px;">Received Date</td>
+                                    <td style="width: 150px;">Reference</td>
+                                    <td style="width: 150px;">Bank</td>
                                 </tr>
+
                             </thead>
                             <tbody>
                             </tbody>

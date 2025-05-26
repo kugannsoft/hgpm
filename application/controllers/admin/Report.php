@@ -360,7 +360,7 @@ class Report extends Admin_Controller {
     public function jobcardsummery() {
         $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
         $this->breadcrumbs->unshift(1, 'Sales', 'admin/report/jobcardsummery');
-        $this->page_title->push(('Job Card Summery'));
+        $this->page_title->push(('JOB CARD SUMMARY'));
         $this->data['pagetitle'] = $this->page_title->show();
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
         $this->data['locations'] = $this->Report_model->loadroot();
@@ -679,6 +679,15 @@ class Report extends Admin_Controller {
         if (isset($_GET['q'])) {
             $q = strtolower($_GET['q']);
             $result = $this->Report_model->searchproduct($q);
+            echo json_encode($result);
+            die;
+        }
+    }
+
+    public function productstockjson() {
+        if (isset($_GET['q'])) {
+            $q = strtolower($_GET['q']);
+            $result = $this->Report_model->searchStockproduct($q);
             echo json_encode($result);
             die;
         }

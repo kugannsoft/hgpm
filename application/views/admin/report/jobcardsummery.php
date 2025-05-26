@@ -6,6 +6,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
+      <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -47,19 +52,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body table-responsive">
                         <table id="saletable" class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <td>Invoice Date</td>
-                                    <td>Job No</td>
-                                    <td>Cus Name</td>
-                                    <td>Veh Name</td>
-                                    <td>Model</td>
-                                    <td>Make</td>
-                                    <td>Emp</td>
-                                    <td>Estimate No</td>
-                                    <td>Status</td>
-                                    <td>Bill Amount</td>
-                                
-                                </tr>
+                                  <tr>
+                                    <th style="width: 120px;">Invoice Date</th>
+                                    <th style="width: 100px;">Job No</th>
+                                    <th style="width: 160px;">Cus Name</th>
+                                    <th style="width: 130px;">Vehicle No</th>
+                                    <th style="width: 100px;">Model</th>
+                                    <th style="width: 100px;">Make</th>
+                                    <th style="width: 80px;">Emp</th>
+                                    <th style="width: 120px;">Estimate No</th>
+                                    <th style="width: 100px;">Status</th>
+                                    <th style="width: 190px;">Bill Amount</th>
+                                    </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -134,7 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
       function drawRow(rowData) {
         var row = $("<tr/>");
-        var statusText = rowData.iscom == 1 ? "Cancel" : "Completed";
+        var statusText = rowData.iscom == 1 ? "Pending" : "Completed";
         var statusClass = rowData.iscom == 1 ? "bg-yellow" : "bg-green";
         $("#saletable").append(row);
         
@@ -142,7 +146,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         row.append($("<td>" + rowData.JobCardNo + "</td>"));
         row.append($("<td>" + rowData.CusName + "</td>"));
         row.append($("<td>" + rowData.JRegNo  + "</td>"));
-        row.append($("<td class='disamount'>" + (rowData.M0 && rowData.M0 !== "-" ? rowData.M0 : "0") + "</td>"));
+        row.append($("<td class='disamount'>" + (rowData.model) + "</td>"));
 
         row.append($("<td class='disamount'>" + rowData.MA + "</td>"));
         row.append($("<td class='cashamount'>" + rowData.Emp + "</td>"));

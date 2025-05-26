@@ -32,6 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <input type="hidden" name="vatRate" id="vatRate" value="<?php echo $company['VAT']; ?>">
                                         <input type="hidden" name="nbtRate" id="nbtRate" value="<?php echo $company['NBT']; ?>">
                                         <input type="hidden" name="nbtRatioRate" id="nbtRatioRate" value="<?php echo $company['NBT_Ratio']; ?>">
+                                        
+
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -222,7 +224,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              <div class="col-sm-1">
                                                 <input class="prd_icheck" type="checkbox" name="isPer"  id="isPer" value="1"> PER
                                             </div>
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-3">
                                                 <input type="text" tabindex="12"  min="0" step="1" class="form-control" required="required"  name="unitcostper" id="unitcostper" placeholder="Enter Qty"  value="0" style="display: none;">
                                             </div>
                                          

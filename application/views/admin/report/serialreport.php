@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+    <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -106,17 +110,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body">
                         <table id="saletable" class="table table-bordered">
                             <thead>
-                                <tr style="font-size: large">
-                                    <td>id</td>
-                                    <td>GRN Date</td>
-                                    <td>Product Code</td>
-                                    <td>Product Name</td>
-                                    <td>Serial</td>
-                                    <td>Location</td>
-                                    <td>Stock</td>
-                                    <td>Cost Price</td>
-                                    <td>Supplier</td>
-                                </tr>
+                             <tr style="font-size: large;">
+                                <td style="width: 50px;">id</td>
+                                <td style="width: 100px;">GRN Date</td>
+                                <td style="width: 130px;">Product Code</td>
+                                <td style="width: 200px;">Product Name</td>
+                                <td style="width: 120px;">Serial</td>
+                                <td style="width: 100px;">Location</td>
+                                <td style="width: 80px;">Stock</td>
+                                <td style="width: 120px;">Cost Price</td>
+                                <td style="width: 200px;">Supplier</td>
+                            </tr>
+
                             </thead>
                             <tbody>
                             </tbody>

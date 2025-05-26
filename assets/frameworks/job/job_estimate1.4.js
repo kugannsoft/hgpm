@@ -406,7 +406,7 @@ var partType = '';
         var newNbtRatio = parseFloat($("#proNbtRatio").val());
 
         if(isNaN(qty) == true){
-            $.notify("Qty can not be empty.", "warning");return false;
+            $.notify("Qty can not be empty.", "");return false;
         }else if(isNaN(sellPrice) == true){
             $.notify("Unit Price can not be empty.", "warning");return false;
         }else{
@@ -868,9 +868,9 @@ var partType = '';
 
 
                         $("#modelNotifi").html(lastproduct_code);
+                        $("#EstNoPdf").val(lastproduct_code);
 
-
-                         $("#EstNoPdf").val(lastproduct_code);
+                         $("#estimateNo").val(lastproduct_code);
 
                          
                         // $('#btnSave').attr('disabled', false);
@@ -1523,6 +1523,14 @@ function getKey(txt){
         }
     });
 
+
+    // $("#tbl_job tbody").on('dblclick', 'tr', function () {
+    //     var thisworkId = $(this).attr('jobid');
+    //     if(thisworkId ==1 || thisworkId==2|| thisworkId==3 ){
+    //         $('#partType').prop('disabled', false);
+    //     }
+    // });
+
 // load grid data
     function loadEstimateDatatoGrid(resultData) {
         totalAmount = 0;
@@ -1578,7 +1586,33 @@ function getKey(txt){
                     totalProVAT += parseFloat(resultData.est_dtl[i].EstVatAmount);
                     totalProNBT += parseFloat(resultData.est_dtl[i].EstNbtAmount);
                 }
-                $("#tbl_job tbody").append("<tr partType='"+resultData.est_dtl[i].EstPartType+"'  totalPrice='"+resultData.est_dtl[i].EstTotalAmount+"' isvat='"+resultData.est_dtl[i].EstIsVat+"' isnbt='"+resultData.est_dtl[i].EstIsNbt+"' nbtRatio='"+resultData.est_dtl[i].EstNbtRatio+"' proVat='"+resultData.est_dtl[i].EstVatAmount+"' proNbt='"+resultData.est_dtl[i].EstNbtAmount+"'  job='" + resultData.est_dtl[i].EstJobDescription + "' jobid='" + resultData.est_dtl[i].EstJobType + "' qty='" + resultData.est_dtl[i].EstQty + "' jobOrder='" + resultData.est_dtl[i].EstJobOrder + "' netprice='" + resultData.est_dtl[i].EstNetAmount + "'  sellprice='" + resultData.est_dtl[i].EstPrice + "'  isIns='" + resultData.est_dtl[i].EstIsInsurance + "' insurance='" + resultData.est_dtl[i].EstInsurance + "' work_id='" + resultData.est_dtl[i].EstJobId + "'  timestamp='" + resultData.est_dtl[i].EstinvoiceTimestamp + "'><td>" + (i + 1) + "</td><td work_id='" + resultData.est_dtl[i].EstJobId + "'>" + resultData.est_dtl[i].jobtype_name + "</td><td>" + resultData.est_dtl[i].EstJobDescription + "</td><td>" + accounting.formatNumber(resultData.est_dtl[i].EstQty) + "</td><td>" + accounting.formatNumber(resultData.est_dtl[i].EstPrice) + "</td><td>" + accounting.formatNumber(resultData.est_dtl[i].EstNetAmount) + "</td><td>" + resultData.est_dtl[i].EstInsurance + "</td><td>&nbsp;&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
+                $("#tbl_job tbody").append("<tr partType='"+
+                    resultData.est_dtl[i].EstPartType+"'  totalPrice='"+
+                    resultData.est_dtl[i].EstTotalAmount+"' isvat='"+
+                    resultData.est_dtl[i].EstIsVat+"' isnbt='"+
+                    resultData.est_dtl[i].EstIsNbt+"' nbtRatio='"+
+                    resultData.est_dtl[i].EstNbtRatio+"' proVat='"+
+                    resultData.est_dtl[i].EstVatAmount+"' proNbt='"+
+                    resultData.est_dtl[i].EstNbtAmount+"'  job='" + 
+                    resultData.est_dtl[i].EstJobDescription + "' jobid='" +
+                    resultData.est_dtl[i].EstJobType + "' qty='" + 
+                    resultData.est_dtl[i].EstQty + "' jobOrder='" + 
+                    resultData.est_dtl[i].EstJobOrder + "' netprice='" +
+                    resultData.est_dtl[i].EstNetAmount + "'  sellprice='" + 
+                    resultData.est_dtl[i].EstPrice + "'  isIns='" + 
+                    resultData.est_dtl[i].EstIsInsurance + "' insurance='" + 
+                    resultData.est_dtl[i].EstInsurance + "' work_id='" + 
+                    resultData.est_dtl[i].EstJobId + "'  timestamp='" + 
+                    resultData.est_dtl[i].EstinvoiceTimestamp + "'><td>" + (i + 1) + "</td><td work_id='" + 
+                    resultData.est_dtl[i].EstJobId + "'>" + 
+                    resultData.est_dtl[i].jobtype_name + "</td><td>" + 
+                    resultData.est_dtl[i].EstJobDescription + "</td><td>" + 
+                    
+                    accounting.formatNumber(resultData.est_dtl[i].EstQty) + "</td><td>" + 
+                    accounting.formatNumber(resultData.est_dtl[i].EstPrice) + "</td><td>" + 
+                    accounting.formatNumber(resultData.est_dtl[i].EstNetAmount) + "</td><td>" + 
+                    
+                    resultData.est_dtl[i].EstInsurance + "</td><td>&nbsp;&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
 
             }
 

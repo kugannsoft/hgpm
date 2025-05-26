@@ -626,11 +626,19 @@ $(document).ready(function() {
             $("#flatQty").hide();
             $("#dropdownMenuButton").hide();
             $("#stockSec").show();
-        }else if(workType == 4){
-            $("#flatQty").hide();
+        }else if (workType == 3){
+              $("#flatQty").hide();
             $("#dropdownMenuButton").hide();
-        } else {
+        }else if(workType == 4){
+            $("#flatQty").show();
+            $("#dropdownMenuButton").show();
+        }else if((workType == 8)){
+             $("#flatQty").hide();
+            $("#dropdownMenuButton").hide();
+        }else {
             $("#jobDescDiv").show();
+            $("#dropdownMenuButton").show();
+            $("#flatQty").show();
             $("#spartDiv").hide();
             $("#stockSec").hide();
         }
@@ -787,6 +795,7 @@ $(document).ready(function() {
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
                     $('#stock').text('');
+                    $('#flatQty').val('');
                     $('input[name="employees[]"]').prop('checked', false); 
                     $('#select_all').prop('checked', false);
                     totalAmount += parseFloat(totalPrice);
@@ -825,6 +834,7 @@ $(document).ready(function() {
                         $("#product").val('');
                         $('#stock').text('');
                         $('#pricestock').text('');
+                         $('#flatQty').val('');
                         if (isInsurance == 1) {} else {
                             totalAmount += parseFloat(totalPrice);
                             totalNetAmount +=parseFloat(netprice);
@@ -859,6 +869,7 @@ $(document).ready(function() {
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
                     $('#stock').text('');
+                     $('#flatQty').val('');
                     totalAmount += parseFloat(totalPrice);
                     totalNetAmount +=parseFloat(netprice);
                     totalProVAT+=parseFloat(proVat);
@@ -887,6 +898,7 @@ $(document).ready(function() {
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
                     $('#stock').text('');
+                     $('#flatQty').val('');
                     totalAmount += parseFloat(totalPrice);
                     totalNetAmount +=parseFloat(netprice);
                     totalProVAT+=parseFloat(proVat);
@@ -915,6 +927,7 @@ $(document).ready(function() {
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
                     $('#stock').text('');
+                     $('#flatQty').val('');
                     totalAmount += parseFloat(totalPrice);
                     totalNetAmount +=parseFloat(netprice);
                     totalProVAT+=parseFloat(proVat);
@@ -940,6 +953,7 @@ $(document).ready(function() {
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
                     $('#stock').text('');
+                     $('#flatQty').val('');
                     totalAmount += parseFloat(totalPrice);
                     totalNetAmount +=parseFloat(netprice);
                     totalProVAT+=parseFloat(proVat);
@@ -1575,7 +1589,12 @@ $(document).ready(function() {
                             $("#lastJob").html('');
                             // $("#saveInvoiceNo").val(newdata.JobInvNo);
                             // $("#lastJob").html(lastproduct_code);
-                            $.notify("Job Invoice successfully saved.", "success");
+                            if(action=="1"){
+                                 $.notify("Temporary Invoice successfully saved.", "success");
+                            }else if(action=="2"){
+                                  $.notify("Temporary Invoice successfully updated.", "success");
+                            }
+                           
                             $("#modelNotifi").html(" Last Job Invoice NUmber = "+lastproduct_code);
 
                             loadnewtempinvoice(lastproduct_code);
@@ -2176,7 +2195,6 @@ $(document).ready(function() {
 
 //load edit grid data
     $("#tbl_job tbody").on('click', '.edit', function() {
-        alert('aaa');
         var jobtype = $(this).parent().parent().attr('jobid')
         var workid = $(this).parent().parent().attr('work_id');
         var jobdesc = $(this).parent().parent().attr('job');

@@ -6,6 +6,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
+
+         <style>
+            #hdsaletable thead {
+                background-color: rgb(202, 205, 245) !important;
+                }
+        </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -22,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                     <div class="col-md-3">
                                        <select class="form-control" name="customer" id="customer">
-                                            <option value="">--select Supplier--</option>
+                                            <option value="">--Select Employee--</option>
                                         </select>
                                         <input type="hidden" name="route_ar" id="route_ar">
                                     </div>
@@ -44,16 +50,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body table-responsive">
                         <table id="saletable" class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Date </td>
-                                    <td>Working Hours</td>
-                                    <td>Flat Qty</td>
-                                    <td>Cost Price</td>
-                                    <td>Labour Rate</td>
-                                
-                                
+                               <tr>
+                                    <td style="width: 180px;">Name</td>
+                                    <td style="width: 120px;">Date</td>
+                                    <td style="width: 120px;">Working Hours</td>
+                                    <td style="width: 100px;">Flat Qty</td>
+                                    <td style="width: 100px;">Invoice Amount</td>
+                                    <td style="width: 100px;">Working Inv Amount</td>
+                                     <td style="width: 100px;">Working Flat Inv Amount</td>
+                                    <td style="width: 100px;">Lost/Profit Rate</td>
                                 </tr>
+
                             </thead>
                             <tbody>
                             </tbody>
@@ -132,6 +139,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         row.append($("<td>" + rowData.Qty  + "</td>"));
         row.append($("<td>" + rowData.FlatQty  + "</td>"));
         row.append($("<td>" + rowData.CostPrice  + "</td>"));
+         row.append($("<td>" + rowData.CostPrice * rowData.Qty  + "</td>"));
+         row.append($("<td>" + rowData.CostPrice * rowData.FlatQty  + "</td>"));
         row.append($("<td>" + rowData.ProfitAmount  + "</td>"));
     
     }
@@ -163,7 +172,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     
     $("#customer").select2({
-        placeholder: "Select a supplier",
+        placeholder: "Select Employee",
         allowClear: true,
         ajax: {
             url: "salespersonjson",

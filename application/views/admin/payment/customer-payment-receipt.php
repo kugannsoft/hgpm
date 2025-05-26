@@ -157,9 +157,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <td>&nbsp;</td>
         </tr>
         <tr style="text-align:left;">
-            <td>Vehicle No</td>
+            <!-- <td>Vehicle No</td>
             <td>:</td>
-            <td colspan="2" id="chq_rcpvno"><?php if($inv){echo $inv->vehicle;} ?></td>
+            <td colspan="2" id="chq_rcpvno"><?php if($inv){echo $inv->vehicle;} ?></td> -->
             <td style="text-align: right;">Code&nbsp;&nbsp;&nbsp;</td>
             <td id="chq_rcpcuscode"> :  <?php echo $pay->CusCode; ?></td>
             <td>&nbsp;</td>
@@ -315,9 +315,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <td>&nbsp;</td>
         </tr>
         <tr style="text-align:left;">
-            <td>Vehicle No</td>
+            <!-- <td>Vehicle No</td>
             <td>:</td>
-            <td colspan="2" id="chq_rcpvno"><?php if($inv){echo $inv->vehicle;} ?></td>
+            <td colspan="2" id="chq_rcpvno"><?php if($inv){echo $inv->vehicle;} ?></td> -->
             <td style="text-align: right;">Code&nbsp;&nbsp;&nbsp;</td>
             <td id="chq_rcpcuscode"> :  <?php echo $pay->CusCode; ?></td>
             <td>&nbsp;</td>

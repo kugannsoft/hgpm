@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+   <style>
+   #hdsaletable thead {
+    background-color: rgb(202, 205, 245) !important;
+    }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -23,14 +27,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <input type="text" class="form-control" name="enddate"  value="<?php echo date("Y-m-d") ?>"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <!-- <div class="col-md-3">
                                         <select class="form-control" name="route" id="route"  multiple="multiple">
                                             <option value="">--select location--</option>
                                             <?php foreach ($locations AS $loc) { ?>
                                                 <option value="<?php echo $loc->location_id ?>"><?php echo $loc->location ?></option>
                                             <?php } ?>
                                         </select>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-3">
                                         <select class="form-control" name="product" id="product">
                                             <option value="">--select product--</option>
@@ -89,19 +93,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="saletable" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td>Date</td>
-                                    <td>Inv. No</td>
-                                    <td>Prd. Code</td>
-                                    <td>Name</td>
-                                    <!-- <td>Cost Price</td> -->
-                                    <td>Unit Price</td>
-                                    <td>Qty</td>
-                                    <td>Free Qty</td>
-                                    <!-- <td>Cost Value</td> -->
-                                    <td>Discount</td>
-                                    <td>net Amount</td>
-                                    <!-- <td>Profit</td> -->
-                                    <!--<td>Return Qty</td>-->
+                                   <th style="width: 100px;">Date</th>
+                                    <th style="width: 80px;">Inv. No</th>
+                                    <th style="width: 100px;">Prd. Code</th>
+                                    <th style="width: 150px;">Name</th>
+                                    <th style="width: 100px;">Unit Price</th>
+                                    <th style="width: 80px;">Qty</th>
+                                    <th style="width: 80px;">Free Qty</th>
+                                    <th style="width: 100px;">Discount</th>
+                                    <th style="width: 120px;">Net Amount</th>
+                                 
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,34 +113,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <!-- <th id="costpr" style="text-align: right;color: #00aaf1;"></th> -->
                                     <th id="unitpr" style="text-align: right;color: #00aaf1;"></th>
                                     <th id="qty" style="text-align: right;color: #00aaf1;"></th>
                                     <th id="freeqty" style="text-align: right;color: #00aaf1;"></th>
-                                    <!-- <th id="costval" style="text-align: right;color: #00aaf1;"></th> -->
                                     <th id="discount" style="text-align: right;color: #00aaf1;"></th>
                                     <th id="netamount" style="text-align: right;color: #00aaf1;"></th>
-                                    <!-- <th id="profit" style="text-align: right;color: #00aaf1;"></th> -->
-                                    <!--<th id="returnqty" style="text-align: right;color: #00aaf1;"></th>-->
+                                    
                                 </tr>
 
-                                <!-- <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th colspan="2" style="text-align: right;">Cash Balance</th>
-                                    <th id="cash" style="text-align: right;color: #00aaf1;"></th>
-                                    <th style="text-align: right;color: #00aaf1;"></th>
-                                </tr> -->
                                
                                 <tr>
-                                    <!-- <th></th>
-                                    <th></th>-->
+                                
                                     <th></th> 
                                     <th></th>
                                     <th></th>
@@ -148,11 +132,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th></th>
                                     <th  colspan="2" style="text-align: right;">Total Sale</th>
                                     <th id="nsale" style="text-align: right;color: #00aaf1;"></th>
-                                    <!-- <th id="nprofit" style="text-align: right;color: #00aaf1;"></th> -->
                                 </tr>
                                  <tr>
-                                    <!-- <th></th>
-                                    <th></th>-->
+                                   
                                     <th></th> 
                                     <th></th>
                                     <th></th>
@@ -161,37 +143,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th></th>
                                    <th colspan="2" style="text-align: right;">Total Item Discount</th>
                                     <th id="toDis" style="text-align: right;color: #00aaf1;"></th>
-                                    <!-- <th id="toDis2" style="text-align: right;color: #00aaf1;"></th> -->
                                 </tr>
-                               <!--  <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th  colspan="2" style="text-align: right;">Expenses(-)</th>
-                                    <th id="expense" style="text-align: right;color: #00aaf1;"></th>
-                                    <th id="expense2"  style="text-align: right;color: #00aaf1;"></th>
-                                </tr>
+                              
                                 <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th  colspan="2" style="text-align: right;">Earning(+)</th>
-                                    <th id="earning" style="text-align: right;color: #00aaf1;"></th>
-                                    <th id="earning2" style="text-align: right;color: #00aaf1;"></th>
-                                </tr> -->
-                                <tr>
-                                    <!-- <th></th>
-                                    <th></th>-->
+                                  
                                     <th></th> 
                                     <th></th>
                                     <th></th>
@@ -200,7 +155,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th></th>
                                     <th  colspan="2" style="text-align: right;">Net Sale</th>
                                     <th id="ntsale" style="text-align: right;color: #00aaf1;"></th>
-                                    <!-- <th id="ntprofit" style="text-align: right;color: #00aaf1;"></th> -->
                                 </tr>
                             </tfoot>
                         </table>
@@ -339,11 +293,11 @@ var toatl_discount =0;
         row.append($("<td>" + rowData[index].JobInvNo + "</td>"));
         row.append($("<td>" + rowData[index].JobCode + "</td>"));
         row.append($("<td>" + rowData[index].AppearName + "</td>"));
-        row.append($("<td class='invunitpr' align='right'>" + accounting.formatMoney(rowData[index].JobPrice) + "</td>"));
-        row.append($("<td class='qty' align='right'>" + accounting.formatMoney(rowData[index].Qty) + "</td>"));
-        row.append($("<td class='freeqty' align='right'>" + accounting.formatMoney(0) + "</td>"));
-        row.append($("<td class='disamount' align='right'>" + accounting.formatMoney(parseFloat(rowData[index].DisAmount)) + "</td>"));
-        row.append($("<td class='netamount' align='right'>" + accounting.formatMoney(rowData[index].NetAmount) + "</td>"));
+        row.append($("<td class='invunitpr'>" + accounting.formatMoney(rowData[index].JobPrice) + "</td>"));
+        row.append($("<td class='qty'>" + accounting.formatMoney(rowData[index].Qty) + "</td>"));
+        row.append($("<td class='freeqty'>" + accounting.formatMoney(0) + "</td>"));
+        row.append($("<td class='disamount'>" + accounting.formatMoney(parseFloat(rowData[index].DisAmount)) + "</td>"));
+        row.append($("<td class='netamount'>" + accounting.formatMoney(rowData[index].NetAmount) + "</td>"));
     }
     function sumcolumn(rclass) {
         var sum = 0;
@@ -466,6 +420,8 @@ var toatl_discount =0;
         minimumInputLength: 2
     });
 
-     $("#saletable").freezeHeader({'height': '600px'});
+    $("#saletable").freezeHeader({
+    height: '600px',
+    });
 
 </script>

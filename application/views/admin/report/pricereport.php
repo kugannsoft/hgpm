@@ -6,6 +6,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
+    <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -75,16 +80,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body table-responsive">
                         <table id="saletable" class="table table-bordered table-hover">
                             <thead>
-                                <tr style="font-size: large">
-                                    <td>id</td>
-                                    <td>Product Code</td>
-                                    <td>Product Name</td>
-                                    <td>Location</td>
-                                    <td>Stock</td>
-                                    <td>Cost Price</td>
-                                    <td>Price</td>
-                                    <td>Supplier</td>
+                               <tr style="font-size: large;">
+                                    <td style="width: 50px;">id</td>
+                                    <td style="width: 130px;">Product Code</td>
+                                    <td style="width: 200px;">Product Name</td>
+                                    <td style="width: 120px;">Location</td>
+                                    <td style="width: 80px;">Stock</td>
+                                    <td style="width: 120px;">Cost Price</td>
+                                    <td style="width: 100px;">Price</td>
+                                    <td style="width: 200px;">Supplier</td>
                                 </tr>
+
                             </thead>
                             <tbody>
                             </tbody>
@@ -117,7 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     });
     $("#productsearch").select2({
         ajax: {
-            url: "productjson",
+            url: "productstockjson",
             dataType: 'json',
             delay: 250,
             data: function (params) {

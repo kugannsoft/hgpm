@@ -283,11 +283,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <input type="button" class="btn btn-success" required="required"  name="addJob" id="addJob" value="Add">
                             </div>
                         </div>
-                        <div class="col-sm-1">
+                        <!-- <div class="col-sm-1">
                             <div  class="form-group">
                                <input type="number" class="form-control" required="required" onfocus="this.select();" name="costPrice" min="0" id="costPrice" value="0" placeholder="Cost Price">
                             </div>
-                        </div>
+                        </div> -->
                         
                     </div>
                     <div class="row">

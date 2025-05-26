@@ -125,6 +125,8 @@
 
                     <span>Customer VAT No:<?php echo $invCus->DocNo; ?>
                     <br>
+                     <span>ODO Meter:<?php echo $jobtype->OdoIn; ?> Km
+                    <br>
                     Payment Type&nbsp;&nbsp;: <?php if ($invHed->JobBankAmount > 0): ?>
                                                                   Bank, 
                                                             <?php endif; ?>
