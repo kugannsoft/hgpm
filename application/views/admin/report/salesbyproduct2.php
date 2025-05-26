@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+ <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -89,19 +93,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="saletable" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td>Date</td>
-                                    <td>Inv. No</td>
-                                    <td>Prd. Code</td>
-                                    <td>Name</td>
-                                    <td>Cost Price</td>
-                                    <td>Unit Price</td>
-                                    <td>Qty</td>
-                                    <!--<td>Free Qty</td>-->
-                                    <!--<td>Cost Value</td>-->
-                                    <td>Discount</td>
-                                    <td>net Amount</td>
-                                    <!--<td>Profit</td>-->
-                                    <!--<td>Return Qty</td>-->
+                                    <th style="width: 120px;">Date</th>
+                                    <th style="width: 120px;">Inv. No</th>
+                                    <th style="width: 140px;">Prd. Code</th>
+                                    <th style="width: 200px;">Name</th>
+                                    <th style="width: 120px;">Cost Price</th>
+                                    <th style="width: 120px;">Unit Price</th>
+                                    <th style="width: 80px;">Qty</th>
+                                    <th style="width: 120px;">Discount</th>
+                                    <th style="width: 180px;">Net Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -390,7 +390,7 @@ var toatl_discount =0;
         row.append($("<td>" + formatDate(date) + "</td>"));
         row.append($("<td>" + rowData[index].SalesInvNo + "</td>"));
         row.append($("<td>" + rowData[index].SalesProductCode + "</td>"));
-        row.append($("<td>" + rowData[index].Description + "<br> "+rowData[index].Serial+"</td>"));
+        row.append($("<td>" + rowData[index].SalesProductName + "<br> "+rowData[index].Serial+"</td>"));
         row.append($("<td class='invcostpr' align='right'>" + accounting.formatMoney(rowData[index].SalesCostPrice) + "</td>"));
         row.append($("<td class='invunitpr' align='right'>" + accounting.formatMoney(rowData[index].SalesUnitPrice) + "</td>"));
         row.append($("<td class='qty' align='right'>" + accounting.formatMoney(rowData[index].Qty) + "</td>"));

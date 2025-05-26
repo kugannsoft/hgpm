@@ -791,6 +791,17 @@ class Master extends Admin_Controller {
         die();
     }
 
+   public function checkJobType() {
+        $cashType = $this->input->post('cash_type');
+
+        $this->db->where('jobtype_code', $cashType);
+        $query = $this->db->get('jobtype');
+        $exists = $query->num_rows() > 0;
+
+        echo json_encode(['exists' => $exists]);
+         die();
+    }
+
     public function editJobType() {
          $transactionCode =$_POST['id'];
          $name =$_POST['name'];

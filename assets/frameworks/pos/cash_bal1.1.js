@@ -372,7 +372,19 @@ $(document).ready(function() {
                         active = "<span class='label label-danger'>Cancel</span>";
                         totalEarn += parseFloat(value2.CashAmount);
                     }
-                    $("#cash_float tbody").append("<tr  transCode='"+value2.TransCode+"' emp='"+value2.Emp+"' mode='" + value2.Mode + "' cash='" + value2.CashAmount + "' remark='" + value2.Remark + "' act='" + value2.IsActive + "' oid='" + value2.InOutID + "'><td>" + (key + 1) + "</td><td  >" + value2.Mode + "</td><td>" + value2.TransactionName + " - " + value2.RepName + " - " + value2.Remark + "</td><td class='text-right' ><b>" + accounting.formatMoney(value2.CashAmount) + "</b></td><td>"+active+"</td></tr>");
+                    $("#cash_float tbody").append("<tr  transCode='"+value2.TransCode+
+                        "' emp='"+value2.Emp+
+                        "' mode='" + value2.Mode + 
+                        "' cash='" + value2.CashAmount + 
+                        "' remark='" + value2.Remark + 
+                        "' act='" + value2.IsActive + 
+                        "' oid='" + value2.InOutID + 
+                        "'><td>" + (key + 1) + 
+                        "</td><td  >" + value2.Mode + 
+                        "</td><td>" + value2.TransactionName + 
+                         " - " + value2.Remark + 
+                        "</td><td class='text-right' ><b>" + accounting.formatMoney(value2.CashAmount) + 
+                        "</b></td><td>"+active+"</td></tr>");
                     $("#totalAmount,#totExp").html(accounting.formatMoney(totalExpens));
                     $("#totalDis,#totErn").html(accounting.formatMoney(totalEarn));
                 });

@@ -74,6 +74,30 @@
         }
     });
 
+
+    $('#cash_type').on('blur', function() {
+        var cashType = $(this).val();
+        
+        if (cashType !== '') {
+            $.ajax({
+               url: "<?php echo base_url('admin/master/checkJobType/') ?>",
+                method: 'POST',
+                data: { cash_type: cashType },
+                success: function(response) {
+                    var newdata = JSON.parse(response);
+                    if (newdata.exists === true) {
+                         $.notify("Already Jobcode Exist.", "warning");
+                    } else {
+                        $('#cash_type_error').text('');
+                    }
+                },
+                error: function() {
+                    $('#cash_type_error').text('Error checking the code.');
+                }
+            });
+        }
+    });
+
     $('#addproductform').submit(function(e) {
         $('#savepro').attr('disabled', true);
         e.preventDefault();
@@ -87,10 +111,13 @@
                 var lastproduct_code = newdata.ProductCode;
 
                 if (fb) {
+                    $.notify("Sucessfully Saved Job type.", "Success");
                     $("#lastProduct").html('');
                     $("#lastProduct").html(lastproduct_code);
                     $('#savepro').attr('disabled', false);
+                    $('#productmodal').modal('hide');
                 } else {
+                    $.notify("Job type Not Saved .", "warning");
                     $("#lastProduct").html('');
                     $('#savepro').attr('disabled', false);
                 }

@@ -93,11 +93,11 @@ class Salesinvoice extends Admin_Controller {
                 ->where('JobInvNo',$invNo)->get()->row();
 
 
-            $this->data['jobtype'] = $this->db->select('jobcardhed.JPayType,paytype.payType')->from('jobcardhed')
+            $this->data['jobtype'] = $this->db->select('jobcardhed.JPayType,paytype.payType,jobcardhed.OdoIn')->from('jobcardhed')
             ->join('paytype','paytype.payTypeId=jobcardhed.JPayType')
             ->join('jobinvoicehed','jobinvoicehed.JobCardNo=jobcardhed.JobCardNo')
             ->where('jobinvoicehed.JobInvNo',$invNo)->get()->row();
-        
+
                 $cusCode =  $this->db->select('JCustomer')->from('jobinvoicehed')->where('JobInvNo',$invNo)->get()->row()->JCustomer;
                 $regNo =  $this->db->select('JRegNo')->from('jobinvoicehed')->where('JobInvNo',$invNo)->get()->row()->JRegNo;
                 $isJob =$this->db->select('jobcardhed.JobCardNo')->from('jobinvoicehed')->join('jobcardhed','jobcardhed.JobCardNo=jobinvoicehed.JobCardNo')->where('JobInvNo', $invNo)->get()->num_rows();
@@ -1484,7 +1484,7 @@ $arr[] =null;
             $res2= $this->db->trans_status();
     }
 
-        $return = array('JobInvNo' => $data['JobInvNo'],'SupplimentryNo'=>$supplimentNo);
+        $return = array('JobInvNo' => $data['JobInvNo'],'SupplimentryNo'=>$supplimentNo,'action'=>$action);
         $return['fb'] = $res2;
         echo json_encode($return);
         die;
@@ -1642,7 +1642,7 @@ $arr[] =null;
             
             
             if($action==1){
-                echo var_dump('aaa');die;
+                // echo var_dump('aaa');die;
                 if($EstJobType!=''){
                     //Insurance
                     $data['JobInvNo'] = $this->Job_model->get_max_code('JobInvoice'.$location);
@@ -1675,9 +1675,9 @@ $arr[] =null;
                             $employeeData = isset($selectedEmployeesArr[$i]) ? $selectedEmployeesArr[$i] : [];
                             
                             $employeeData = str_replace(['[', ']', '"'], '', $employeeData);
-                            // echo var_dump(json_encode($employeeData));die;
-                     $employeeData1 = explode(',', trim($employeeData, '"'));
-                     //echo var_dump($employeeData1);die;
+                             //echo var_dump(json_encode($employeeData));die;
+                    //  $employeeData1 = explode(',', trim($employeeData, '"'));
+                    //  echo var_dump($employeeData1);die;
                     $jobDtl = array(
                         'JobInvNo' => $data['JobInvNo'],
                         'JobCardNo' => $data['JobCardNo'],
@@ -1714,22 +1714,22 @@ $arr[] =null;
                     }
                     
                     
-                    if (!is_string($employeeData1)) {
-                        $employeeList = $employeeData1; 
+                    if (!is_string($employeeData)) {
+                        $employeeList = $employeeData; 
                     } else {
-                        $employeeList = json_decode($employeeData1, true);
+                        $employeeList = json_decode($employeeData, true);
                     }
-                     //echo var_dump($employeeList);die;
+                    // echo var_dump($employeeList);die;
                 
                     foreach ($employeeList as $employee) {
-                         //echo var_dump( $employee );die;
+                        // echo var_dump( $employee );die;
                         $jobFlatDtl = array(
                             'Job_Inv_No' => $data['JobInvNo'],
                             'Emp_No' => $employee,
                             'Qty' => $qtyArr[$i],
                             'FlatQty' => $flatQty,
-                            'CostPrice' => $costPriceArr[$i],
-                            'ProfitAmount' => ($costPriceArr[$i] * $qtyArr[$i]) - ($costPriceArr[$i] * $flatQty),
+                            'CostPrice' => $sell_priceArr[$i],
+                            'ProfitAmount' => ($sell_priceArr[$i] * $qtyArr[$i]) - ($sell_priceArr[$i] * $flatQty),
                             'Date' => date("Y-m-d H:i:s")
                         );
                 
@@ -2065,8 +2065,8 @@ $arr[] =null;
                                     'Emp_No' => $employee,
                                     'Qty' => $qtyArr[$i],
                                     'FlatQty' => $flatQty,
-                                    'CostPrice' => $costPriceArr[$i],
-                                    'ProfitAmount' => ($costPriceArr[$i] * $qtyArr[$i]) - ($costPriceArr[$i] * $flatQty),
+                                    'CostPrice' => $sell_priceArr[$i],
+                                    'ProfitAmount' => ($sell_priceArr[$i] * $qtyArr[$i]) - ($sell_priceArr[$i] * $flatQty),
                                     'Date' => date("Y-m-d H:i:s")
                                 );
                         

@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+    <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -43,15 +47,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <thead>
                                 <h4 style="margin-left:10px;">Supplier Name :<span id ="supplier_name"></span> </h4>
                                 <h4 style="margin-left:10px;">Phone Number : <span id ="supplier_phone"></span></h4>
-                                <tr>
-                                    <td>Date</td>
-                                    <td>GRN NO</td>
-                                    <td style="text-align: right;">Credit Amount</td>
-                                    <td style="text-align: right;">Settled Amount</td>
-                                    
-                                    <td style="text-align: right;">Due Amount</td>
-                             
+                               <tr>
+                                    <td style="width: 150px;">Date</td>
+                                    <td style="width: 150px;">GRN NO</td>
+                                    <td style="width: 130px; text-align: right;">Credit Amount</td>
+                                    <td style="width: 130px; text-align: right;">Settled Amount</td>
+                                    <td style="width: 140px; text-align: right;">Due Amount</td>
                                 </tr>
+
                             </thead>
                             <tbody>
                             </tbody>

@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+    <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -91,21 +95,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="saletable" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td>Date</td>
-                                    <td>Inv. No</td>
-                                    <td>Prd. Code</td>
-                                    <td>Name</td>
-                                    <!-- <td>Cost Price</td> -->
-                                    <td>Unit Price</td>
-                                    <td>Qty</td>
-                                    <td>Total Amount</td>
-                                    <!-- <td>Cost Value</td> -->
-                                    <td>Discount</td>
-                                    <td>VAT</td>
-                                    <td>NBT</td>
-                                    <td>net Amount</td>
-                                    <!-- <td>Profit</td> -->
-                                    <!--<td>Return Qty</td>-->
+                                    
+                                    <th style="width: 100px;">Date</th>
+                                    <th style="width: 100px;">Inv. No</th>
+                                    <th style="width: 120px;">Prd. Code</th>
+                                    <th style="width: 180px;">Name</th>
+                                    <th style="width: 100px;">Unit Price</th>
+                                    <th style="width: 80px;">Qty</th>
+                                    <th style="width: 120px;">Total Amount</th>
+                                    <th style="width: 100px;">Discount</th>
+                                    <th style="width: 80px;">VAT</th>
+                                    <th style="width: 80px;">NBT</th>
+                                    <th style="width: 140px;">Net Amount</th>
+                                  
                                 </tr>
                             </thead>
                             <tbody>

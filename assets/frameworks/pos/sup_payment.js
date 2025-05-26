@@ -124,9 +124,9 @@ $('.prd_icheck').iCheck({
                             "<td  class='invoiceNo'>" + paymentNo + "</td>" +
                             "<td  class=''>" + invNo + "</td>" +
                             "<td>" + invDate + "</td><td class='text-right'>" + accounting.formatMoney(totalNetAmount) + "</td>" +
+                            "<td class='text-right returnAmount' invPay='0'>" + accounting.formatMoney(ReturnAmount) + "</td>" +
                             "<td class='text-right creditAmount'>" + accounting.formatMoney(creditAmount) + "</td>" +
                             "<td class='text-right settleAmount' invPay='0'>" + accounting.formatMoney(settleAmount) + "</td>" +
-                             "<td class='text-right returnAmount' invPay='0'>" + accounting.formatMoney(ReturnAmount) + "</td>" +
                             "<td class='text-right dueAmount' isColse='0'>" + accounting.formatMoney(creditAmount - settleAmount) + "</td>" +
                             
                             "<td></td></tr>");

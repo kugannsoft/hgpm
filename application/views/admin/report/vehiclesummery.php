@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+    <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -66,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="box" id="report">
                 <div class="row">
                     <div class="col-md-1">&nbsp;</div>
-                    <div class="col-md-10">Register No :<span id="cusName"></span> <span class="pull-right" id="a">DATE : <?php echo date('Y-m-d');?></span><br>
+                    <div class="col-md-10"> <span class="pull-right" id="a">DATE : <?php echo date('Y-m-d');?></span><br>
                     <span id="address1"></span>
                     <span id="address2"></span></div>
                     <!-- <div class="col-md-5">DATE : <?php echo date('Y-m-d');?></div> -->
@@ -76,18 +80,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body table-responsive">
                         <table id="saletable" class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <td>Invoice Date</td>
-                                    <td>Invoice No</td>
-                                    <td>Job Type</td>
-                                    <td>Job Description</td>
-                                    <td>Unit Price</td>
-                                    <td>Qty</td>
-                                    <td>Discount Amount</td>
-                                    
-                                    <td>Net Amount</td>
-                                    <!-- <td>Profit</td> -->
-                                    <!--<td>Return Qty</td>-->
+                               <tr>
+                                <th style="width: 130px;">Invoice Date</th>
+                                <th style="width: 130px;">Invoice No</th>
+                                <th style="width: 120px;">Job Type</th>
+                                <th style="width: 250px;">Job Description</th>
+                                <th style="width: 120px;">Unit Price</th>
+                                <th style="width: 100px;">Qty</th>
+                                <th style="width: 170px;">Discount Amount</th>
+                                <th style="width: 180px;">Net Amount</th>
                                 </tr>
                             </thead>
                             <tbody>

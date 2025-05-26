@@ -478,10 +478,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </li>
 
                             <li class="<?= active_link_function('jobcardsummery') ?>">
-                                <a href="<?php echo site_url('admin/report/jobcardsummery'); ?>">Job Cart summery</a>
+                                <a href="<?php echo site_url('admin/report/jobcardsummery'); ?>">Job Card Summary</a>
                             </li>
                             <li class="<?= active_link_function('jobcategoryreport') ?>">
-                                <a href="<?php echo site_url('admin/report/jobcategoryreport'); ?>">Job Categry Report</a>
+                                <a href="<?php echo site_url('admin/report/jobcategoryreport'); ?>">Job Category Report</a>
                             </li>
                         </ul>
                     </li>

@@ -378,9 +378,9 @@ class Report_model extends CI_Model {
             jobinvoicehed.JobInvoiceDate, 
             jobinvoicehed.JobEstimateNo,
             customer.CusName, 
-            vehicledetail.Model, 
+            model.model, 
             vehicledetail.Make, 
-            salespersons.RepName AS Emp,jobinvoicehed.IsCompelte AS iscom,
+            salespersons.RepName AS Emp,jobcardhed.IsCompelte AS iscom,
             make.make AS MA, model.model AS MO, job_status.status_name AS status_name");
 
 
@@ -405,7 +405,7 @@ class Report_model extends CI_Model {
             jobinvoicehed.JobInvoiceDate, 
             jobinvoicehed.JobEstimateNo,
             customer.CusName, 
-            vehicledetail.Model, 
+            model.model, 
             vehicledetail.Make, 
             salespersons.RepName AS Emp,jobcardhed.IsCompelte AS iscom,
             make.make AS MA, model.model AS MO,job_status.status_name AS status_name");
@@ -433,12 +433,14 @@ class Report_model extends CI_Model {
             $this->db->select("salespersons.*,main_jobflat_details.* ");
             $this->db->from('salespersons');
             $this->db->join('main_jobflat_details', 'main_jobflat_details.Emp_No = salespersons.RepId', 'INNER');
-            $this->db->where('main_jobflat_details.Emp_No',$emp);
+            
             $this->db->where('DATE(main_jobflat_details.Date) <=', $enddate);
             $this->db->where('DATE(main_jobflat_details.Date) >=', $startdate);
           
             $this->db->order_by('main_jobflat_details.Date', 'DESC');
-
+            if (isset($emp) && $emp != '') {
+                $this->db->where('main_jobflat_details.Emp_No', $emp);
+            }
         return $this->db->get()->result();
     }
 
@@ -1082,7 +1084,7 @@ class Report_model extends CI_Model {
         $this->db->select('salesinvoicedtl.SalesProductCode,
                            salesinvoicehed.SalesInvNo,
                            salesinvoicehed.SalesDate,
-                          salesinvoicedtl.SalesProductName AS AppearName,
+                          salesinvoicedtl.SalesProductName AS SalesProductName,
                            	salesinvoicedtl.SalesUnitPrice,
                            salesinvoicedtl.SalesCostPrice,
                           (salesinvoicedtl.SalesQty) AS Qty,
@@ -1303,6 +1305,18 @@ class Report_model extends CI_Model {
         $this->db->limit(50);
         return $this->db->get()->result();
     }
+
+     public function searchStockproduct($q) {
+        
+        $this->db->select('product.ProductCode AS id,product.Prd_Description AS text,productcondition.IsPromotions');
+        $this->db->from('product');
+        $this->db->join('productcondition', 'productcondition.ProductCode = product.ProductCode', 'INNER');
+        $this->db->where('product.Prd_IsActive', 1);
+        $this->db->where('productcondition.IsPromotions',0);
+        $this->db->like('CONCAT(product.ProductCode,product.Prd_Description)', $q, 'left');
+        $this->db->limit(50);
+        return $this->db->get()->result();
+    }
     
     public function searchsupplier($q) {
         $this->db->select('SupCode AS id,SupName AS text');
@@ -1403,15 +1417,17 @@ class Report_model extends CI_Model {
                            location.location,
                            productstock.Stock,
                            productprice.ProductPrice,
-                           supplier.SupName');
+                           supplier.SupName,productcondition.IsPromotions');
         $this->db->from('product');
         $this->db->join('supplier', 'supplier.SupCode = product.Prd_Supplier', 'LEFT');
+         $this->db->join('productcondition', 'productcondition.ProductCode = product.ProductCode', 'INNER');
         $this->db->join('productstock', 'productstock.ProductCode = product.ProductCode', 'LEFT');
         $this->db->join('subdepartment', 'subdepartment.SubDepCode = product.SubDepCode', 'INNER');
         $this->db->join('productprice', 'productprice.ProductCode = product.ProductCode', 'LEFT');
         $this->db->join('subcategory', 'subcategory.SubCategoryCode = product.SubCategoryCode', 'left');
         $this->db->join('location', 'location.location_id = productstock.Location', 'INNER');
         $this->db->where('product.Prd_IsActive', 1);
+          $this->db->where('productcondition.IsPromotions', 0);
         if (isset($route) && $route != '') {
             $this->db->where_in('productstock.Location', $route);
         }
@@ -1458,8 +1474,9 @@ class Report_model extends CI_Model {
                             subdepartment.Description,
                             location.location,
                             productstock.Stock,
-                            supplier.SupName');
+                            supplier.SupName,productcondition.IsPromotions');
         $this->db->from('product');
+          $this->db->join('productcondition', 'productcondition.ProductCode = product.ProductCode', 'INNER');
         $this->db->join('supplier', 'supplier.SupCode = product.Prd_Supplier', 'INNER');
         $this->db->join('productstock', 'productstock.ProductCode = product.ProductCode', 'LEFT');
         $this->db->join('subdepartment', 'subdepartment.SubDepCode = product.SubDepCode', 'INNER');
@@ -1467,7 +1484,7 @@ class Report_model extends CI_Model {
         $this->db->join('location', 'location.location_id = productstock.Location', 'INNER');
         $this->db->where('productstock.Stock < product.Prd_ROL');
         $this->db->where('product.Prd_IsActive', 1);
-        
+         $this->db->where('productcondition.IsPromotions', 0);
         if (isset($route) && $route != '') {
             $this->db->where_in('productstock.Location', $route);
         }
@@ -1512,14 +1529,16 @@ class Report_model extends CI_Model {
                             location.location,
                             pricestock.Stock,
                             pricestock.Price,
-                            supplier.SupName');
+                            supplier.SupName,productcondition.IsPromotions');
         $this->db->from('product');
         $this->db->join('supplier', 'supplier.SupCode = product.Prd_Supplier', 'INNER');
+          $this->db->join('productcondition', 'productcondition.ProductCode = product.ProductCode', 'INNER');
         $this->db->join('pricestock', 'pricestock.PSCode = product.ProductCode', 'LEFT');
         $this->db->join('subdepartment', 'subdepartment.SubDepCode = product.SubDepCode', 'INNER');
 //        $this->db->join('subcategory', 'subcategory.SubCategoryCode = product.SubCategoryCode', 'INNER');
         $this->db->join('location', 'location.location_id = pricestock.PSLocation', 'INNER');
         $this->db->where('product.Prd_IsActive', 1);
+         $this->db->where('productcondition.IsPromotions', 0);
         if (isset($route) && $route != '') {
             $this->db->where('pricestock.PSLocation', $route);
         }
@@ -2365,7 +2384,7 @@ foreach($row as $country => $cities) {
         
         $list = array();
         foreach ($result->result() as $row) {
-            $list["Invoice No: ".$row->JobInvNo." &nbsp; | &nbsp; Job Card No: ".$row->JobCardNo." &nbsp;| &nbsp;Customer : ".$row->CusName][] = $row;
+        $list["Invoice No: " . $row->JobInvNo . " &nbsp; | &nbsp; Job Card No: " . $row->JobCardNo . " &nbsp;| &nbsp;Customer : " . $row->CusName . " |&nbsp; Vehicle No: " . $row->JRegNo][] = $row;
         }
         return $list;
     }

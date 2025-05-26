@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+  <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -92,22 +96,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body  table-responsive">
                         <table id="saletable" class="table table-bordered  table-hover">
                             <thead>
-                                <tr style="font-size: large">
-                                    <td>#</td>
-                                    <td>Date</td>
-                                    <td>Product Code</td>
-                                    <td>Product Name</td>
-                                    <td>Qty</td>
-                                    <td>Cost Price</td>
-                                    <td>Selling Price</td>
-                                    <td>Total Net</td>
-                                    <td>Total Cost</td>
-                                    <td>Profit</td>
-                                    <td>User</td>
-                                    <td>Stock In</td>
-                                    <td>Is Cancel</td>
-                                    <td>Serial no</td>
-                                </tr>
+                            <tr style="font-size: large">
+                                <td style="width: 40px;">#</td>
+                                <td style="width: 90px;">Date</td>
+                                <td style="width: 100px;">Product Code</td>
+                                <td style="width: 150px;">Product Name</td>
+                                <td style="width: 60px;">Qty</td>
+                                <td style="width: 90px;">Cost Price</td>
+                                <td style="width: 90px;">Selling Price</td>
+                                <td style="width: 90px;">Total Net</td>
+                                <td style="width: 90px;">Total Cost</td>
+                                <td style="width: 90px;">Profit</td>
+                                <td style="width: 100px;">User</td>
+                                <td style="width: 80px;">Stock In</td>
+                                <td style="width: 70px;">Is Cancel</td>
+                                <td style="width: 160px;">Serial no</td>
+                            </tr>
+
                             </thead>
                             <tbody>
                             </tbody>

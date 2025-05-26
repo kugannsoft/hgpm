@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <tr>
                                     <td>Pro. Code</td>
                                     <td>Name</td>
-                                    <td>Appear Name</td>
+                                    <td>Invoice Name</td>
                                     <td>Cost Price</td>
                                     <td>Set Price</td>
                                     <td>###</td>

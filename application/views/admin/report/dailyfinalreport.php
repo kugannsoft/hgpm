@@ -7,7 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-
+    <style>
+    #hdsaletable thead {
+        background-color: rgb(202, 205, 245) !important;
+        }
+   </style>
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -95,24 +99,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box-body table-responsive">
                         <table id="saletable" class="table table-bordered table-hover table-striped">
                             <thead>
-                                <tr>
-                                    <td>Date</td>
-                                    <td>Prd</td>
-                                    <td>Name</td>
-                                    <td>S IN</td>
-                                    <td>V IN</td>
-                                    <td>N IN</td>
-                                    <td>P IN</td>
-                                    <td>H IN</td>
-                                    <td>S Out</td>
-                                    <td>V Out</td>
-                                    <td>N Out</td>
-                                    <td>P Out</td>
-                                    <td>H Out</td>
-                                    <td>Sales</td>
-                                    <td>GRN</td>
-                                    <td>Stock</td>
+                               <tr>
+                                    <td style="width: 100px;">Date</td>
+                                    <td style="width: 90px;">Prd</td>
+                                    <td style="width: 150px;">Name</td>
+                                    <td style="width: 60px;">S IN</td>
+                                    <td style="width: 60px;">V IN</td>
+                                    <td style="width: 60px;">N IN</td>
+                                    <td style="width: 60px;">P IN</td>
+                                    <td style="width: 60px;">H IN</td>
+                                    <td style="width: 60px;">S Out</td>
+                                    <td style="width: 60px;">V Out</td>
+                                    <td style="width: 60px;">N Out</td>
+                                    <td style="width: 60px;">P Out</td>
+                                    <td style="width: 60px;">H Out</td>
+                                    <td style="width: 100px;">Sales</td>
+                                    <td style="width: 100px;">GRN</td>
+                                    <td style="width: 100px;">Stock</td>
                                 </tr>
+
                             </thead>
                             <tbody>
                             </tbody>

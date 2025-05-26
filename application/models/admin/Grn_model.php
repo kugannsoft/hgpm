@@ -33,18 +33,20 @@ class Grn_model extends CI_Model {
 
     public function loadproductjson($query,$sup,$supCode) {
         if($sup!=0){
-            $query1 =$this->db->select('product.ProductCode,product.Prd_Description,pricestock.Price')
+            $query1 =$this->db->select('product.ProductCode,product.Prd_Description,pricestock.Price,pricestock.Stock')
                     ->from('product')
                     ->join(' pricestock', 'pricestock.PSCode = product.ProductCode', 'INNER')
-                    ->where('product.Prd_Supplier', $supCode)
                     ->like("CONCAT(' ',product.ProductCode,product.Prd_Description,product.BarCode)", $query ,'left')
+                    ->where('product.Prd_Supplier', $supCode)
+                    ->where('pricestock.Stock !=', 0)
                     ->limit(50)->get();
      
         }else{
-            $query1 =$this->db->select('product.ProductCode,product.Prd_Description,pricestock.Price')
+            $query1 =$this->db->select('product.ProductCode,product.Prd_Description,pricestock.Price,pricestock.Stock')
                     ->from('product')
                     ->join(' pricestock', 'pricestock.PSCode = product.ProductCode', 'INNER')
                     ->like("CONCAT(' ',product.ProductCode,product.Prd_Description,product.BarCode)", $query ,'left')
+                    ->where('pricestock.Stock !=', 0)
                     ->limit(50)->get();
         }
 
@@ -155,7 +157,7 @@ class Grn_model extends CI_Model {
                     'GRN_Pro_Vat' => $pro_vatArr[$i]);
                 $this->db->insert('goodsreceivenotedtl', $grnDtl);
 
-                $productData = $this->db->select('Prd_AveragecostPrice')->from('product')->where('ProductCode', $product_codeArr[$i])->get()->row();
+                $productData = $this->db->select('Prd_AveragecostPrice,Prd_SetAPrice')->from('product')->where('ProductCode', $product_codeArr[$i])->get()->row();
                 $stockData = $this->db->select('Stock')->from('productstock')->where('ProductCode', $product_codeArr[$i])->where('Location', $location)->get()->row();
 
                 if ($productData && $stockData) {
@@ -167,7 +169,14 @@ class Grn_model extends CI_Model {
                     $newAverageCost = (($oldQty * $oldCost) + ($newQty * $newCost)) / ($oldQty + $newQty);
                     
                     // Update product table
-                    $this->db->update('product', array('Prd_AveragecostPrice' => $newAverageCost), array('ProductCode' => $product_codeArr[$i]));
+                   $this->db->update(
+                        'product',
+                        array(
+                            'Prd_AveragecostPrice' => $newAverageCost,
+                            'Prd_SetAPrice' => $sell_priceArr[$i]
+                        ),
+                        array('ProductCode' => $product_codeArr[$i])
+                    );
                     
                     // Update stock quantity
                     $updatedStockQty = $oldQty + $qtyArr[$i];
