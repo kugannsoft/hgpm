@@ -29,9 +29,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <thead>
                             <tr>
                                 <td>ID</td>
-                                <td>ID</td>
+                          
                                 <td>Name</td>
-                                <td>Name</td>
+                              
                             
                                 <td>Phone</td>
                                 <td>Credit Limit</td>
@@ -95,26 +95,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
                 <?php }?>
             },
-            {"data": "CusCode", "visible": false, "searchable": true},
-
+          
+             <?php if (in_array("SM21", $blockView) || $blockView == null) { ?>
             {
-                <?php if (in_array("SM21", $blockView) || $blockView == null) { ?>
-
-                "data": null, orderable: false, searchable: false,
-                mRender: function (data, type, row) {
-                    return '<a href="<?php echo base_url() ?>admin/payment/view_customer/' + (row.CusCode) + '" >' + row.CusName + '</a>';
+                "data": "CusName",
+                "searchable": true,
+                "orderable": true,
+                "render": function (data, type, row) {
+                    return '<a href="<?php echo base_url() ?>admin/payment/view_customer/' + row.CusCode + '">' + data + '</a>';
                 }
-                <?PHP  } else {?>
-
-                "data": null, orderable: false, searchable: false,
-                mRender: function (data, type, row) {
-                    return row.CusName;
-                }
-                <?php }?>
             },
-            {"data": "CusName", "visible": false, "searchable": true},
-
-            {"data": "CusBookNo"},
+            <?php } else { ?>
+            {
+                "data": "CusName",
+                "searchable": true,
+                "orderable": true
+            },
+            <?php } ?>
+           
+            {"data": "MobileNo"},
             {"data": "CreditLimit", searchable: false},
             {"data": "CusOustandingAmount", searchable: false},
             {"data": "payType", searchable: false},

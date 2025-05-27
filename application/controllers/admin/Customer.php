@@ -540,9 +540,11 @@ class Customer extends Admin_Controller {
         die();
     }
     public function allCustomers() {
+        $this->output->enable_profiler(FALSE);
         $this->load->library('Datatables');
+       
         $this->datatables->select('customer.CusCode,customer.IsActive,customer.CusBookNo,customer.MobileNo,customer.CusName,
-        customer.LastName,customer.CreditLimit,customeroutstanding.CusOustandingAmount,paytype.payType');
+        customer.LastName,customer.CreditLimit,customeroutstanding.CusOustandingAmount,paytype.payType,customer.IsSyn,customer.IsDelete');
         $this->datatables->from('customer');
         $this->datatables->join('customeroutstanding','customeroutstanding.CusCode=customer.CusCode');
         $this->datatables->join('paytype','paytype.payTypeId=customer.payMethod');
