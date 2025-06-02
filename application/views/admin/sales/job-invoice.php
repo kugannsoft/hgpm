@@ -67,6 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div  class="form-group">
                                 <input type="text" class="form-control" required="required"  name="tempNo" id="tempNo" placeholder="Temp. No"  value="<?php if(isset($TempNo)){echo $TempNo;}?>" >
                             </div>
+                             <input type="hidden" class="form-control" required="required"  name="tempNobac" id="tempNobac" placeholder="Temp. No"  value="<?php if(isset($TempNo->JobInvNo)){echo $TempNo->JobInvNo;} ?>" >
                         </div>
                         <div class="col-sm-2">
                             <div  class="form-group">
@@ -722,5 +723,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     ul.ui-autocomplete {
     z-index: 1100;
+    
 }
+
+ .ui-autocomplete {
+        z-index: 9999 !important;
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: white;
+        border: 1px solid #ccc;
+    }
 </style>

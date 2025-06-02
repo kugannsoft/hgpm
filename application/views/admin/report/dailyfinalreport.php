@@ -348,5 +348,5 @@ $("#saletable").append("<tr style='background-color:#00a678;color:#fff;'><td col
         });
     }
     
-     $("#saletable").freezeHeader({'height': '600px'});
+     $("#saletable").freezeHeader();
 </script>

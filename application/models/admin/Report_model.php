@@ -1961,7 +1961,7 @@ class Report_model extends CI_Model {
 
     public function cashinoutbyroutebytype($startdate, $enddate, $location = NULL,$locationAr = NULL, $type) {
         
-            $this->db->select('cashinout.*,users.first_name,transactiontypes.TransactionName,salespersons.RepName');
+            $this->db->select('cashinout.*,users.first_name,transactiontypes.TransactionName,salespersons.RepName,');
             $this->db->from('cashinout');
             $this->db->join('users', 'users.id = cashinout.SystemUser', 'left');
             $this->db->join('salespersons','cashinout.Emp=salespersons.RepID','left');
@@ -1970,6 +1970,7 @@ class Report_model extends CI_Model {
             // $this->db->where('DATE(InOutDate) >=', $startdate);
             $this->db->where('TransCode!=', $type);
             $this->db->where_in('cashinout.Location', $locationAr);
+            $this->db->where('cashinout.IsActive',1);
             // $this->db->limit(50);
         return $this->db->get()->result();
     }

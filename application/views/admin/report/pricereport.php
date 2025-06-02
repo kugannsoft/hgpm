@@ -258,5 +258,5 @@ $("#supplier").select2({
             title: 'Date vise Sales Report'
         });
     }
-     $("#saletable").freezeHeader({'height': '600px'});
+     $("#saletable").freezeHeader();
 </script>
