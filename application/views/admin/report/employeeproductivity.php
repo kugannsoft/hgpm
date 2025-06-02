@@ -203,5 +203,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         minimumInputLength: 2
     });
 
-     $("#saletable").freezeHeader({'height': '600px'});
+     $("#saletable").freezeHeader();
 </script>

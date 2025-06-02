@@ -126,6 +126,7 @@ $(document).ready(function() {
     });
 
     function loadAdvanceData(pay_no){
+        console.log(pay_no);
         $.ajax({
             type: "POST",
             url: "../Salesinvoice/getadvancepaymentbyid",
@@ -144,54 +145,157 @@ $(document).ready(function() {
         });
     }
 
-    $("#return_payment_no").autocomplete({
+    // $("#return_payment_no").autocomplete({
+    //     source: function(request, response) {
+    //         $.ajax({
+    //             url: '../salesinvoice/loadreturnpaymentjson',
+    //             dataType: "json",
+    //             data: {
+    //                 q: request.term,
+    //                 cusCode:cusCode,
+    //                 loc:loc
+    //             },
+    //             success: function(data) {
+    //                 response($.map(data, function(item) {
+    //                     return {
+    //                         label: item.text,
+    //                         value: item.id,
+    //                         data: item
+    //                     }
+    //                 }));
+    //             }
+    //         });
+    //     },
+    //     autoFocus: true,
+    //     minLength: 0,
+    //     select: function(event, ui) {
+    //         return_payment_no = ui.item.value;
+    //         $("#return_amount").val(0);
+    //         $("#mareturn").html(0);
+    //         loadReturnData(return_payment_no);
+    //     }
+    // });
+
+    // function loadReturnData(pay_no){
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "../Salesinvoice/getreturnpaymentbyid",
+    //         data: { payid: pay_no },
+    //         success: function(data) {
+    //             var resultData = JSON.parse(data);
+
+    //             if (resultData.return){
+    //                 return_amount = parseFloat(resultData.return.ReturnAmount);
+    //                 return_payment_no = resultData.return.ReturnNo;
+    //                 $("#return_amount").val(return_amount);
+    //                 $("#mareturn").html(return_amount);
+    //                 addPayment(cashAmount, creditAmount, cardAmount,chequeAmount,cusType,advance_amount,bank_amount,return_amount);
+    //             }
+    //         }
+    //     });
+    // }
+
+    let selectedAdvancePayments = [];
+    let advancePaymentLookup = {}; 
+
+    $("#advance_payment_no").autocomplete({
         source: function(request, response) {
             $.ajax({
-                url: '../salesinvoice/loadreturnpaymentjson',
+                url: '../salesinvoice/loadadvancepaymentjson',
                 dataType: "json",
                 data: {
                     q: request.term,
-                    cusCode:cusCode,
-                    loc:loc
+                    cusCode: cusCode,
+                    loc: loc
                 },
                 success: function(data) {
+                    
+                    data.forEach(item => {
+                        advancePaymentLookup[item.id] = item;
+                    });
+
                     response($.map(data, function(item) {
                         return {
                             label: item.text,
                             value: item.id,
-                            data: item
-                        }
+                            data: item,
+                            amount:item.Amount
+                        };
                     }));
+
+                    console.log("Loaded advance payments:", data);
+                    console.log("Lookup keys now:", Object.keys(advancePaymentLookup));
                 }
             });
         },
         autoFocus: true,
         minLength: 0,
-        select: function(event, ui) {
-            return_payment_no = ui.item.value;
-            $("#return_amount").val(0);
-            $("#mareturn").html(0);
-            loadReturnData(return_payment_no);
+        focus: function() {
+            return false; 
+        },
+        select: function() {
+            return false; 
+        },
+        open: function() {
+            
+            setTimeout(() => {
+                $(".advance-check").off("click").on("click", function(e) {
+                    e.stopPropagation(); 
+
+                   const id = $(this).data("id");
+
+                    if ($(this).is(":checked")) {
+                        if (!selectedAdvancePayments.includes(id)) {
+                            selectedAdvancePayments.push(id);
+                        }
+                    } else {
+                        selectedAdvancePayments = selectedAdvancePayments.filter(item => item !== id);
+                    }
+
+                    console.log("Selected: ", selectedAdvancePayments);
+                    updateAdvanceSelectionDisplay();
+                });
+            }, 0);
         }
+    }).autocomplete("instance")._renderItem = function(ul, item) {
+        const isChecked = selectedAdvancePayments.includes(item.value) ? 'checked' : '';
+        const checkbox = `<input type="checkbox" class="advance-check" data-id="${item.value}" ${isChecked}>`;
+        const label = `<label style="margin-left:5px;">${item.label}</label>`;
+
+        return $("<li>")
+            .append(`<div style="display: flex; align-items: center;">${checkbox}${label}</div>`)
+            .appendTo(ul);
+    };
+
+
+    $("#advance_payment_no").on("focus", function() {
+        $(this).autocomplete("search", this.value);
     });
 
-    function loadReturnData(pay_no){
-        $.ajax({
-            type: "POST",
-            url: "../Salesinvoice/getreturnpaymentbyid",
-            data: { payid: pay_no },
-            success: function(data) {
-                var resultData = JSON.parse(data);
+    function updateAdvanceSelectionDisplay() {
+        let total = 0;
 
-                if (resultData.return){
-                    return_amount = parseFloat(resultData.return.ReturnAmount);
-                    return_payment_no = resultData.return.ReturnNo;
-                    $("#return_amount").val(return_amount);
-                    $("#mareturn").html(return_amount);
-                    addPayment(cashAmount, creditAmount, cardAmount,chequeAmount,cusType,advance_amount,bank_amount,return_amount);
+        console.log('Calculating total for:', selectedAdvancePayments);
+
+        selectedAdvancePayments.forEach(id => {
+            let item = advancePaymentLookup[id];
+            if (item && item.Amount) {
+                const amount = parseFloat(item.Amount);
+                if (!isNaN(amount)) {
+                    advance_amount += amount;
+                } else {
+                    console.warn('Invalid Amount:', item.Amount);
                 }
+            } else {
+                console.warn('Item not found for ID:', id);
             }
-        });
+            });
+
+        console.log('Total amount:', advance_amount);
+
+        $("#advance_amount").val(advance_amount.toFixed(2));
+        $("#madvance").html(advance_amount.toFixed(2));
+         addPayment(cashAmount, creditAmount, cardAmount,chequeAmount,cusType,advance_amount,bank_amount,return_amount);
     }
 
     $("#invoiceType").change(function() {
@@ -1570,6 +1674,7 @@ $(document).ready(function() {
 
         var supNum = $("#supplemetNo").val();
         estimateNo = $("#estimateNo").val();
+        var tempInvoiceNo = $('#tempNo').val();
         var esdate = $("#appoDate").val();
         var insCompany = $("#vehicleCompany").val();
         var estimate_type = $("#estimateType").val();
@@ -1603,9 +1708,17 @@ $(document).ready(function() {
                 $.ajax({
                     url: "../salesinvoice/saveTempInvoices",
                     type: "POST",
-                    data: { action: action, InvoiceType:InvoiceType,remark:remark ,mileageout:mileageout,mileageoutUnit:mileageoutUnit, date: esdate, estimateNo: estimateNo,invoiceNo: tempInvoiceNo, remark: remark,
-                         estimateAmount: totalAmount, insCompany: insCompany, cusCode: cusCode, regNo: regNo, sup_no: supNum, jobNo: jobNo, job_type: job_type, estimate_type: estimate_type, net_price: net_priceArr, qty: qtyArr, sell_price: sell_priceArr, is_ins: is_insArr, insurance: insuranceArr, desc: descArr, job_id: job_idArr, job_order: job_orderArr, work_id: work_idArr,estLineNo:estLineNoArr,  timestamp: timestampArr,isVat:isVatArr,isNbt:isNbtArr,nbtRatio:nbtRatioArr,proVat:proVatArr,proNbt:proNbtArr,totalPrice:totalPriceArr,proDiscount:proDiscountArr,disPercent:disPercentArr,discountType:disTypeArr,estPrice:estimatePriceArr,costPrice:costPriceArr,
-                        nbtRatioRate: nbtRatioRate,isTotalVat:isTotalVat,isTotalNbt:isTotalNbt,totalNet:totalNet,totalAmount:totalAmount,totalVat:finalVat,totalNbt:finalNbt,
+                    data: { action: action, InvoiceType:InvoiceType,remark:remark ,mileageout:mileageout,mileageoutUnit:mileageoutUnit, 
+                        date: esdate, estimateNo: estimateNo,invoiceNo: tempInvoiceNo, remark: remark,
+                         estimateAmount: totalAmount, insCompany: insCompany, cusCode: cusCode, regNo: regNo, sup_no: supNum,
+                          jobNo: jobNo, job_type: job_type, estimate_type: estimate_type, net_price: net_priceArr, qty: qtyArr, 
+                          sell_price: sell_priceArr, is_ins: is_insArr, insurance: insuranceArr, desc: descArr, job_id: job_idArr, 
+                          job_order: job_orderArr, work_id: work_idArr,estLineNo:estLineNoArr,  timestamp: timestampArr,isVat:isVatArr,
+                          isNbt:isNbtArr,nbtRatio:nbtRatioArr,proVat:proVatArr,proNbt:proNbtArr,totalPrice:totalPriceArr,
+                          proDiscount:proDiscountArr,disPercent:disPercentArr,discountType:disTypeArr,estPrice:estimatePriceArr,
+                          costPrice:costPriceArr,
+                        nbtRatioRate: nbtRatioRate,isTotalVat:isTotalVat,isTotalNbt:isTotalNbt,totalNet:totalNet,totalAmount:totalAmount,
+                        totalVat:finalVat,totalNbt:finalNbt,
                         total_discount:total_discount,totalflatPrice:totalflatPrice,selectedEmployeesArr:selectedEmployeesArr,status:status},
                     success: function(data) {
                         var newdata = JSON.parse(data);
@@ -1616,19 +1729,26 @@ $(document).ready(function() {
                         if (fb) {
                             $('#btnSaveTemp').attr('disabled', true);
                             $("#lastJob").html('');
-                            // $("#saveInvoiceNo").val(newdata.JobInvNo);
-                            // $("#lastJob").html(lastproduct_code);
+                             $("#tempNo").val(newdata.JobInvNo);
+                            $("#tempNo").html(newdata.JobInvNo);
                             if(action=="1"){
                                  $.notify("Temporary Invoice successfully saved.", "success");
-                            }else if(action=="2"){
-                                  $.notify("Temporary Invoice successfully updated.", "success");
-                            }
-                           
-                            $("#modelNotifi").html(" Last Job Invoice NUmber = "+lastproduct_code);
+                                  $("#modelNotifi").html(" Last Job Invoice NUmber = "+lastproduct_code);
 
                             loadnewtempinvoice(lastproduct_code);
                             isProVatEnabled=0;
                             SupNumber = 0;
+                            }else if(action=="2"){
+                                  $.notify("Temporary Invoice successfully updated.", "success");
+                                   $("#modelNotifi").html(" Last Job Invoice NUmber = "+lastproduct_code);
+
+                                    const jobNo = $('#tempNo').val();
+                            loadnewtempinvoice(jobNo);
+                            isProVatEnabled=0;
+                            SupNumber = 0;
+                            }
+                           
+                           
                         } else {
                             $("#lastJob").html('');
                             $('#btnSave').attr('disabled', false);
@@ -1921,6 +2041,32 @@ $(document).ready(function() {
 
     //auto load invoice ifset invoiceno
     tempInvoiceNo = $("#tempNo").val();
+    if (tempInvoiceNo != '') {
+        clearCustomerData();
+        clearVehicleData();
+        clearInvoiceData();
+        $("#tbl_payment tbody").html("");
+        $("#tbl_job tbody").html('');
+        total_due_amount = 0;
+        total_over_payment = 0;
+        $("#btnViewJob").attr('disabled', false);
+        SupNumber = 0;
+        $.ajax({
+            type: "POST",
+            url: "../salesinvoice/getTempInvoiceDataByInvoiceNo",
+            data: { invoiceNo: tempInvoiceNo },
+            success: function(data) {
+                var resultData = JSON.parse(data);
+
+                setGridandLabelData(resultData);
+
+                loadTempInvoiceDatatoGrid(resultData);
+            }
+        });
+    }
+
+
+    tempInvoiceNo = $("#tempNobac").val();
     if (tempInvoiceNo != '') {
         clearCustomerData();
         clearVehicleData();

@@ -421,5 +421,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         return  date.getFullYear()+"-"+ month + "-" + day + " " + strTime;
       }
 
-       $("#saletable").freezeHeader({'height': '600px'});
+       $("#saletable").freezeHeader();
 </script>

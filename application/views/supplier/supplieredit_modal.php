@@ -107,6 +107,7 @@
             success: function (data) {
                 if (data == 1) {
                     $('#suppliermodal').modal('hide');
+                    $.notify("Supplier Updated Sucessfully.", "Success");
                 }
             }
         });

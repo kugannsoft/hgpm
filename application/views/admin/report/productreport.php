@@ -415,5 +415,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
     }
 
-    $("#saletable").freezeHeader({'height': '600px'});
+    $("#saletable").freezeHeader();
 </script>

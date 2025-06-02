@@ -385,5 +385,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
 
             };
+    
+
+    $('#producttbl').on('contextmenu', 'a.btn-primary', function (e) {
+        e.preventDefault(); 
+    });
+
+    $('#producttbl').on('mousedown', 'a.btn-primary', function (e) {
+        if (e.button === 1) {
+            e.preventDefault(); 
+        }
+    });
+
   
 </script>

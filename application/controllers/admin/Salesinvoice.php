@@ -883,10 +883,12 @@ class Salesinvoice extends Admin_Controller {
                 $this->data['JobInvoiceNo'] = base64_decode($id);
             }elseif($type=='job'){
                 $this->data['JobNo'] = base64_decode($id);
+                 $this->data['TempNo'] = $this->db->select('JobInvNo')->from('tempjobinvoicehed')->where('JobCardNo',base64_decode($id))->get()->row();
             }elseif($type=='est'){
                 $this->data['EstimateNo'] = base64_decode($id);
             }elseif($type=='tempinv'){
                 $this->data['TempNo'] = base64_decode($id);
+            
             }
                 $this->data['supNo'] = $sup;
 
@@ -1060,17 +1062,19 @@ class Salesinvoice extends Admin_Controller {
 
     public function getTempInvoiceDataByInvoiceNo(){
         $invoiceNo = $_POST['invoiceNo'];
-$arr[] =null;
+        $arr[] =null;
         if($invoiceNo!='' && isset($invoiceNo)){
             $cusCode = $this->db->select('JCustomer')->from('tempjobinvoicehed')->where('JobInvNo', $invoiceNo)->get()->row()->JCustomer;
             $regNo =$this->db->select('JRegNo')->from('tempjobinvoicehed')->where('JobInvNo', $invoiceNo)->get()->row()->JRegNo;
             $isInvoice = $this->db->select('JobInvNo')->from('tempjobinvoicehed')->where('JobInvNo', $invoiceNo)->get()->num_rows();
+            // echo var_dump($isInvoice);die;
             if($isInvoice>0){
                 $jobNo =$this->db->select('JobCardNo')->from('tempjobinvoicehed')->where('JobInvNo', $invoiceNo)->get()->row()->JobCardNo;
                 $arr['inv_hed'] = $this->db->select()->from('tempjobinvoicehed')->where('JobInvNo', $invoiceNo)->get()->row();
                 $arr['inv_dtl'] = $this->db->select('tempjobinvoicedtl.*,jobtype.jobtype_name')->from('tempjobinvoicedtl')
                 ->join('jobtype', 'jobtype.jobtype_id = tempjobinvoicedtl.JobType')
                 ->where('tempjobinvoicedtl.JobInvNo', $invoiceNo)->order_by('jobinvoicedtlid')->get()->result();
+                
                 $arr['job_inv'] = $this->Job_model->getInvoiceDtlbyid($invoiceNo);
             }else{
                 $arr['inv_dtl'] =null;
@@ -1223,6 +1227,7 @@ $arr[] =null;
     }
 
     public function saveTempInvoices() {
+       
         $totalCost=0;
         $location=$_SESSION['location'];
         $action = $_POST['action'];
@@ -1235,7 +1240,6 @@ $arr[] =null;
         $data['JobEstimateNo'] = $_POST['estimateNo'];
         $data['JobSupplimentry'] = $supplimentNo;
         $data['JobCardNo'] = $_POST['jobNo'];
-        
         $data['JobInvoiceDate'] = $_POST['date'];
         $data['JobLocation'] = $location;
         $data['JobTotalAmount'] = $_POST['estimateAmount'];
@@ -2706,7 +2710,7 @@ $arr[] =null;
         $query = $_GET['q'];
         $customer = $_GET['cusCode'];
         $location = $_GET['loc'];
-        $q = $this->db->select('customerpaymenthed.CusPayNo AS id, CONCAT(customerpaymenthed.CusPayNo," ",TotalPayment," ",Remark) AS text')->from('customerpaymenthed')->join('customerpaymentdtl','customerpaymentdtl.CusPayNo=customerpaymenthed.CusPayNo')->where('customerpaymenthed.Location',$location)->where('customerpaymenthed.CusCode',$customer)->where('customerpaymenthed.PaymentType',2)->where('customerpaymenthed.IsCancel',0)->where('customerpaymentdtl.IsRelease',0)->like('customerpaymenthed.CusPayNo', $query)->order_by('customerpaymenthed.CusPayNo','DESC')->get()->result();
+        $q = $this->db->select('customerpaymenthed.CusPayNo AS id,customerpaymenthed.TotalPayment AS Amount, CONCAT(customerpaymenthed.CusPayNo," ",TotalPayment," ",Remark) AS text')->from('customerpaymenthed')->join('customerpaymentdtl','customerpaymentdtl.CusPayNo=customerpaymenthed.CusPayNo')->where('customerpaymenthed.Location',$location)->where('customerpaymenthed.CusCode',$customer)->where('customerpaymenthed.PaymentType',2)->where('customerpaymenthed.IsCancel',0)->where('customerpaymentdtl.IsRelease',0)->like('customerpaymenthed.CusPayNo', $query)->order_by('customerpaymenthed.CusPayNo','DESC')->get()->result();
         echo json_encode($q);die;
     }
 

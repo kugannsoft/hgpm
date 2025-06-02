@@ -557,5 +557,5 @@ $(function() {
 
             };
 
-             $("#saletable").freezeHeader({'height': '600px'});
+             $("#saletable").freezeHeader();
 </script>

@@ -426,5 +426,5 @@ var toatl_discount =0;
         },
         minimumInputLength: 2
     });
- $("#saletable").freezeHeader({'height': '600px'});
+ $("#saletable").freezeHeader();
 </script>

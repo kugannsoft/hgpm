@@ -693,5 +693,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             title:'Daily Cash Balance Report '+datebalance
         });
     }
-     $("#saletable").freezeHeader({'height': '600px'});
+     $("#saletable").freezeHeader();
 </script>

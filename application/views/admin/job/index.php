@@ -6,6 +6,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
+<style>
+    a.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+</style>
     <section class="content">
         <div class="box collapse cart-options" id="collapseExample">
             <div class="box-header">Filter Categories</div>
@@ -548,5 +555,28 @@ div.ui-datepicker{
 }
 </style>
 <script type="text/javascript">
+
+    const invLink = document.getElementById('invLink');
+    let alreadyClicked = false;
+
+    invLink.addEventListener('click', function(e) {
+    if (alreadyClicked) {
+        e.preventDefault();
+        return;
+    }
+
+    alreadyClicked = true;
+
+    });
+
+    invLink.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    });
+
+    invLink.addEventListener('mousedown', function(e) {
+    if (alreadyClicked || e.button === 1) {
+        e.preventDefault(); 
+    }
+    });
 
 </script>
