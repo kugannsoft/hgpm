@@ -64,9 +64,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <button type="submit" class="btn btn-flat btn-success">Show</button>
                                 </div>
                             </form>
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                                 <button onclick="printdiv()" class="btn btn-flat btn-default">Print</button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -84,6 +84,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <?php foreach ($makes as $make): ?>
                                         <th><?= htmlspecialchars($make->make) ?></th>
                                     <?php endforeach; ?>
+            
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,6 +100,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+
+
+
                     </div>
                 </div>
             </div>
