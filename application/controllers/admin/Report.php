@@ -357,6 +357,23 @@ class Report extends Admin_Controller {
         }
     }
 
+      public function allworktype() {
+        $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
+        $this->breadcrumbs->unshift(1, 'Sales', 'admin/report/allworktype');
+        $this->page_title->push(('Work Type Wise Job sale'));
+        $this->data['pagetitle'] = $this->page_title->show();
+        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        $this->data['locations'] = $this->Report_model->loadroot();
+        $this->data['jobtypes'] = $this->db->select('*')->from('jobtype')->get()->result();
+        $people = array("0", "10", "13");
+
+        if (in_array($_SESSION['user_id'], $people)) {
+            $this->template->admin_render('admin/report/allworktype', $this->data);
+        } else {
+            $this->template->admin_render('admin/report/allworktype', $this->data);
+        }
+    }
+
     public function jobcardsummery() {
         $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
         $this->breadcrumbs->unshift(1, 'Sales', 'admin/report/jobcardsummery');
@@ -1191,6 +1208,31 @@ class Report extends Admin_Controller {
         $result['earn'] =null;
         echo json_encode($result);
         die;
+    }
+
+    public function loadAllWorkType() {
+        $this->output->set_content_type('application_json');
+        $enddate = $_POST['enddate'];
+        $startdate = $_POST['startdate'];
+       
+            $jobtypes = $this->Report_model->getAllJobTypes(); 
+            $data = $this->Report_model->loadAllWorkType($startdate, $enddate);
+            
+            
+            $grouped = [];
+            foreach ($data as $row) {
+                $date = $row->JobInvoiceDate;
+                $type = $row->jobtype_name;
+                $amount = $row->TotalAmount;
+
+                $grouped[$date][$type] = $amount;
+            }
+            
+           
+          echo json_encode([
+                'grouped' => $grouped,
+                'jobtypes' => $jobtypes
+            ]);
     }
 
     public function loadjobsalebymake() {
