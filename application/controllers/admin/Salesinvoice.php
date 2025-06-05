@@ -515,7 +515,11 @@ class Salesinvoice extends Admin_Controller {
 
            // $this->data['invType']= $this->db->select('SalesInvType')->from('salesinvoicehed')->where('SalesInvNo',$invNo)->get()->result();
             
-            $this->data['term'] = $this->db->select()->from('invoice_condition')->where('InvType', 1)->get()->result();      
+            $this->data['term'] = $this->db->select()->from('invoice_condition')->where('InvType', 1)->get()->result();    
+            $this->data['chequedetails'] = $this->db->select('chequedetails.*,Bank.BankName')->from('chequedetails')
+            ->join('Bank','chequedetails.BankNo =Bank.BankCode','INNER')
+            ->where('ReferenceNo',$invNo)->get()->row();
+            // echo var_dump($this->data['chequedetails']);die;
             $this->template->admin_render('admin/sales/view-sales-invoice_1', $this->data);
 
     }

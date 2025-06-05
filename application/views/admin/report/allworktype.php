@@ -65,10 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <tbody>
                         </tbody>
                         <tfoot>
-                            <tr>
-                                
-                                
-                            </tr>
+                           
                         </tfoot>
                     </table>
 
@@ -146,7 +143,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         const jobtypeTotals = {};
         jobtypes.forEach(jt => jobtypeTotals[jt] = 0);
-
+        let TotalAmount = 0;
         for (const date in groupedData) {
             const row = $("<tr/>");
             row.append($("<td/>").text(date));
@@ -155,7 +152,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 const amount = parseFloat(groupedData[date][jobtype] || 0);
                 jobtypeTotals[jobtype] += amount;
                 row.append($("<td/>").text(amount.toFixed(2)));
-            });
+
+                
+                 TotalAmount += amount;
+                });
+            
 
             $('#saletable tbody').append(row);
         }
@@ -163,29 +164,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
         const totalRow = $("<tr/>");
         totalRow.append("<th>Total</th>");
+       
         jobtypes.forEach(function(jobtype) {
             totalRow.append(
-                $("<th style='text-align:right; color:#00aaf1;'/>").text(jobtypeTotals[jobtype].toFixed(2))
+                $("<th style='text-align:right; color:#00aaf1;'/>").text(accounting.formatMoney(jobtypeTotals[jobtype].toFixed(2)))
             );
         });
 
-        $('#saletable tfoot').html(totalRow);
+          const grandTotalRow = $("<tr/>");
+            grandTotalRow.append(
+                $("<th colspan='" + (jobtypes.length + 1) + "' style='text-align:right; color:#d9534f;'/>")
+                .text("Grand Total: " + accounting.formatMoney(TotalAmount))
+            );
+
+        $('#saletable tfoot').html('').append(totalRow).append(grandTotalRow);
     }
 
 
 
-  function updateTotal(groupedData, jobtypes) {
-        let grandTotal = 0;
+//   function updateTotal(groupedData, jobtypes) {
+//         let grandTotal = 0;
 
-        for (const date in groupedData) {
-            jobtypes.forEach(jobtype => {
-                const amount = parseFloat(groupedData[date][jobtype] || 0);
-                grandTotal += amount;
-            });
-        }
+//         for (const date in groupedData) {
+//             jobtypes.forEach(jobtype => {
+//                 const amount = parseFloat(groupedData[date][jobtype] || 0);
+//                 grandTotal += amount;
+//             });
+//         }
+//         console.log(grandTotal);
 
-        $('#ntsale').html(grandTotal.toFixed(2));
-    }
+//         $('#ntsale').html(accounting.formatMoney(grandTotal));
+//     }
 
 
     function sumcolumn(rclass) {

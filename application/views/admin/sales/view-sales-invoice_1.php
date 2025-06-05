@@ -293,10 +293,10 @@
                    
                 </tr>
                 <?php } else { ?>
-                  <th colspan="5" style='text-align:right;border-left:1px solid  #000;border-bottom:1px  solid  #000;font-size: 10px;font-weight: normal;text-align: left;'></th>
-                    <th style='text-align:right;font-size: 12px;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>&nbsp;&nbsp;</th>
-                    <th colspan="" style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">&nbsp;&nbsp;</th>
-                    <th id="lbltotalDicount" style='text-align:right;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'></th>
+                  <th colspan="5" style='text-align:right;border-bottom:1px  solid  #000;font-size: 10px;font-weight: normal;text-align: left;'></th>
+                    <th style='text-align:right;font-size: 12px;border-top:1px solid #000;border-left:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>Total&nbsp;&nbsp;</th>
+                    <th colspan="" style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">&nbsp;&nbsp;Rs.</th>
+                    <th id="lbltotalDicount" style='text-align:right;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'><?php echo number_format($invHed->SalesNetAmount,2);?></th>
 
                    
                 </tr>
@@ -319,10 +319,11 @@
                             $payment_term="Cheque";
                             ?>
                   <tr  id="rowNBT">
-                <th colspan="5" style='text-align:right;border-left:1px solid  #000;border-bottom:1px  solid  #000;font-size: 10px;font-weight: normal;text-align: left;'></th>
+                <th colspan="4" style='text-align:right;border-left:1px solid  #000;border-bottom:1px  solid  #000;font-size: 10px;font-weight: normal;text-align: left;'></th>
+                <th colspan="" style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;border-right: 1px solid #000;">&nbsp;&nbsp;Rs.</th>
                     <th style='text-align:right;font-size: 12px;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>Cheque  Amount &nbsp;&nbsp;</th>
                     <th colspan="" style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">&nbsp;&nbsp;Rs.</th>
-                    <th id="lbltotalDicount" style='text-align:right;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'><?php echo number_format($invHed->SalesCCardAmount,2);?></th>
+                    <th id="lbltotalDicount" style='text-align:right;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'><?php echo number_format($invHed->SalesChequeAmount,2);?></th>
 
                 </tr>
               
@@ -357,8 +358,35 @@
                 
             </tfoot>
         </table>
+ <?php if($invHed->SalesChequeAmount>0){?>
+        <br>
+        <table id="tbl_est_data" style="font-family: Arial, Helvetica, sans-serif;border-collapse:collapse;width:700px;padding:1px;font-size:11px;" align="center" border="0">
+          
 
+            <tr style="text-align:left;font-size:13px;">
+                <td   style="border:1px solid #000; font-size:13px; width:250px; padding:5px; vertical-align: top;">
+                   Bank Name :<?php echo ($chequedetails->BankName);?>
 
+                   <br>
+                Cheque No :<?php echo ($chequedetails->ChequeNo);?>
+
+                </td>
+                 <td   style="border:1px solid #000; font-size:13px; width:250px; padding:5px; vertical-align: top;">
+                   Cheque Received date :<?php echo ($chequedetails->ReceivedDate);?>
+
+                   <br>
+                 Cheque Reference:<?php echo ($chequedetails->ReferenceNo);?>
+                 <br>
+                    Date of Cheque:<?php echo ($chequedetails->ChequeDate);?>
+                </td>
+                
+            </tr>
+ 
+            </thead>
+            
+        
+        </table>
+    <?php } ?>
                 <br>
 
         <table id="tbl_est_data" style="font-family: Arial, Helvetica, sans-serif;border-collapse:collapse;width:700px;padding:1px;font-size:11px;" align="center" border="0">
