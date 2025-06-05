@@ -340,22 +340,11 @@ var isJobNbtRatio=0;
         isJobNbt = parseFloat($("#workType option:selected").attr('isNbt'));
         isJobNbtRatio = parseFloat($("#workType option:selected").attr('nbtRatio'));
 
-        if (workType == 1) {
+        if (workType == 1 || workType == 2 || workType == 3 || workType == 4 || workType == 5
+            || workType == 6 || workType == 7 || workType == 8) {
             $("#spartDiv").hide();
             $("#jobDescDiv").show();
             $("#partType").prop("disabled",false);
-        } else if (workType == 2) {
-            $("#spartDiv").show();
-            $("#jobDescDiv").hide();
-            $("#partType").prop("disabled",false);
-        } else if (workType == 3) {
-            $("#spartDiv").hide();
-            $("#jobDescDiv").show();
-            $("#partType").prop("disabled",false);
-        }else if (workType == 9) {
-            $("#spartDiv").hide();
-            $("#jobDescDiv").show();
-            $("#partType").prop("disabled",true);
         } else {
             $("#jobDescDiv").show();
             $("#spartDiv").hide();
@@ -421,7 +410,7 @@ var partType = '';
                     proNbt=addProductNbt((totalPrice),isNewVat,isNewNbt,newNbtRatio) ;
                     netprice +=proVat ;
                     netprice +=proNbt ;
-                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
+                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + partType + " </td> <td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
                     if (jobRef != 0 || jobRef != '') { jobNumArr.push(jobRef); }
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
@@ -447,7 +436,7 @@ var partType = '';
                         proNbt=addProductNbt((totalPrice),isNewVat,isNewNbt,newNbtRatio) ;
                         netprice +=proVat ;
                         netprice +=proNbt ;
-                        $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + proName + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "' netprice='" + netprice + "'  sellprice='" + sellPrice + "'  isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + proCode + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + proName + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
+                        $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + proName + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "' netprice='" + netprice + "'  sellprice='" + sellPrice + "'  isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + proCode + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + proName + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + partType + " </td> <td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
                         if (proCode != 0 || proCode != '') { proCodeArr.push(proCode); }
                         $("#prdName").val('');
                         $("#product").val('');
@@ -480,7 +469,7 @@ var partType = '';
                     proNbt=addProductNbt((totalPrice),isNewVat,isNewNbt,newNbtRatio) ;
                     netprice +=proVat ;
                     netprice +=proNbt ;
-                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
+                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + partType + " </td> <td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
                     if (jobRef != 0 || jobRef != '') { paintsArr.push(jobRef); }
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
@@ -505,7 +494,7 @@ var partType = '';
                     proNbt=addProductNbt((totalPrice),isNewVat,isNewNbt,newNbtRatio) ;
                     netprice +=proVat ;
                     netprice +=proNbt ;
-                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
+                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + partType + " </td> <td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
                     if (jobRef != 0 || jobRef != '') { parts2Arr.push(jobRef); }
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
@@ -530,7 +519,7 @@ var partType = '';
                     proNbt=addProductNbt((totalPrice),isNewVat,isNewNbt,newNbtRatio) ;
                     netprice +=proVat ;
                     netprice +=proNbt ;
-                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
+                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + partType + " </td> <td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
                     if (jobRef != 0 || jobRef != '') { parts3Arr.push(jobRef); }
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
@@ -552,7 +541,7 @@ var partType = '';
                     proNbt=addProductNbt((totalPrice),isNewVat,isNewNbt,newNbtRatio) ;
                     netprice +=proVat ;
                     netprice +=proNbt ;
-                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
+                    $("#tbl_job tbody").append("<tr partType='"+partType+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td>" + accounting.formatNumber(qty) + "</td><td>" + accounting.formatNumber(sellPrice) + "</td><td>" + accounting.formatNumber(netprice) + "</td><td>" + partType + " </td> <td>" + insurance + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
                     if (jobRef != 0 || jobRef != '') { parts3Arr.push(jobRef); }
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
@@ -1610,8 +1599,9 @@ function getKey(txt){
                     
                     accounting.formatNumber(resultData.est_dtl[i].EstQty) + "</td><td>" + 
                     accounting.formatNumber(resultData.est_dtl[i].EstPrice) + "</td><td>" + 
-                    accounting.formatNumber(resultData.est_dtl[i].EstNetAmount) + "</td><td>" + 
-                    
+                    accounting.formatNumber(resultData.est_dtl[i].EstNetAmount) + "</td><td>" +
+                    partType + " </td><td>" +
+
                     resultData.est_dtl[i].EstInsurance + "</td><td>&nbsp;&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
 
             }
