@@ -273,7 +273,7 @@ $(document).ready(function() {
     });
 
     function updateAdvanceSelectionDisplay() {
-        let total = 0;
+        let advance_amount  = 0;
 
         console.log('Calculating total for:', selectedAdvancePayments);
 

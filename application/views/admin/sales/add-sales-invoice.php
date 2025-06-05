@@ -650,13 +650,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="chequeReciveDate" class="control-label">Cheque Received date <span class="required">*</span></label>
-                                    <input type="text" class="form-control"   name="chequeReciveDate" id="chequeReciveDate">
+                                    <input type="date" class="form-control"   name="chequeReciveDate" id="chequeReciveDate">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="chequeDate" class="control-label">Date of Cheque<span class="required">*</span></label>
-                                    <input type="text" class="form-control"   name="chequeDate" id="chequeDate">
+                                    <input type="date" class="form-control"   name="chequeDate" id="chequeDate">
                                 </div>
                             </div>
                             <div class="col-md-4">

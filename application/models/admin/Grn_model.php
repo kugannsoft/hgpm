@@ -39,7 +39,7 @@ class Grn_model extends CI_Model {
                     ->like("CONCAT(' ',product.ProductCode,product.Prd_Description,product.BarCode)", $query ,'left')
                     ->where('product.Prd_Supplier', $supCode)
                     ->where('pricestock.Stock !=', 0)
-                    ->limit(50)->get();
+                    ->get();
      
         }else{
             $query1 =$this->db->select('product.ProductCode,product.Prd_Description,pricestock.Price,pricestock.Stock')
@@ -47,7 +47,7 @@ class Grn_model extends CI_Model {
                     ->join(' pricestock', 'pricestock.PSCode = product.ProductCode', 'INNER')
                     ->like("CONCAT(' ',product.ProductCode,product.Prd_Description,product.BarCode)", $query ,'left')
                     ->where('pricestock.Stock !=', 0)
-                    ->limit(50)->get();
+                    ->get();
         }
 
         if ($query1->num_rows() > 0) {
