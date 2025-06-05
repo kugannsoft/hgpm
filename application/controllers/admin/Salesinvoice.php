@@ -2705,7 +2705,12 @@ $arr[] =null;
         $query = $_GET['q'];
         $customer = $_GET['cusCode'];
         $location = $_GET['loc'];
-        $q = $this->db->select('customerpaymenthed.CusPayNo AS id, CONCAT(customerpaymenthed.CusPayNo," ",TotalPayment," ",Remark) AS text')->from('customerpaymenthed')->join('customerpaymentdtl','customerpaymentdtl.CusPayNo=customerpaymenthed.CusPayNo')->where('customerpaymenthed.Location',$location)->where('customerpaymenthed.CusCode',$customer)->where('customerpaymenthed.PaymentType',2)->where('customerpaymenthed.IsCancel',0)->where('customerpaymentdtl.IsRelease',0)->like('customerpaymenthed.CusPayNo', $query)->order_by('customerpaymenthed.CusPayNo','DESC')->get()->result();
+        $q = $this->db->select('customerpaymenthed.CusPayNo AS id, CONCAT(customerpaymenthed.CusPayNo," ",TotalPayment," ",Remark) AS text')
+            ->from('customerpaymenthed')->join('customerpaymentdtl','customerpaymentdtl.CusPayNo=customerpaymenthed.CusPayNo')->where('customerpaymenthed.Location',$location)
+            ->where('customerpaymenthed.CusCode',$customer)->where('customerpaymenthed.PaymentType',2)
+            ->where('customerpaymenthed.IsCancel',0)->where('customerpaymentdtl.IsRelease',0)
+            ->like('customerpaymenthed.CusPayNo', $query)->order_by('customerpaymenthed.CusPayNo','DESC')
+            ->get()->result();
         echo json_encode($q);die;
     }
 

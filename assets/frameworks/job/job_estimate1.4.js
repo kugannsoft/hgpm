@@ -340,22 +340,11 @@ var isJobNbtRatio=0;
         isJobNbt = parseFloat($("#workType option:selected").attr('isNbt'));
         isJobNbtRatio = parseFloat($("#workType option:selected").attr('nbtRatio'));
 
-        if (workType == 1) {
+        if (workType == 1 || workType == 2 || workType == 3 || workType == 4 || workType == 5
+            || workType == 6 || workType == 7 || workType == 8) {
             $("#spartDiv").hide();
             $("#jobDescDiv").show();
             $("#partType").prop("disabled",false);
-        } else if (workType == 2) {
-            $("#spartDiv").show();
-            $("#jobDescDiv").hide();
-            $("#partType").prop("disabled",false);
-        } else if (workType == 3) {
-            $("#spartDiv").hide();
-            $("#jobDescDiv").show();
-            $("#partType").prop("disabled",false);
-        }else if (workType == 9) {
-            $("#spartDiv").hide();
-            $("#jobDescDiv").show();
-            $("#partType").prop("disabled",true);
         } else {
             $("#jobDescDiv").show();
             $("#spartDiv").hide();
@@ -387,6 +376,7 @@ var partType = '';
     // var k=0;
     // ADD job descriptions
     $("#addJob").click(function() {
+
         var jobdesc = $("#jobdesc").val();
         // var val2 = $("#jobdesc2 option:selected").val();
         var workTypes = $("#workType option:selected").html();

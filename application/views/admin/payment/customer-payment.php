@@ -25,6 +25,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <!--<form class="form-horizontal">-->
                         <div class="row">
                             <div class="col-md-6">
+
+                                
                                 <div class="form-group">
                                     <label for="customer" class="col-sm-5 control-label">Customer <span class="required">*</span></label>
                                     <div class="col-sm-6">

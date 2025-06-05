@@ -75,6 +75,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      <div class="row">
                     <div class="box-body table-responsive">
                         <table id="saletable" class="table table-bordered">
+                            <colgroup>
+                                <col style="width: 150px;">
+                                <col style="width: 150px;">
+                                <col style="width: px;">
+                                <col style="width: 150px;">
+                                <col style="width: 150px;">
+                                <col style="width: 150px;">
+                                <col style="width: 150px;">
+                                <col style="width: 100px;">
+                            </colgroup>
                             <thead>
                                 <tr>
                                     <td>Invoice Date</td>
@@ -425,5 +435,12 @@ var toatl_discount =0;
         },
         minimumInputLength: 2
     });
- $("#saletable").freezeHeader({'height': '600px'});
+
+
+
+        $("#saletable").freezeHeader({'height': '600px'});
+
+
+
+
 </script>

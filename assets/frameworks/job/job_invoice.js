@@ -353,6 +353,8 @@ $(document).ready(function() {
     discount = $("input[name='discount']:checked").val();
     discount_type = $("input[name='discount_type']:checked").val();
 
+
+
 //===========discount types===========================
     $("input[name='discount']").on('ifChanged', function() {
         var check = ($(this).val());

@@ -1412,7 +1412,7 @@ class Job extends Admin_Controller {
                     if($isEstimate>0){
                         $jobNo =$this->db->select('EstJobCardNo')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row()->EstJobCardNo;
                         $arr['est_hed'] = $this->db->select()->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row();
-                        // $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name')->from('estimatedtl')->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')->where('estimatedtl.EstimateNo', $estimateNo)->order_by('estimatedtlid')->get()->result();
+                         $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name')->from('estimatedtl')->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')->where('estimatedtl.EstimateNo', $estimateNo)->order_by('estimatedtlid')->get()->result();
                          $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name,jobtype.jobhead')->from('estimatedtl')->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')->where('estimatedtl.EstimateNo', $estimateNo)->where('estimatedtl.SupplimentryNo', $supplemetNo)->order_by('estimatedtlid')->get()->result();
                         $arr['job_est'] = $this->Job_model->getEstimateDtlbyid($estimateNo,$supplemetNo);
                     }else{

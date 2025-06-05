@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-footer">
                 <button class="btn btn-primary close-item-options pull-right">Hide options</button>
             </div>
-        </div>   
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="box box-success">
@@ -41,12 +41,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-sm-2">
                             <label for="companyCode" class="control-label">Outstanding : <span id="cusOutstand"></span></label>
                         </div>
-                        
+
                     </div>
                     <div class="row row-eq-height">
                         <div class="col-sm-2">
                             <div  class="form-group">
-                            <input type="text" class="form-control"  name="jobNo" id="jobNo" value="<?php if(isset($JobNo)){echo $JobNo;}?>" placeholder="Job Number">                             
+                            <input type="text" class="form-control"  name="jobNo" id="jobNo" value="<?php if(isset($JobNo)){echo $JobNo;}?>" placeholder="Job Number">
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -98,13 +98,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-sm-2">
                             <div  class="form-group">
                                 <input type="text" class="form-control" required="required"  name="appoDate" id="appoDate" placeholder="Date">
-                                <input type="hidden" class="form-control" required="required"  name="jobType" id="jobType" placeholder="Date"> 
+                                <input type="hidden" class="form-control" required="required"  name="jobType" id="jobType" placeholder="Date">
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div  class="form-group">
                                 <select name="invoiceType" required="required"  id="invoiceType" class="form-control">
-                                 
+
                                     <option value="1">General</option>
                                     <option value="2">Tax</option>
                                 </select>
@@ -113,7 +113,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-sm-2">
                             <div  class="form-group">
                                 <select name="partInvType" required="required"  id="partInvType" class="form-control">
-                                  
+
                                     <option value="1">Labour and Part Invoice</option>
 
                                 </select>
@@ -152,7 +152,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <span class="input-group-addon text-left">Total Invoice</span>
                             </div>
                         </div>
-                        
+
                     </div>
                     <hr>
                     <div id="stockSec">
@@ -170,12 +170,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="col-sm-2">
                             <div  class="form-group" id="jobDescDiv">
                                 <input type="text" class="form-control" required="required" onfocus="this.select();" name="jobdesc" id="jobdesc" value="" placeholder=" Job Description">
                             </div>
-                            
+
                             <div  class="form-group" id="spartDiv">
                                 <input type="text" class="form-control" required="required" onfocus="this.select();" name="product" id="product" value="" placeholder="Spart Part">
                             </div>
@@ -197,7 +197,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <input type="hidden" name="saveInvoiceNo" id="saveInvoiceNo" value="<?php {echo $JobInvoiceNo;}?>">
                             </div>
                         </div>
-                        
+
                         <div class="col-sm-1">
                             <div  class="form-group">
                                 <input type="number" class="form-control" required="required" onfocus="this.select();" name="flatQty" id="flatQty" min="0" value="" placeholder="flatQty">
@@ -243,7 +243,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <option value="3">Labour Complete</option>
                                     </select>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -288,12 +288,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                <input type="number" class="form-control" required="required" onfocus="this.select();" name="costPrice" min="0" id="costPrice" value="0" placeholder="Cost Price">
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-sm-1">
                             <div  class="form-group">
-                                
+
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -303,7 +303,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="col-sm-1">
                             <div  class="form-group">
-                                
+
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -313,7 +313,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="col-sm-1">
                             <div  class="form-group text-right">
-                               
+
                             </div><br>
                         </div>
                        <!--  <div class="col-sm-1">
@@ -337,9 +337,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <input class="" type="hidden" name="totalNbtRatio" id="totalNbtRatio" value='1'>
                             </div>
                         </div> -->
-                        
+
                     </div>
-                        <div class="row"> 
+                        <div class="row">
                             <div class="col-sm-12">
                              <div class="fixheader">
                                 <table id="tbl_job" class="table table-bordered table-hover table-striped">
@@ -359,7 +359,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -397,7 +397,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <button  data-target="#modelPayment" data-toggle="modal"  class="btn btn-primary btn-lg btn-block" type="button" id="btnSaveInv">
                                          Save</button>&nbsp;
                                     </div>
-                                    <?php endif; ?> 
+                                    <?php endif; ?>
                                     <div class="col-sm-1">&nbsp;</div>
                                 </div>
                                 <div class="row">
@@ -415,19 +415,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div class="col-sm-1">&nbsp;</div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
-                          
+
                         </div>
                         <div class="row">
                         </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
-            </div>      
+            </div>
         </div>
     </section>
     <!--add product modal-->
@@ -443,8 +443,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body" >
-                 <?php //invoice print 
-                        $this->load->view('admin/sales/job-invoice-print.php',true); ?>  
+                 <?php //invoice print
+                        $this->load->view('admin/sales/job-invoice-print.php',true); ?>
                 </div>
             </div>
         </div>
@@ -520,10 +520,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <!--</div>-->
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <span class="label">Advance Payment</span>
-                                        <input type="text" name="advance_payment_no" id="advance_payment_no"   class="form-control" placeholder="Advace Payment No">
-                                    </div>
+
+                                    <ul class="list_item">
+                                        <li class="Item">
+                                            <span class="checkbox">
+                                                <i class="fa-solid fa-check check-icon"></i>
+                                                <input type="text" name="advance_payment_no" id="advance_payment_no"   class="form-control" multiple="multiple" placeholder="Advance Payment No">
+                                            </span>
+                                        </li>
+                                    </ul>
+
+
+<!--
+
                                     <div class="form-group" style="display:;">
                                         <span class="label">Return Payment</span>
                                         <input type="text" name="return_payment_no" id="return_payment_no"   class="form-control" placeholder="Return Payment No">
@@ -591,9 +600,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <input type="text" name="compayto" id="compayto"  class="form-control" placeholder="Commission Pay to" onfocus="this.select();" onmouseup="return false;">
                                             <input type="hidden" name="compaytoid" id="compaytoid"  class="form-control" placeholder="Commission Pay to" onfocus="this.select();" onmouseup="return false;">
                                         </div><br>
-                                        
+
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-11">
                                         <div class="input-group">If item receiver different from customer</div>
@@ -605,12 +614,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <span class="input-group-addon">NIC</span>
                                             <input type="text" name="receiver_nic" id="receiver_nic"  class="form-control" placeholder="Receiver Nic" onfocus="this.select();" minlength="10" maxlength="12" onmouseup="return false;">
                                         </div><br>
-                                        
+
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                             </form>
-                        </div> 
+                        </div>
                         <div class="row">
                             <div class="col-md-12"><div id='chequeData'><hr><h4>Cheque Details</h4>
                             <div class="col-md-4">
@@ -665,27 +674,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </form>
         </div>
     </div>
-    
+
 </div>
 
 <script>
-    document.getElementById('select_all').addEventListener('change', function() {
-        let checkboxes = document.querySelectorAll('input[name="employees[]"]');
-        checkboxes.forEach(cb => cb.checked = this.checked);
-    });
 
-    window.onclick = function(event) {
-        if (!event.target.matches('.dropdown-toggle')) {
-            let dropdowns = document.getElementsByClassName("dropdown-menu");
-            for (let i = 0; i < dropdowns.length; i++) {
-                let openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
-        }
-    }
-    
+
 </script>
 
 
@@ -723,4 +717,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     ul.ui-autocomplete {
     z-index: 1100;
 }
+
+
+
+
+
 </style>

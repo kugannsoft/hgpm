@@ -94,36 +94,45 @@ $(document).ready(function() {
         });
     });
 
-    $("#advance_payment_no").autocomplete({
-        source: function(request, response) {
-            $.ajax({
-                url: '../salesinvoice/loadadvancepaymentjson',
-                dataType: "json",
-                data: {
-                    q: request.term,
-                    cusCode:cusCode,
-                    loc:loc
-                },
-                success: function(data) {
-                    response($.map(data, function(item) {
-                        return {
-                            label: item.text,
-                            value: item.id,
-                            data: item
-                        }
-                    }));
-                }
-            });
-        },
-        autoFocus: true,
-        minLength: 0,
-        select: function(event, ui) {
-            advance_payment_no = ui.item.value;
-            $("#advance_amount").val(0);
-            $("#madvance").html(0);
-            loadAdvanceData(advance_payment_no);
+
+    // Toggle dropdown
+    document.getElementById('dropdownToggle').addEventListener('click', function () {
+        document.querySelector('.dropdown-container').classList.toggle('open');
+    });
+
+    // Close dropdown on click outside
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest('.dropdown-container')) {
+            document.querySelector('.dropdown-container').classList.remove('open');
         }
     });
+
+    // Load data dynamically
+    function loadAdvancePayments() {
+        fetch(`../salesinvoice/loadadvancepaymentjson?q=&cusCode=${cusCode}&loc=${loc}`)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('dropdownCheckboxes');
+                container.innerHTML = '';
+
+                if (data.length === 0) {
+                    container.innerHTML = '<p>No advance payments found.</p>';
+                    return;
+                }
+
+                data.forEach(item => {
+                    const checkboxItem = document.createElement('label');
+                    checkboxItem.innerHTML = `
+                        <input type="checkbox" name="advance_payment_no[]" value="${item.id}">
+                        ${item.text}
+                    `;
+                    container.appendChild(checkboxItem);
+                });
+            });
+    }
+
+    // Call this when the page loads or user opens the dropdown
+    loadAdvancePayments();
 
     function loadAdvanceData(pay_no){
         $.ajax({

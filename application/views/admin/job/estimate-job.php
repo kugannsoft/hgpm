@@ -161,7 +161,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="col-sm-2">
                             <div  class="form-group">
-                                <select name="partType" id="partType" class="form-control" disabled>
+                                <select name="partType"  id="partType" class="form-control" >
                                     <option value="">Select a part type</option>
                                     <?php foreach ($parttype as $trns) { ?>
                                     <option value="<?php echo $trns->parttype_code; ?>" ><?php echo $trns->parttype_code; ?></option>

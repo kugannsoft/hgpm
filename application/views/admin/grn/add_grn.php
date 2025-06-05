@@ -328,6 +328,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         increaseArea: '50%'
     });
 
+    const costInput = document.getElementById("unitcost");
+    const disInput = document.getElementById("selPercent");
+    const sellingInput = document.getElementById("sellingPrice");
 
+
+
+    function calculateSelling() {
+        const cost = parseFloat(costInput.value) || 0;
+        const dis = parseFloat(disInput.value) || 0;
+        const selling = (cost+((cost * dis)/100));
+        sellingInput.value = selling.toFixed(2);
+    }
+
+    costInput.addEventListener("input", calculateSelling);
+    disInput.addEventListener("input", calculateSelling);
 
 </script>
