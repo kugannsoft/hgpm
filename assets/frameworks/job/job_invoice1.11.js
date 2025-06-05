@@ -713,7 +713,7 @@ $(document).ready(function() {
     
   $("#workType").change(function () {
         workType = $("#workType").val();
-        alert(workType);
+      
         isJobVat = parseFloat($("#workType option:selected").attr('isVat'));
         isJobNbt = parseFloat($("#workType option:selected").attr('isNbt'));
         isJobNbtRatio = parseFloat($("#workType option:selected").attr('nbtRatio'));
@@ -820,11 +820,15 @@ $(document).ready(function() {
             } else if (workType == 4) {
                 $("#flatQty").show();
                 $("#dropdownMenuButton").show();
-                 $("#stockSec").hide();
+                $("#stockSec").hide();
+                $("#spartDiv").hide();
+                $("#jobDescDiv").show();
             } else if (workType == 8) {
                 $("#flatQty").hide();
                 $("#dropdownMenuButton").hide();
                  $("#stockSec").hide();
+                   $("#spartDiv").hide();
+                $("#jobDescDiv").show();
             } else {
                 $("#jobDescDiv").show();
                 $("#dropdownMenuButton").show();
@@ -869,11 +873,12 @@ $(document).ready(function() {
         // $('input[name="employees[]"]').prop('checked', false); 
         // $('#select_all').prop('checked', false);
         var jobdesc = $("#jobdesc").val();
+       
         // var val2 = $("#jobdesc2 option:selected").val();
         var workTypes = $("#workType option:selected").html();
        
         var workId = $("#workType option:selected").val();
-   
+       
         
         
         var workOrder = $("#workType option:selected").attr('jobOrder');
@@ -1062,8 +1067,9 @@ $(document).ready(function() {
                     netprice +=proNbt ;
                     $("#tbl_job tbody").append("<tr estlineno='"+estLine+"' cost_price='"+costprice+"' est_price='"+estprice+"' discount_type='"+discount_type+"'  proDiscount='"+product_discount+"' disPrecent='"+prodiscount_precent+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + proCode + "</td><td class='text-right'>" + accounting.formatNumber(qty) + "</td><td class='text-right'>" + accounting.formatNumber(sellPrice) + "</td><td class='text-right'>" + accounting.formatNumber(prodiscount_precent) + "</td><td class='text-right'>" + accounting.formatNumber(estprice) + "</td><td class='text-right'>" + accounting.formatNumber(netprice) + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
                     if (jobRef != 0 || jobRef != '') { paintsArr.push(jobRef); }
-                    $("#jobdesc").val('');
-                    $("#jobdesc2").val('');
+                    // $("#jobdesc").val('');
+                    // $("#jobdesc2").val('');
+                     $("#proCode").val('');
                     $('#stock').text('');
                      $('#flatQty').val('');
                     totalAmount += parseFloat(totalPrice);
@@ -1078,6 +1084,7 @@ $(document).ready(function() {
                 }
             } else if (workId == 4 && jobdesc != '') {
                 //paints
+               
                 var parts2ArrIndex = $.inArray(jobRef, parts2Arr);
 
                 if (parts2ArrIndex < 0) {
