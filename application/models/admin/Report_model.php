@@ -884,6 +884,33 @@ class Report_model extends CI_Model {
         return $list;
     }
 
+
+   public function loadAllWorkType($startdate, $enddate) {
+        $this->db->select('
+            DATE(jobinvoicehed.JobInvoiceDate) AS JobInvoiceDate,
+            jobtype.jobtype_name,
+            SUM(jobinvoicedtl.JobTotalAmount) AS TotalAmount
+        ');
+        $this->db->from('jobinvoicedtl');
+        $this->db->join('jobinvoicehed', 'jobinvoicehed.JobInvNo = jobinvoicedtl.JobInvNo', 'INNER');
+        $this->db->join('jobtype', 'jobtype.jobtype_id = jobinvoicedtl.JobType', 'INNER');
+        $this->db->where('DATE(jobinvoicehed.JobInvoiceDate) >=', $startdate);
+        $this->db->where('DATE(jobinvoicehed.JobInvoiceDate) <=', $enddate);
+        $this->db->where('jobinvoicehed.IsCancel', 0);
+        $this->db->group_by(['DATE(jobinvoicehed.JobInvoiceDate)', 'jobtype.jobtype_name']);
+        
+        return $this->db->get()->result();
+    }
+
+    public function getAllJobTypes() {
+        return $this->db
+            ->select('jobtype_id, jobtype_name')
+            ->from('jobtype')
+            ->order_by('jobtype_name', 'ASC')
+            ->get()
+            ->result();
+    }
+
     public function genjobreportbymake($startdate, $enddate, $location = NULL, $product = NULL,$locationAr = NULL,$dep,$subdep,$subcat) {
          $this->db->select('(JobInvoiceDate) As InvDate,JobInvNo,jobinvoicehed.JobCardNo,(JobTotalDiscount) AS DisAmount,
                                 (JobCashAmount)+ (ThirdCashAmount) AS CashAmount,

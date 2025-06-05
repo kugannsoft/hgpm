@@ -477,6 +477,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     sale</a>
                             </li>
 
+                             <li class="<?= active_link_function('allworktype') ?>">
+                                <a href="<?php echo site_url('admin/report/allworktype'); ?>"> All Work Type Wise Amount</a>
+                            </li>
+
                             <li class="<?= active_link_function('jobcardsummery') ?>">
                                 <a href="<?php echo site_url('admin/report/jobcardsummery'); ?>">Job Card Summary</a>
                             </li>

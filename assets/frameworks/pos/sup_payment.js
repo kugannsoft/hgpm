@@ -536,8 +536,8 @@ $("input[name='disablePrint']").on('ifChanged', function() {
                         settle_amount = parseFloat(accounting.unformat($("#tbl_payment tbody").find("[id='" + autorowid + "']").children('.settleAmount').html()));
                         
                         if (due_amount <= pay_amount) {
-                            var due_amount3 = due_amount;
-                            var pay_amount3 = pay_amount;
+                            var due_amount3 = parseFloat(due_amount.toFixed(2));
+                            var pay_amount3 = parseFloat(pay_amount.toFixed(2));
                             $("#" + autorowid + " .settleAmount").attr('invPay', (due_amount));
                             total_settle += due_amount;
                             pay_amount -= due_amount;

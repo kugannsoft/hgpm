@@ -64,9 +64,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <button type="submit" class="btn btn-flat btn-success">Show</button>
                                 </div>
                             </form>
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                                 <button onclick="printdiv()" class="btn btn-flat btn-default">Print</button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -81,24 +81,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <thead style="background-color: #f2f2f2;">
                                 <tr>
                                     <th>Job Section \ Make</th>
+                                    <th>Total</th>
                                     <?php foreach ($makes as $make): ?>
                                         <th><?= htmlspecialchars($make->make) ?></th>
                                     <?php endforeach; ?>
+            
                                 </tr>
+                                
                             </thead>
                             <tbody>
                                 <?php foreach ($jobsections as $section): ?>
                                     <tr>
+                                        
                                         <td style="text-align: left;"><?= htmlspecialchars($section->JobSection) ?></td>
                                         <?php foreach ($makes as $make): ?>
                                             <td id="jobcard-<?= $section->JobSecNo ?>-<?= $make->make_id ?>">
                                                 <?= $report_matrix[$section->JobSection][$make->make] ?>
                                             </td>
                                         <?php endforeach; ?>
+                                       
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+
+
+
                     </div>
                 </div>
             </div>
@@ -153,25 +161,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
     });
 
-    function drawTable(data) {
-        data.forEach(function(rowData) {
-            var row = $("<tr/>");
-            row.append("<td style='text-align: left;'>" + rowData.JobSection + "</td>");
+  function drawTable(data) {
 
-            <?php foreach ($makes as $make): ?>
-                var makeName = "<?= $make->make ?>";
-                var jobCardCount = rowData.makes[makeName] || 0;  
-                row.append("<td>" + jobCardCount + "</td>");
-            <?php endforeach; ?>
+      $('#reportTable tbody').empty();
 
-        
-            $('#reportTable tbody').append(row);
-        });
+    var makeCount = <?= count($makes) ?>;
+    var makeTotals = new Array(makeCount).fill(0);  
+    var grandTotal = 0; 
+    data.forEach(function(rowData) {
+        var row = $("<tr/>");
+
+        var rowTotal = 0;
+        var colIndex = 1;
+
+   
+        row.append("<td style='text-align: left;'>" + rowData.JobSection + "</td>");
+
+     
+         <?php foreach ($makes as $index => $make): ?>
+            var makeName = "<?= $make->make ?>";
+             var countVal = parseInt(rowData.makes[makeName]) || 0;
+            rowTotal +=  parseInt(countVal ) || 0;
+            makeTotals[<?= $index ?>] += countVal ;
+
+            rowTotal += parseInt(jobCardCount) || 0;
+        <?php endforeach; ?>
+          grandTotal += rowTotal;
+
+        row.append("<td><strong>" + rowTotal + "</strong></td>");
+
+       
+        colIndex = 1;
+        <?php foreach ($makes as $make): ?>
+            var makeName = "<?= $make->make ?>";
+            var jobCardCount = rowData.makes[makeName] || 0;
+            row.append("<td class='col-" + colIndex + "'>" + jobCardCount + "</td>");
+            colIndex++;
+        <?php endforeach; ?>
+
+        $('#reportTable tbody').append(row);
+    });
+
+      var totalRow = $("<tr/>");
+    totalRow.append("<td>Total</td>");           
+    totalRow.append("<td>" + grandTotal + "</td>");
+
+     for (var i = 0; i < makeTotals.length; i++) {
+        totalRow.append("<td>" + makeTotals[i] + "</td>");
     }
+
+    $('#reportTable tbody').append(totalRow);
+}
+
 
     
     function sumcolumn(rclass) {
         var sum = 0;
+   
         var elemnt = document.getElementsByClassName(rclass);
         $(elemnt).each(function () {
             var value = accounting.unformat($(this).text());
