@@ -249,6 +249,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th>Qty</th>
                                             <th>Price</th>
                                             <th>Total</th>
+                                            <th>PartType</th>
                                             <th>Insurance</th>
                                             <th></th>
                                         </tr>
