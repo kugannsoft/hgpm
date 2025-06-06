@@ -1514,10 +1514,9 @@ class Salesinvoice extends Admin_Controller {
         $creditAmount = $_POST['creditAmount'];
         $chequeAmount = $_POST['chequeAmount'];
         $advanceAmount = $_POST['advance_amount'];
-        $advancePayNo = $_POST['advance_pay_no'];
+        $advancePayNo = $_POST['advancePaymentNo'];
         $returnAmount = $_POST['return_amount'];
         $returnPayNo = $_POST['return_payment_no'];
-        //        var_dump($returnAmount,$returnPayNo);die();
         $companyAmount = 0;
         $customer = $_POST['cusCode'];
         // $returnPayNo = $_POST['return_payment_no'];
@@ -1812,7 +1811,15 @@ class Salesinvoice extends Admin_Controller {
                 $this->db->insert('jobinvoicepaydtl', $advancePay);
 
                 //release advance payment
-                $this->db->update('customerpaymentdtl',array('IsRelease'=>1),array('CusPayNo'=>$advancePayNo));
+                //$this->db->update('customerpaymentdtl',array('IsRelease'=>1),array('CusPayNo'=>$advancePayNo));
+
+                $advancePayArray = json_decode($advancePayNo, true);
+
+                if (is_array($advancePayArray)) {
+                    foreach ($advancePayArray as $payNo) {
+                        $this->db->update('customerpaymentdtl', ['IsRelease' => 1], ['CusPayNo' => $payNo]);
+                    }
+                }
 
             }
 
@@ -2714,7 +2721,14 @@ class Salesinvoice extends Admin_Controller {
         $query = $_GET['q'];
         $customer = $_GET['cusCode'];
         $location = $_GET['loc'];
-        $q = $this->db->select('customerpaymenthed.CusPayNo AS id,customerpaymenthed.TotalPayment AS Amount, CONCAT(customerpaymenthed.CusPayNo," ",TotalPayment," ",Remark) AS text')->from('customerpaymenthed')->join('customerpaymentdtl','customerpaymentdtl.CusPayNo=customerpaymenthed.CusPayNo')->where('customerpaymenthed.Location',$location)->where('customerpaymenthed.CusCode',$customer)->where('customerpaymenthed.PaymentType',2)->where('customerpaymenthed.IsCancel',0)->where('customerpaymentdtl.IsRelease',0)->like('customerpaymenthed.CusPayNo', $query)->order_by('customerpaymenthed.CusPayNo','DESC')->get()->result();
+        $q = $this->db->select('customerpaymenthed.CusPayNo AS id,customerpaymenthed.TotalPayment AS Amount, CONCAT(customerpaymenthed.CusPayNo," ",TotalPayment," ",Remark) AS text')
+        ->from('customerpaymenthed')
+        ->join('customerpaymentdtl','customerpaymentdtl.CusPayNo=customerpaymenthed.CusPayNo')
+        ->where('customerpaymenthed.Location',$location)->where('customerpaymenthed.CusCode',$customer)
+        ->where('customerpaymenthed.PaymentType',2)
+        ->where('customerpaymenthed.IsCancel',0)
+        ->where('customerpaymentdtl.IsRelease',0)->like('customerpaymenthed.CusPayNo', $query)
+        ->order_by('customerpaymenthed.CusPayNo','DESC')->get()->result();
         echo json_encode($q);die;
     }
 
