@@ -94,36 +94,36 @@ $(document).ready(function() {
         });
     });
 
-    $("#advance_payment_no").autocomplete({
-        source: function(request, response) {
-            $.ajax({
-                url: '../salesinvoice/loadadvancepaymentjson',
-                dataType: "json",
-                data: {
-                    q: request.term,
-                    cusCode:cusCode,
-                    loc:loc
-                },
-                success: function(data) {
-                    response($.map(data, function(item) {
-                        return {
-                            label: item.text,
-                            value: item.id,
-                            data: item
-                        }
-                    }));
-                }
-            });
-        },
-        autoFocus: true,
-        minLength: 0,
-        select: function(event, ui) {
-            advance_payment_no = ui.item.value;
-            $("#advance_amount").val(0);
-            $("#madvance").html(0);
-            loadAdvanceData(advance_payment_no);
-        }
-    });
+    // $("#advance_payment_no").autocomplete({
+    //     source: function(request, response) {
+    //         $.ajax({
+    //             url: '../salesinvoice/loadadvancepaymentjson',
+    //             dataType: "json",
+    //             data: {
+    //                 q: request.term,
+    //                 cusCode:cusCode,
+    //                 loc:loc
+    //             },
+    //             success: function(data) {
+    //                 response($.map(data, function(item) {
+    //                     return {
+    //                         label: item.text,
+    //                         value: item.id,
+    //                         data: item
+    //                     }
+    //                 }));
+    //             }
+    //         });
+    //     },
+    //     autoFocus: true,
+    //     minLength: 0,
+    //     select: function(event, ui) {
+    //         advance_payment_no = ui.item.value;
+    //         $("#advance_amount").val(0);
+    //         $("#madvance").html(0);
+    //         loadAdvanceData(advance_payment_no);
+    //     }
+    // });
 
     function loadAdvanceData(pay_no){
         console.log(pay_no);
@@ -1443,7 +1443,7 @@ $(document).ready(function() {
         var costPriceArr = JSON.stringify(costPrice);
         var estLineNoArr = JSON.stringify(estLineNo);
         var totalflatPrice = JSON.stringify(totalflatPrice);
-     
+        var advancePaymentNo = JSON.stringify(selectedAdvancePayments);
 
         var supNum = $("#supplemetNo").val();
         estimateNo = $("#estimateNo").val();
@@ -1524,7 +1524,7 @@ $(document).ready(function() {
                         bank_amount:bank_amount,cashAmount:cashAmount,creditAmount:creditAmount,chequeAmount:chequeAmount,cardAmount:cardAmount,advance_amount:advance_amount,
                         advance_pay_no:advance_payment_no,return_payment_no:return_payment_no,return_amount:return_amount,ccAmount: ccAmountArr, ccRef: ccRefArr, ccType: ccTypeArr,
                         ccName: ccNameArr,chequeNo:chequeNo,bank: bank,chequeReference: chequeReference, chequeRecivedDate: chequeReciveDate, chequeDate: chequeDate,pay_remark:pay_remark,
-                        totalflatPrice:totalflatPrice,selectedEmployeesArr:selectedEmployeesArr},
+                        totalflatPrice:totalflatPrice,advancePaymentNo:advancePaymentNo},
                     success: function(data) {
                         var newdata = JSON.parse(data);
                         var fb = newdata.fb;
