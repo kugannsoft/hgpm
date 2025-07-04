@@ -284,11 +284,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <input type="button" class="btn btn-success" required="required"  name="addJob" id="addJob" value="Add">
                             </div>
                         </div>
-                        <!-- <div class="col-sm-1">
+                        <div class="col-sm-1">
                             <div  class="form-group">
-                               <input type="number" class="form-control" required="required" onfocus="this.select();" name="costPrice" min="0" id="costPrice" value="0" placeholder="Cost Price">
+                               <input type="number" class="form-control" required="required" onfocus="this.select();" name="cost_rice" min="0" id="cost_price" value="0" placeholder="Cost Price">
                             </div>
-                        </div> -->
+                        </div>
                         
                     </div>
                     <div class="row">
@@ -384,8 +384,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <tr><td>Net Amount</td><td>&nbsp;:&nbsp;</td><td id="totalNet" class="text-right" style="font-weight: bold;font-size:25px;color:#3c8dbc;"></td></tr>
                                 </table>
                                 <hr>
+                               
                                 <div class="row">
                                     <div class="col-sm-1">&nbsp;</div>
+                                   
                                     <div class="col-sm-10">
                                         <button class="btn btn-primary btn-lg btn-block" type="button" id="btnSaveTemp">Temparary Save</button>&nbsp;
                                     </div>
@@ -399,8 +401,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                          Save</button>&nbsp;
                                     </div>
                                     <?php endif; ?> 
+                                
                                     <div class="col-sm-1">&nbsp;</div>
                                 </div>
+                              
                                 <div class="row">
                                     <div class="col-sm-1">&nbsp;</div>
                                     <div class="col-sm-10">

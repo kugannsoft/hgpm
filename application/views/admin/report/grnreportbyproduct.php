@@ -103,6 +103,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <td style="width: 280px;">Product Name</td>
                                 <td style="width: 80px;">Qty</td>
                                 <td style="width: 100px;">Sales Qty</td>
+                                <td style="width: 100px;">Return Qty</td>
                                 <td style="width: 100px;">Blance Qty</td>
                                 <td style="width: 150px;">Actual Qty</td>
                             </tr>
@@ -330,6 +331,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     productstock = (value[i].productstock);
                     Prd_Description = (value[i].Prd_Description);
                     total_sales_qty = (value[i].total_sales_qty);
+                    total_return_qty = (value[i].total_return_qty);
                     blance_qty = parseFloat((gr_qty) - (value[i].total_sales_qty));
                     
                     totalStock+=(parseFloat(value[i].GRN_Qty));
@@ -344,7 +346,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $("#totalstock").html(accounting.formatMoney(totalStock));
                     
                     if (i == (value.length - 1)) {
-                        $("#saletable").append("<tr style='background-color:#A9A9A9;color:#fff;'><td>Total</td><td>" + ProductCode + "</td><td>" + Prd_Description + "</td><td>" + accounting.formatMoney(gr_qty) + "</td><td>" + total_sales_qty + "</td><td><b></b>" + accounting.formatMoney(blance_qty) + "</b></td><td><b></b>" + accounting.formatMoney(productstock) + "</b></td></tr>");
+                        $("#saletable").append("<tr style='background-color:#A9A9A9;color:#fff;'><td>Total</td><td>"
+                        + ProductCode + "</td><td>"
+                        + Prd_Description + "</td><td>" 
+                        + accounting.formatMoney(gr_qty) + "</td><td>" 
+                        + total_sales_qty + "</td><td><b></b>" 
+                        + total_return_qty + "</td><td><b></b>" 
+                        + accounting.formatMoney(blance_qty) + "</b></td><td><b></b>" 
+                        + accounting.formatMoney(productstock) + "</b></td></tr>");
                         $("#saletable").append("<tr><td colspan='12'>&nbsp;</td></tr>");
                         gr_qty = 0;
                         gr_net = 0;
@@ -379,8 +388,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function printdiv() {
         $("#saletable").print({
-            prepend: "<h3 style='text-align:center'>Product Detail Report</h3><hr/>",
-            title: 'Date vise Sales Report'
+            prepend: "<h3 style='text-align:center'>Goods Recevied Note by Product Report</h3><hr/>",
+            title: 'Goods Recevied Note by Product'
         });
     }
     

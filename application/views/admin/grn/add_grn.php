@@ -299,9 +299,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <th>Unit Price</th>
                                             <th>Selling Price</th>
                                             <th>Discount (%)</th>
-                                            <th>Total Net Amount</th>
+                                            <th>Net Amount</th>
                                             <th>VAT/SST Amount</th>
-                                            <th>Serial</th>
+                                            <th>Net + Vat Amount</th>
                                             <th></th>
                                         </tr>
                                     </thead>

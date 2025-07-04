@@ -502,6 +502,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li class="<?= active_link_function('salesbyproduct') ?>">
                                 <a href="<?php echo site_url('admin/report/salesbyproduct'); ?>">Product wise sale</a>
                             </li>
+                             <li class="<?= active_link_function('profitReport') ?>">
+                                <a href="<?php echo site_url('admin/report/profitReport'); ?>">Product Profit Report</a>
+                            </li>
+                               <li class="<?= active_link_function('profitSummuryReport') ?>">
+                                <a href="<?php echo site_url('admin/report/profitSummuryReport'); ?>"> Profit Summary Report</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

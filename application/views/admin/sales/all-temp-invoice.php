@@ -124,14 +124,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	            {"data": "JobEstimateNo", searchable: false},
                 {"data": null, orderable: false, searchable: false,
                             mRender: function (data, type, row) {
-                                  if(row.IsInvoice==1 && row.IsCompelte==1){
+                                  if(row.invoice_status == 'Complete'){
                                     return '<label class="label label-success">Created</label>';
-                                }else if(row.IsInvoice==1){
-                                    return '<label class="label label-success">Created</label>';
-                                }else if(row.IsInvoice==0){
+
+                                }else if(row.invoice_status == 'Pending'){
                                     return '<label class="label label-warning">Pending</label>';
-                                }else if(row.IsInvoice==2){
-                                    return '<label class="label label-danger">Canceled</label>';
                                 }
                             }
                 },
@@ -149,7 +146,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php if (in_array("SM44", $blockEdit) || $blockEdit == null) { ?>
                     "data": null, orderable: false, searchable: false,
                     mRender: function (data, type, row) {
-                        if (row.IsInvoice == 0 && row.IsCancel == 0) {
+                        if (row.invoice_status == 'Pending') {
                             return '<a href="../Salesinvoice/job_invoice?type=tempinv&id=' + Base64.encode(row.JobInvNo) + '" class="btn btn-xs btn-default" >Edit</a> &nbsp;';
                         } else {
                             return '<a href="#" disabled class="btn btn-xs btn-default" >Edit</a> &nbsp;';
@@ -158,7 +155,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?PHP  } else {?>
                     "data": null, orderable: false, searchable: false,
                     mRender: function (data, type, row) {
-                        if (row.IsInvoice == 0 && row.IsCancel == 0) {
+                        if (row.invoice_status == 'Pending') {
                             return '<a href="../Salesinvoice/job_invoice?type=tempinv&id=' + Base64.encode(row.JobInvNo) + '" class="btn btn-xs btn-default" disabled>Edit</a> &nbsp;';
                         } else {
                             return '<a href="#"  class="btn btn-xs btn-default" disabled>Edit</a> &nbsp;';

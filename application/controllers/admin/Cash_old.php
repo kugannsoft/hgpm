@@ -117,6 +117,7 @@ class Cash extends Admin_Controller {
             $date = ($_REQUEST['cash_date']);
             $location = ($_REQUEST['location']);
             $user = $_SESSION['user_id'];
+            //echo var_dump($user);die;
             // $last_date = date('Y-m-d', strtotime($date. ' - 1 days'));
 
             $isend = $this->db->select('ID')->from('cashierbalancesheet')->where('DATE(BalanceDate)' ,$date)->get()->num_rows();
@@ -281,10 +282,9 @@ class Cash extends Admin_Controller {
         $BalanceDate= $_POST['payDate'].date(" H:i:s");
         $float =$_POST['floatAmount'];
         $invUser=$_POST['invUser'];
+        
         $this->db->trans_start();
-        //$this->db->query("CAll SPT_SAVE_CASIHER_BALANCE('1','$loc','$BalanceDate','$datetime','$float','$mode','$id','$invUser')");
         $this->db->query("CAll SPT_SAVE_CASIHER_BALANCE('1','$float','$BalanceDate','$datetime','$mode','$loc','$id','$invUser')");
-        //echo $this->db->last_query();
         $this->db->trans_complete();
         $res2 =  $this->db->trans_status();
 
@@ -330,7 +330,7 @@ class Cash extends Admin_Controller {
         $res2 =  $this->db->trans_status();
         $return = array('InOutID' => ($id),'InOutDate' => $datetime);
         $return['fb'] = $res2;
-        $res3=$this->cashSummary($_POST['payDate']);//send email
+        $res3=$this->cashSummary($_POST['payDate']);
         $return['email'] = $res3;
         echo json_encode($return);
         die;

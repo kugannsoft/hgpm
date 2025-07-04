@@ -113,6 +113,11 @@ class Salesinvoice extends Admin_Controller {
                     $this->data['job_count'] =null;
                 }
                 $this->data['job']=$this->db->select('jobinvoicehed.*')->from('jobinvoicehed')->where('jobinvoicehed.JCustomer',$cusCode)->where('jobinvoicehed.IsCancel',0)->get()->result();
+
+                 $this->data['jobUser']=$this->db->select('users.first_name as FN')->from('jobinvoicehed')
+                ->join('users','jobinvoicehed.JobInvUser = users.id')->where('JobInvNo', $invNo)->get()->row();
+              
+
             $this->data['invCus']= $this->db->select('customer.*')
                 ->from('customer')->join('vehicledetail','vehicledetail.CusCode=customer.CusCode')->where('customer.CusCode',$cusCode)->get()->row();
                 $this->data['invVehi']= $this->db->select('vehicledetail.ChassisNo,vehicledetail.contactName,make.make,model.model')->from('vehicledetail')->join('make','make.make_id=vehicledetail.Make','left')->join('model','model.model_id=vehicledetail.Model','left')->where('vehicledetail.RegNo',$regNo)->get()->row();
@@ -838,6 +843,7 @@ class Salesinvoice extends Admin_Controller {
     public function job_invoice() {
         
         $id = isset($_GET['id'])?$_GET['id']:NULL;
+        
         $type = isset($_GET['type'])?$_GET['type']:NULL;
         $sup = isset($_GET['sup'])?$_GET['sup']:0;
 
@@ -885,14 +891,16 @@ class Salesinvoice extends Admin_Controller {
             // $this->db->insert('insu_company', array('InsuranceName' => 'Union Insurance', ));
             if($type=='inv'){
                 $this->data['JobInvoiceNo'] = base64_decode($id);
+                
             }elseif($type=='job'){
                 $this->data['JobNo'] = base64_decode($id);
                  $this->data['TempNo'] = $this->db->select('JobInvNo')->from('tempjobinvoicehed')->where('JobCardNo',base64_decode($id))->get()->row();
-            }elseif($type=='est'){
-                $this->data['EstimateNo'] = base64_decode($id);
-            }elseif($type=='tempinv'){
-                $this->data['TempNo'] = base64_decode($id);
-            
+                }elseif($type=='est'){
+                    $this->data['EstimateNo'] = base64_decode($id);
+                }elseif($type=='tempinv'){
+                    $this->data['TempNo'] = base64_decode($id);
+                    $this->data['IsInvoice'] = $this->db->select('IsInvoice')->from('tempjobinvoicehed')->where('JobInvNo',$this->data['TempNo'])->get()->row();
+                    // echo var_dump( $this->data['IsInvoice']);die;
             }
                 $this->data['supNo'] = $sup;
 
@@ -1231,6 +1239,7 @@ class Salesinvoice extends Admin_Controller {
     }
 
     public function saveTempInvoices() {
+        
        
         $totalCost=0;
         $location=$_SESSION['location'];
@@ -1427,10 +1436,15 @@ class Salesinvoice extends Admin_Controller {
 
                 $flatQty = isset($flatQtyArr[$i]) ? $flatQtyArr[$i] : 0; 
                 $employeeData = isset($selectedEmployeesArr[$i]) ? $selectedEmployeesArr[$i] : [];
-               
-                $employeeData = str_replace(['[', ']', '"'], '', $employeeData);
-                $employeeData1 = explode(',', trim($employeeData, '"'));
-                // echo var_dump($employeeData);
+                            
+                            if (!is_array($employeeData)) {
+                                $employeeData = json_decode($employeeData, true);
+                                if (!is_array($employeeData)) {
+                                    $employeeData = [];
+                                }
+                            }
+                    // echo var_dump(json_encode($employeeData));die;
+                
                  $jobDtl = array(
                     'JobInvNo' => $data['JobInvNo'],
                     'JobCardNo' => $data['JobCardNo'],
@@ -1457,14 +1471,14 @@ class Salesinvoice extends Admin_Controller {
                     'JobNetAmount' => $net_priceArr[$i],
                     'JobinvoiceTimestamp' => $estTimestmp,
                     'FlatQty' => $flatQty,
-                    'Employee' => json_encode($employeeData1),
+                    'Employee' => json_encode($employeeData),
                     );
                  $this->db->insert('tempjobinvoicedtl',$jobDtl);
            
-                    if (!is_string($employeeData1)) {
-                        $employeeList = $employeeData1; 
+                     if (!is_string($employeeData)) {
+                        $employeeList = $employeeData; 
                     } else {
-                        $employeeList = json_decode($employeeData1, true);
+                        $employeeList = json_decode($employeeData, true);
                     }
                         //echo var_dump($employeeList);die;
                     foreach ($employeeList as $employee) {
@@ -1613,7 +1627,7 @@ class Salesinvoice extends Admin_Controller {
             $data1['OdoOutUnit']=$_POST['mileageoutUnit'];
             //////////////////////////////////////////////
             
-            $tempInvoiceNo = $_POST['tempInvoiceNo'];
+            $tempInvoiceNo = $_POST['invoiceNo'];
             
             $net_priceArr = json_decode($_POST['net_price']);
             $qtyArr = json_decode($_POST['qty']);
@@ -1678,13 +1692,20 @@ class Salesinvoice extends Admin_Controller {
                             }else{
                                 $estTimestmp = date("Y-m-d H:i:s");
                             }
-                            $flatQty = isset($flatQtyArr[$i]) ? $flatQtyArr[$i] : 0; 
-                            $employeeData = isset($selectedEmployeesArr[$i]) ? $selectedEmployeesArr[$i] : [];
+                             $employeeData = isset($selectedEmployeesArr[$i]) ? $selectedEmployeesArr[$i] : [];
                             
-                            $employeeData = str_replace(['[', ']', '"'], '', $employeeData);
-                             //echo var_dump(json_encode($employeeData));die;
+                            if (!is_array($employeeData)) {
+                                $employeeData = json_decode($employeeData, true);
+                                if (!is_array($employeeData)) {
+                                    $employeeData = [];
+                                }
+                            }
+                            
+
+                    $flatQty = isset($flatQtyArr[$i]) ? $flatQtyArr[$i] : 0; 
+                           // echo var_dump(json_encode($employeeData));die;
                     //  $employeeData1 = explode(',', trim($employeeData, '"'));
-                    //  echo var_dump($employeeData1);die;
+                    //   echo var_dump($employeeData1);die;
                     $jobDtl = array(
                         'JobInvNo' => $data['JobInvNo'],
                         'JobCardNo' => $data['JobCardNo'],
@@ -1817,7 +1838,10 @@ class Salesinvoice extends Admin_Controller {
 
                 if (is_array($advancePayArray)) {
                     foreach ($advancePayArray as $payNo) {
-                        $this->db->update('customerpaymentdtl', ['IsRelease' => 1], ['CusPayNo' => $payNo]);
+                       $this->db->update('customerpaymentdtl', 
+                            ['IsRelease' => 1,'InvoiceNo' => $invoiceNo], 
+                            ['CusPayNo' => $payNo,]
+                        );
                     }
                 }
 
@@ -2152,7 +2176,19 @@ class Salesinvoice extends Admin_Controller {
              $this->db->insert('jobinvoicepaydtl', $advancePay);
 
              //release advance payment
-             $this->db->update('customerpaymentdtl',array('IsRelease'=>1),array('CusPayNo'=>$advancePayNo));
+             //$this->db->update('customerpaymentdtl',array('IsRelease'=>1),array('CusPayNo'=>$advancePayNo),array('InvoiceNo'=>$invoiceNo));
+
+              $advancePayArray = json_decode($advancePayNo, true);
+              if (is_array($advancePayArray)) {
+                  foreach ($advancePayArray as $payNo) {
+                    
+                      $this->db->update('customerpaymentdtl', 
+                        ['IsRelease' => 1,'InvoiceNo' => $invoiceNo], 
+                        ['CusPayNo' => $payNo,]
+                    );
+
+                    }
+                }
 
          }
 
@@ -2721,12 +2757,14 @@ class Salesinvoice extends Admin_Controller {
         $query = $_GET['q'];
         $customer = $_GET['cusCode'];
         $location = $_GET['loc'];
-        $q = $this->db->select('customerpaymenthed.CusPayNo AS id,customerpaymenthed.TotalPayment AS Amount, CONCAT(customerpaymenthed.CusPayNo," ",TotalPayment," ",Remark) AS text')
+        $q = $this->db->select('customerpaymenthed.CusPayNo AS id,customerpaymenthed.TotalPayment AS Amount, 
+        CONCAT(customerpaymenthed.CusPayNo," ",TotalPayment," ",Remark) AS text,customerpaymenthed.IsAdvanceCancel')
         ->from('customerpaymenthed')
         ->join('customerpaymentdtl','customerpaymentdtl.CusPayNo=customerpaymenthed.CusPayNo')
         ->where('customerpaymenthed.Location',$location)->where('customerpaymenthed.CusCode',$customer)
         ->where('customerpaymenthed.PaymentType',2)
         ->where('customerpaymenthed.IsCancel',0)
+        ->where('customerpaymenthed.IsAdvanceCancel',0)
         ->where('customerpaymentdtl.IsRelease',0)->like('customerpaymenthed.CusPayNo', $query)
         ->order_by('customerpaymenthed.CusPayNo','DESC')->get()->result();
         echo json_encode($q);die;
@@ -2778,6 +2816,11 @@ class Salesinvoice extends Admin_Controller {
                 'Remark' => $_POST['remark'],
                 'CancelUser' => $_SESSION['user_id']);
                 $this->db->insert('canceljobinvoice', $invCanel);
+
+                  $this->db->update('customerpaymentdtl', 
+                            ['IsRelease' => 0], 
+                            ['InvoiceNo' => $jobInvNo]
+                        );
                 
                 //check is made any previous payment
                 $isPay = $this->db->select('count(invoicesettlementdetails.InvNo) AS inv')->from('invoicesettlementdetails')->join('customerpaymenthed', 'invoicesettlementdetails.CusPayNo = customerpaymenthed.CusPayNo', 'INNER')->where('invoicesettlementdetails.InvNo', $jobInvNo)->where('customerpaymenthed.IsCancel', 0)->get()->row()->inv;
@@ -2869,6 +2912,11 @@ class Salesinvoice extends Admin_Controller {
                     'Remark' => $_POST['remark'],
                     'CancelUser' => $_SESSION['user_id']);
                 $this->db->insert('canceljobinvoice', $invCanel);
+
+                 $this->db->update('customerpaymentdtl', 
+                            ['IsRelease' => 0], 
+                            ['InvoiceNo' => $jobInvNo]
+                        );
 
                 //check is made any previous payment
                 $isPay = $this->db->select('count(invoicesettlementdetails.InvNo) AS inv')->from('invoicesettlementdetails')->join('customerpaymenthed', 'invoicesettlementdetails.CusPayNo = customerpaymenthed.CusPayNo', 'INNER')->where('invoicesettlementdetails.InvNo', $jobInvNo)->where('customerpaymenthed.IsCancel', 0)->get()->row()->inv;
@@ -2996,7 +3044,7 @@ class Salesinvoice extends Admin_Controller {
         }elseif($_POST['action']==1 && $SalesInvType==2){
             $grnNo = $this->Salesinvoice_model->get_max_code('TaxInvoiceNo'.$location);
         }elseif($_POST['action']==1 && $SalesInvType==3){
-            $grnNo = $this->Salesinvoice_model->get_max_code('CreditInvoiceNo'.$location);
+            $grnNo = $this->Salesinvoice_model->get_max_code('SalesInvoiceNo'.$location);
         }elseif ($_POST['action']==2) {
            $grnNo = $_POST['grn_no'];
         }
@@ -3171,7 +3219,6 @@ class Salesinvoice extends Admin_Controller {
 
     public function cancelSalesInvoice() {
     
-        
             $checkRole = $_SESSION['role'];
 
 // if Role is ADMIN (Role id ==1)
@@ -3647,13 +3694,11 @@ public function all_delivery_note() {
     }
 
      public function cancelJobPayment() {
-
+        
          $checkRole = $_SESSION['role'];
-
-// if Role is ADMIN (Role id ==1)
+         // if Role is ADMIN (Role id ==1)
          if ($checkRole == 1) {
              $jobInvNo=$this->input->post('jobinvno');
-
              $this->db->trans_start();
              $cancelNo = $this->get_max_code('CancelJobInvPayment');
              $invCanel = array(
@@ -3666,23 +3711,30 @@ public function all_delivery_note() {
                  'CancelUser' => $_SESSION['user_id']);
              $this->db->insert('canceljobinvpayment', $invCanel);
 
+             //customerpaymentdtl is realse==0;
+                $this->db->update('customerpaymentdtl', 
+                            ['IsRelease' => 0], 
+                            ['InvoiceNo' => $jobInvNo]
+                        );
+
+
              //check is made any previous payment
              $isPay = $this->db->select('count(invoicesettlementdetails.InvNo) AS inv')->from('invoicesettlementdetails')->join('customerpaymenthed', 'invoicesettlementdetails.CusPayNo = customerpaymenthed.CusPayNo', 'INNER')->where('invoicesettlementdetails.InvNo',$jobInvNo)->where('customerpaymenthed.IsCancel',0)->get()->row()->inv;
-
              if ($isPay > 0) {
                  echo 2;
-             }else{
-                 //check invoice already cancel or not
-                 $query0 = $this->db->get_where('jobinvoicehed', array('JobInvNo' => $invCanel['JobInvoiceNo'],'IsCancel'=>0));
-
-                 if ($query0->num_rows() > 0) {
-                     $query = $this->db->get_where('jobinvoicedtl', array('JobInvNo' => $invCanel['JobInvoiceNo']));
-
-
-
-                     //update/ cancel credit invoice
-                     $query2 = $this->db->get_where('creditinvoicedetails', array('InvoiceNo' => $invCanel['JobInvoiceNo']));
-                     if ($query2->num_rows() > 0) {
+                }else{
+                    //check invoice already cancel or not
+                    $query0 = $this->db->get_where('jobinvoicehed', array('JobInvNo' => $invCanel['JobInvoiceNo'],'IsCancel'=>0));
+                    
+                    if ($query0->num_rows() > 0) {
+                        $query = $this->db->get_where('jobinvoicedtl', array('JobInvNo' => $invCanel['JobInvoiceNo']));
+                        
+                        
+                        
+                        //update/ cancel credit invoice
+                        $query2 = $this->db->get_where('creditinvoicedetails', array('InvoiceNo' => $invCanel['JobInvoiceNo']));
+                        if ($query2->num_rows() > 0) {
+                        //  echo var_dump($query);die;
                          $this->db->update('creditinvoicedetails', array('IsCancel' => 1), array('InvoiceNo' => $invCanel['JobInvoiceNo']));
                          foreach ($query2->result_array() as $row) {
                              //update customer outstanding

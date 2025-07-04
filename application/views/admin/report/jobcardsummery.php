@@ -176,8 +176,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function printdiv() {
         $("#saletable").print({
-            prepend:"<h3 style='text-align:center'>Job Invoice Summury by date Report</h3><hr/>",
-            title:'Date vise Sales Report'
+            prepend:"<h3 style='text-align:center'>Job Card Summary  Report</h3><hr/>",
+            title:'JOB CARD SUMMARY'
         });
     }
      $("#saletable").freezeHeader();

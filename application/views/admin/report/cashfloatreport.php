@@ -217,8 +217,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function printdiv() {
         $("#saletable").print({
-            prepend:"<h3 style='text-align:center'>Date vise cash float Report</h3><hr/>",
-            title:'Date vise Sales Report'
+            prepend:"<h3 style='text-align:center'>Expenses/ Earninig Report</h3><hr/>",
+            title:'Expenses/ Earninig'
         });
     }
      $("#saletable").freezeHeader();

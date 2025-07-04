@@ -29,22 +29,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 }else if($grn_hed->GRN_No==1){
                                     echo '<label class="label label-danger">Canceled</label>';
                                 } ?></td></tr>
-                                    <tr><td>GRN No</td><td>:</td><td class="text-right" id="totalAmount"><?php echo $grn_hed->GRN_No;?></td></tr>
-                                    <tr><td>Date</td><td>:</td><td class="text-right"  id="totalDis"><?php echo $grn_hed->GRN_Date;?></td></tr>
-                                <tr><td>Supplier</td><td>:</td><td class="text-right"  id="totalNet"><?php echo $grn_hed->SupName;?></td></tr>
-                                    
+                                    <tr><td>GRN No</td><td>:</td><td class="text-right" id=""><?php echo $grn_hed->GRN_No;?></td></tr>
+                                    <tr><td>Date</td><td>:</td><td class="text-right"  id=""><?php echo $grn_hed->GRN_Date;?></td></tr>
+                                    <tr><td>Supplier</td><td>:</td><td class="text-right"  id=""><?php echo $grn_hed->SupName;?></td></tr>
+                                    <tr><td>Invoice No</td><td>:</td><td class="text-right"  id=""> <?php echo strtoupper($grn_hed->GRN_InvoiceNo); ?></td></tr>
+                                    <tr><td>Remarks</td><td>:</td><td class="text-right"  id=""><?php echo $grn_hed->GRN_Remark;?></td></tr>
+                                    <tr><td>Data Entry by</td><td>:</td><td class="text-right"  id=""> <?php echo strtoupper($grn_hed->first_name); ?></td></tr>
+                                    <tr><td>Checked by</td><td>:</td><td class="text-right"  id=""></td></tr>
+                                    <tr><td>Authorized by</td><td>:</td><td class="text-right"  id=""></td></tr>
+                                    <tr><td>Payment No</td><td>:</td><td class="text-right"  id=""></td></tr>
                                 </table>
                                 
                             </div>
                             <div class="col-md-4">
                                 <table class="table">
                                     <tr><td></td><td></td><td class="text-right"></td></tr>
-                                    <tr><td>Total Amount</td><td>:</td><td class="text-right" id="totalAmount"><?php echo number_format($grn_hed->GRN_Amount,2);?></td></tr>
-                                    <tr><td>Total Discount</td><td>:</td><td class="text-right"  id="totalDis"><?php echo number_format($grn_hed->GRN_DisAmount,2);?></td></tr>
+                                    <tr><td>Total GRN Amount</td><td>:</td><td class="text-right" id=""><?php echo number_format($grn_hed->GRN_Amount,2);?></td></tr>
+                                    <tr><td>GRN Discount Amount</td><td>:</td><td class="text-right"  id="totalDis"><?php echo number_format($grn_hed->GRN_DisAmount,2);?></td></tr>
                                
-                                <tr><td>Additional Charges</td><td>:</td><td class="text-right"  id="totalDis"><?php echo number_format($grn_hed->GRN_AdditionalCharges,2);?></td></tr>
-                                 <tr><td>Total Net Amount</td><td>:</td><td class="text-right"  id="totalNet"><?php echo number_format($grn_hed->GRN_NetAmount+$grn_hed->GRN_AdditionalCharges,2);?></td></tr>
-                                    
+                                <tr><td>Additional Charges</td><td>:</td><td class="text-right"  id=""><?php echo number_format($grn_hed->GRN_AdditionalCharges,2);?></td></tr>
+                                 <tr><td>Net GRN Amount</td><td>:</td><td class="text-right"  id=""><?php echo number_format($grn_hed->GRN_Amount+$grn_hed->GRN_AdditionalCharges -$grn_hed->GRN_DisAmount,2);?></td></tr>
+                                <tr><td>GRN VAT Amount</td><td>:</td><td class="text-right"  id=""><?php echo number_format($grn_hed->GRN_VatNetAmount,2);?></td></tr>
+                                <tr><td>Total GRN with VAT Amount</td><td>:</td><td class="text-right"  id=""><?php echo number_format($grn_hed->GRN_NetAmount+$grn_hed->GRN_AdditionalCharges,2);?></td></tr>
+
                                 </table>
                             </div>
                             <div class="col-sm-2">

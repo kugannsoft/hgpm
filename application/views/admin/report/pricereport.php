@@ -254,8 +254,8 @@ $("#supplier").select2({
     }
     function printdiv() {
         $("#saletable").print({
-            prepend: "<h3 style='text-align:center'>Product Detail Report</h3><hr/>",
-            title: 'Date vise Sales Report'
+            prepend: "<h3 style='text-align:center'>Price Stock Report</h3><hr/>",
+            title: 'Price Stock'
         });
     }
      $("#saletable").freezeHeader();

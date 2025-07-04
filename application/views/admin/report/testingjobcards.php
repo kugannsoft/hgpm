@@ -346,7 +346,7 @@ var toatl_discount =0;
     function printdiv() {
         $("#saletable").print({
             prepend: "<h3 style='text-align:center'>Product vise Sales Report</h3><hr/>",
-            title: 'Date vise Sales Report'
+            title: ''
         });
     }
 

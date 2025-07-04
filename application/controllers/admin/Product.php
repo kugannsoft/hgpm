@@ -62,8 +62,10 @@ class Product extends Admin_Controller {
 
     public function loadmodal_editproduct() {
         $productid = $_REQUEST['id'];
+       
         $this->data['product']    = $this->Product_model->loadproductbyid($productid);
         $this->data['productpl']  = $this->Product_model->loadpricelistbyid($productid);
+        $this->data['productStockpls']  = $this->Product_model->loadPriceStockPrice($productid);
         $this->data['productloc'] = $this->Product_model->loadproductlocationbyid($productid);
         
         $this->data['brand'] = $this->db->select('*')->from('productbrand')->get()->result();
@@ -145,6 +147,43 @@ class Product extends Admin_Controller {
         echo json_encode($this->data['product']);
         die;
     }
+    public function updateNewSellingPrice(){
+      
+        $proCode  = $this->input->post('productCode', true);  
+        $oldPrice = $this->input->post('old_price',   true);
+        $newPrice = $this->input->post('new_price',   true);
+        
+        
+        if (!is_numeric($oldPrice) || !is_numeric($newPrice)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid price input.']);
+            exit;
+        }
+
+       
+        $this->db->where('PSCode', $proCode)
+                ->where('Price',  (float) $oldPrice)
+                ->set  ('Price',  (float) $newPrice)
+                ->update('pricestock');
+
+        $this->db->where('ProductCode',$proCode)
+            ->set('Prd_SetAPrice', (float) $newPrice)
+            ->update('product');
+
+           $this->db->where('ProductCode',$proCode)
+            ->set('ProductPrice', (float) $newPrice)
+            ->update('productprice');
+       
+       if ($this->db->affected_rows() === 1) {
+            echo json_encode(['status' => 'success', 'message' => 'Price updated successfully.']);
+        } else {
+            echo json_encode(['status' => 'warning', 'message' => 'No change made.']);
+        }
+
+        exit;
+
+    }
+
+
 
     public function getProductByBarCode() {
         $dep = $_POST['proCode'];
@@ -367,6 +406,7 @@ class Product extends Admin_Controller {
     }
 
     public function update_product() {
+       
         $productcode = $_POST['productCode'];
 
         $data['Prd_Description'] = $_POST['productname'];

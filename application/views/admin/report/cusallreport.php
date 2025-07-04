@@ -265,7 +265,7 @@ $("input[name='isall']").on('ifChanged', function(event){
     function printdiv() {
         $("#report").print({
             prepend: $("#Report_header").html(),
-            title: 'Date vise Sales Report'
+            title: ''
         });
     }
 

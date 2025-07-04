@@ -73,7 +73,10 @@ class Grn extends Admin_Controller {
         $this->data['pagetitle'] = $this->page_title->show();
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
         $this->data['grn'] = $this->Grn_model->loadGrnById($grnNo);
-         $this->data['grn_hed'] = $this->db->select('goodsreceivenotehed.*,supplier.SupName')->from('goodsreceivenotehed')->where('goodsreceivenotehed.GRN_No', $grnNo)
+         $this->data['grn_hed'] = $this->db->select('goodsreceivenotehed.*,supplier.SupName,users.first_name')
+         ->from('goodsreceivenotehed')
+         ->join('users','goodsreceivenotehed.GRN_User=users.id')
+         ->where('goodsreceivenotehed.GRN_No', $grnNo)
        ->join('supplier', 'supplier.SupCode = goodsreceivenotehed.GRN_SupCode')->get()->row();
         $this->data['location'] = $this->Grn_model->loadlocations();
         $this->template->admin_render('admin/grn/view-grn', $this->data);

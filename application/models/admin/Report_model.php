@@ -112,6 +112,34 @@ class Report_model extends CI_Model {
         }
         return $this->db->get()->result();
     }
+
+      public function loadprofit($startdate, $enddate) {
+       
+            $this->db->select('jobinvoicedtl.*');
+            $this->db->from('jobinvoicedtl');
+            $this->db->where('JobType',2);
+            $this->db->where('DATE(jobinvoicedtl.JobinvoiceTimestamp) <=', $enddate);
+            $this->db->where('DATE(jobinvoicedtl.JobinvoiceTimestamp) >=', $startdate);
+            $this->db->order_by('JobInvNo');
+        return $this->db->get()->result();
+    }
+
+   public function loadprofitSummary($startdate, $enddate) {
+        $this->db->select('
+            DATE(jobinvoicedtl.JobinvoiceTimestamp) as InvoiceDate,
+            SUM(jobinvoicedtl.JobCost) as TotalJobCost,
+            SUM(jobinvoicedtl.JobPrice) as TotalJobPrice,
+            (jobinvoicedtl.JobQty) as TotalJobQty,
+            SUM((jobinvoicedtl.JobPrice - jobinvoicedtl.JobCost) * jobinvoicedtl.JobQty) AS TotalQtyProfit
+        ');
+        $this->db->from('jobinvoicedtl');
+        $this->db->where('JobType', 2);
+        $this->db->where('DATE(jobinvoicedtl.JobinvoiceTimestamp) >=', $startdate);
+        $this->db->where('DATE(jobinvoicedtl.JobinvoiceTimestamp) <=', $enddate);
+        $this->db->group_by('DATE(jobinvoicedtl.JobinvoiceTimestamp)');
+        $this->db->order_by('DATE(jobinvoicedtl.JobinvoiceTimestamp)', 'ASC');
+        return $this->db->get()->result();
+    }
     
     public function genreportbyroute($startdate, $enddate, $location = NULL,$locationAr = NULL) {
         if (isset($location) && $location != '') {
@@ -373,6 +401,7 @@ class Report_model extends CI_Model {
 
     public function loadjobcardsummery($startdate, $enddate, $location = NULL,$locationAr = NULL) {
         if (isset($location) && $location != '') {
+          
             $this->db->select("jobcardhed.*, 
             jobinvoicehed.JobNetAmount, 
             jobinvoicehed.JobInvoiceDate, 
@@ -394,7 +423,7 @@ class Report_model extends CI_Model {
             $this->db->join('salespersons', 'salespersons.RepID = jobcardhed.Jlabour', 'INNER');
             $this->db->where('DATE(jobinvoicehed.JobInvoiceDate) <=', $enddate);
             $this->db->where('DATE(jobinvoicehed.JobInvoiceDate) >=', $startdate);
-            $this->db->where_in('jobcardhed.JobLocation', $locationAr);
+            $this->db->where_in('jobcardhed.JLocation', $location);
             $this->db->where('jobcardhed.IsCancel', 0);
          
             $this->db->order_by('jobcardhed.JobCardNo', 'DESC');
@@ -452,7 +481,8 @@ class Report_model extends CI_Model {
         // $this->db->where('main_jobflat_details.Job_Inv_No',$jobcardno);
         $this->db->where('DATE(main_jobflat_details.Date) <=', $enddate);
         $this->db->where('DATE(main_jobflat_details.Date) >=', $startdate);
-      
+        // $this->db->where('jobinvoicehed.JobCardNo',$jobcardno);
+        $this->db->group_by(['main_jobflat_details.Job_Inv_No', 'DATE(main_jobflat_details.Date)']);
         $this->db->order_by('main_jobflat_details.Date', 'DESC');
 
     return $this->db->get()->result();
@@ -1907,7 +1937,7 @@ class Report_model extends CI_Model {
         $this->db->where('DATE(PayDate) =', $enddate);
         $this->db->where('PaymentType', $type);
         $this->db->where('IsCancel', 0);
-        
+         $this->db->where('IsAdvanceCancel', 0);
         if (isset($location) && $location != '') {
            $this->db->where_in('customerpaymenthed.Location', $locationAr);
         }
@@ -2264,6 +2294,7 @@ foreach($row as $country => $cities) {
                 $this->db->join('customer','customerpaymenthed.CusCode = customer.CusCode');
                 $this->db->join('bank','customerpaymentdtl.BankNo = bank.BankCode','left');
                  $this->db->where('customerpaymenthed.IsCancel',0);
+                 $this->db->where('customerpaymenthed.IsAdvanceCancel',0);
             if (isset($isall) && $isall == 0 ) {
                 if (isset($enddate) && $enddate != '' ) {
                 $this->db->where('DATE(customerpaymenthed.PayDate) <=', $enddate);

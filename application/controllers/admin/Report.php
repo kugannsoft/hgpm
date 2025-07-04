@@ -50,6 +50,25 @@ class Report extends Admin_Controller {
         }
     }
 
+    public function profitReport() {
+        $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
+        $this->breadcrumbs->unshift(1, 'Sales', 'admin/report/profitReport');
+        $this->page_title->push(('Profit Report'));
+        $this->data['pagetitle'] = $this->page_title->show();
+        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        $this->template->admin_render('admin/report/profitreport', $this->data);
+    }
+
+      public function profitSummuryReport() {
+        $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
+        $this->breadcrumbs->unshift(1, 'Sales', 'admin/report/profitSummuryReport');
+        $this->page_title->push(('Profit Summary Report'));
+        $this->data['pagetitle'] = $this->page_title->show();
+        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        $this->template->admin_render('admin/report/profitSummuryReport', $this->data);
+    }
+
+
     public function psalesbydate() {
         $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
         $this->breadcrumbs->unshift(1, 'Sales', 'admin/report/salesbydate');
@@ -360,7 +379,7 @@ class Report extends Admin_Controller {
       public function allworktype() {
         $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
         $this->breadcrumbs->unshift(1, 'Sales', 'admin/report/allworktype');
-        $this->page_title->push(('Work Type Wise Job sale'));
+        $this->page_title->push(('All Work Type Wise Amount'));
         $this->data['pagetitle'] = $this->page_title->show();
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
         $this->data['locations'] = $this->Report_model->loadroot();
@@ -550,6 +569,24 @@ class Report extends Admin_Controller {
         $salesperson = isset($_POST['salesperson']) ? $_POST['salesperson'] : 0;
         $routeAr = isset($_POST['route_ar']) ? json_decode($_POST['route_ar']) : NULL;
         $result = $this->Report_model->gensalesreportbyroute($startdate, $enddate, $route,$routeAr,$invtype,$salesperson);
+        echo json_encode($result);die;
+    }
+
+    public function loadprofit() {
+        $this->output->set_content_type('application_json');
+        $enddate = $_POST['enddate'];
+        $startdate = $_POST['startdate'];
+      
+        $result = $this->Report_model->loadprofit($startdate, $enddate);
+        echo json_encode($result);die;
+    }
+
+      public function loadprofitSummary() {
+        $this->output->set_content_type('application_json');
+        $enddate = $_POST['enddate'];
+        $startdate = $_POST['startdate'];
+      
+        $result = $this->Report_model->loadprofitSummary($startdate, $enddate);
         echo json_encode($result);die;
     }
 
@@ -1350,7 +1387,7 @@ class Report extends Admin_Controller {
 
         $this->db->select('product.ProductCode,product.Prd_Description,goodsreceivenotedtl.*,goodsreceivenotehed.GRN_IsComplete,
         goodsreceivenotehed.GRN_IsCancel,(goodsreceivenotehed.GRN_DateORG) AS TransDate,DATE(goodsreceivenotedtl.GRN_Date) As grndate,
-        supplier.SupName,IFNULL(sales.total_sales_qty, 0) AS total_sales_qty,productstock.stock AS productstock');
+        supplier.SupName,IFNULL(sales.total_sales_qty, 0) AS total_sales_qty,productstock.stock AS productstock,IFNULL(returns.total_return_qty, 0) AS total_return_qty');
         $this->db->from('product');
 
           if (isset($enddate) && $enddate != '' ) {
@@ -1383,6 +1420,12 @@ class Report extends Admin_Controller {
         GROUP BY JobCode) sales", 
         "sales.JobCode = product.ProductCode", 
         "left");
+
+        $this->db->join("(
+            SELECT PRN_Product, SUM(PRN_Qty) AS total_return_qty
+            FROM purchasereturnnotedtl
+            GROUP BY PRN_Product
+        ) returns", "returns.PRN_Product = product.ProductCode", "left");
         $this->db->where('goodsreceivenotehed.GRN_IsCancel',0);
         $data = $this->db->get();
          $list = array();

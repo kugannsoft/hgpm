@@ -299,7 +299,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var datebalance = $("#enddate").val();
         $("#printReport").print({
             prepend:"<h3 style='text-align:center'>Daily Cash Balance Report "+datebalance+"</h3><hr/>",
-            title:'Daily Cash Balance Report '+datebalance
+            title:'Job Invoice Summury '+datebalance
         });
     }
 </script>
