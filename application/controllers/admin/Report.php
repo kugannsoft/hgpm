@@ -1593,9 +1593,7 @@ class Report extends Admin_Controller {
             $this->template->admin_render('admin/report/suppliercreditsummary', $this->data);
         }
     } 
-    
-    
-    
+
     public function customerallreport() {
         $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
         $this->breadcrumbs->unshift(1, 'Credit', 'admin/report/customercredit');
@@ -1674,8 +1672,8 @@ class Report extends Admin_Controller {
         $route = isset($_POST['route']) ? $_POST['route'] : NULL;
         $supcode = isset($_POST['supplier']) ? $_POST['supplier'] : NULL;
 
-        // $startdate = isset($_POST['startdate']) ? $_POST['startdate'] : NULL;
-        // $enddate = isset($_POST['enddate']) ? $_POST['enddate'] : NULL;
+        $startdate = isset($_POST['startdate']) ? $_POST['startdate'] : NULL;
+        $enddate = isset($_POST['enddate']) ? $_POST['enddate'] : NULL;
        
 
 
@@ -1687,7 +1685,7 @@ class Report extends Admin_Controller {
         //     $startdate = '';
         // }
 
-       $result['cr'] = $this->Report_model->loadsuppliercredisummury($startdate=null, $enddate=null, $route,$supcode);
+       $result['cr'] = $this->Report_model->loadsuppliercredisummury($startdate, $enddate, $route,$supcode);
     //    $result['sup'] = $this->Report_model->loadsupplier($startdate=null, $enddate=null, $route,$supcode);
             echo json_encode($result);
             die;

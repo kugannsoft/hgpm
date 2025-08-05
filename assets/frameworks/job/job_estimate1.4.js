@@ -1600,7 +1600,8 @@ function getKey(txt){
                     accounting.formatNumber(resultData.est_dtl[i].EstQty) + "</td><td>" + 
                     accounting.formatNumber(resultData.est_dtl[i].EstPrice) + "</td><td>" + 
                     accounting.formatNumber(resultData.est_dtl[i].EstNetAmount) + "</td><td>" +
-                    partType + " </td><td>" +
+                    resultData.est_dtl[i].EstPartType + " </td><td>" +
+                    
 
                     resultData.est_dtl[i].EstInsurance + "</td><td>&nbsp;&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
 

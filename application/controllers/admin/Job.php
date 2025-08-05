@@ -236,7 +236,7 @@ class Job extends Admin_Controller {
            $this->data['job_count'] = $this->db->select('count(JobCardNo)  AS noofjobs')->from('jobcardhed')->where('JRegNo', $regNo)->where('JCustomer', $cusCode)->where('IsCancel', 0)->where('appoimnetDate<', $appoimnetDate)->get()->row();
            $this->data['branch']=$this->db->select('branch_address.*,company.CompanyName,company.CompanyName2')->from('branch_address')->join('company', 'company.CompanyID = branch_address.company_id')->where('loc_id',$location)->get()->row();
             $this->data['workers'] = $this->db->select('jobwoker.*,salespersons.RepName,emp_type.EmpType')->from('jobwoker')->join('salespersons','jobwoker.JobWokerId=salespersons.RepID')->join('emp_type','emp_type.EmpTypeNo=salespersons.RepType')->where('jobwoker.JCardNo',$jno)->get()->result();
-            $this->data['term'] = $this->db->select()->from('invoice_condition')->where('InvType', 4)->get()->result();
+            $this->data['term'] = $this->db->select()->from('invoice_condition')->where('InvType', 5)->get()->result();
              //invoice updates
              $this->data['invUpdate']=$this->db->select('editinvoices.*,users.first_name,users.last_name')->from('editinvoices')->join('users', 'editinvoices.UpdateUser = users.id', 'INNER')->where('editinvoices.InvoiceNo', $jno)->where('editinvoices.EditType', 5)->order_by('UpdateDate','DESC')->get()->result();
                 // array('error' => ' ' )

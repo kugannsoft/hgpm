@@ -357,6 +357,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <script src="<?php echo base_url($plugins_dir . '/account/accounting.min.js'); ?>"></script>
             <?php if ($this->router->fetch_method() == 'cash_float'): ?>
                 <script src="<?php echo base_url('assets/frameworks/pos/cash_ex.js'); ?>"></script>
+                
             <?php endif; ?>
             <?php if ($this->router->fetch_method() == 'cash_float_balance'): ?>
                 <script src="<?php echo base_url('assets/frameworks/pos/cash_bal1.1.js'); ?>"></script>

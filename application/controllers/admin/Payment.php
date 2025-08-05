@@ -90,6 +90,7 @@ class Payment extends Admin_Controller {
         $this->data['salePerson'] = $this->Payment_model->get_data_by_where('salespersons', $id2);
         $this->load->model('admin/Pos_model');
         $id3 = array('CompanyID' => $location);
+        $this->data['bank']=$this->db->select('bank_account.*,bank.BankName,bank.BankCode')->from('bank_account')->join('bank','BankCode=acc_bank')->get()->result();
         $this->data['company'] = $this->Pos_model->get_data_by_where('company', $id3);
         $this->template->admin_render('admin/payment/supplier-payment', $this->data);
     }
@@ -1137,6 +1138,7 @@ class Payment extends Admin_Controller {
         $cheque_amount = 0;
         $location = $_POST['location'];
         $payType = $_POST['payType'];
+        
         $payDate = $_POST['payDate'];
         $payAmount = $_POST['payAmount'];
         $cusCode = $_POST['SupCode'];
@@ -1150,6 +1152,7 @@ class Payment extends Admin_Controller {
         $avail_outstand = $outstanding - $total_settle;
         $cashType = $_POST['cashType'];
         $returnInvoice = $_POST['returnInvoice'];
+        
         $supName = $this->db->select('SupName')->from('supplier')->where('SupCode', $cusCode)->get()->row()->SupName;
         $payMode = '';
         if ($payType == 1) {
@@ -1158,6 +1161,9 @@ class Payment extends Admin_Controller {
             $chequeDate = '';
             $cash_amount = $total_settle;
             $payMode = 'Cash';
+        }elseif($payType == 2){
+            $card_amount = $total_settle;
+            $payMode = 'bank';
         } elseif ($payType == 3) {
             $cheque_amount = $total_settle;
             $payMode = 'Cheque';
@@ -1172,6 +1178,7 @@ class Payment extends Admin_Controller {
         
         if($payType ==4){
             if($cashType ==2){
+                
                 $credit_invoice = isset($_POST['credit_invoice']) ? json_decode($_POST['credit_invoice'], true) : [];
                 // echo var_dump($credit_invoice);die;
                 $cus_settle_amount = json_decode($_POST['cus_settle_amount'], true);
@@ -1261,9 +1268,9 @@ class Payment extends Admin_Controller {
                     'BankNo' => $bank, 'ChequeNo' => $chequeNo, 'ChequeDate' => $chequeDate,  'ChequeAmount' => $payAmount, 'IsCancel' => 0, 'IsRelease' => 0
                 );
     
-                if ($payType == 1) {
+               
                     $cancelNo = $this->db->select_max('FlotNo')->get('maincashflot')->row()->FlotNo;
-                    $currentBalance = $this->db->select('CurrentBlance')->from('maincashflot')->where('FlotNo', $cancelNo)->get()->row()->CurrentBlance;
+                    //$currentBalance = $this->db->select('CurrentBlance')->from('maincashflot')->where('FlotNo', $cancelNo)->get()->row()->CurrentBlance;
                     
                     $datetime = date("Y-m-d H:i:s");
                     
@@ -1273,17 +1280,25 @@ class Payment extends Admin_Controller {
                         'Location' => 1,
                         'FlotDate' => date("Y-m-d"),
                         'DateORG' => date("Y-m-d H:i:s"),
-                        'TransactionCode' => 2,
+                        'TransactionCode' => 19,
                         'CounterNo' => 1,
                         'Remark' => $remark . $supName,
                         'FlotAmount' => $payAmount,
                         'SystemUser' =>1,
+                        'chequeReference' =>$chequeReference,
+                        'chequeRecivedDate' =>$chequeRecivedDate,
+                        'chequeDate' =>$chequeDate,
+                        'ChequeNo' =>$chequeNo,
+                        'Bank' =>$bank,
+                        'PayType' => $payMode
                     ];
                 
-                        $invCanel['CurrentBlance'] = $currentBalance - $payAmount;
+                        //$invCanel['CurrentBlance'] = $currentBalance - $payAmount;
                         $res3 = $this->Cash_model->saveCashFloat('maincashflot', $invCanel);
                     
-                }
+              
+
+
                 
                
                 $id3 = array('CompanyID' => $location);

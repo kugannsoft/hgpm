@@ -31,6 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <td>Invoice Type</td>
                                     <td>Invoice Condition</td>
                                     <td>###</td>
+                                    <td>###</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <td><?php echo $trns->invtype; ?></td>
                                     <td><?php echo $trns->InvCondition; ?></td>
                                     <td><a  class="btn btn-xs btn-primary" href="#" onclick="editp(<?php echo $trns->InvRemarkId; ?>)" >Edit</a></td>
+                                    <td><a  class="btn btn-xs btn-primary" href="#" onclick="deleteinv(<?php echo $trns->InvRemarkId; ?>)" >Delete</a></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>
@@ -58,10 +60,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
+
+<!-- <a class="btn btn-xs btn-danger"
+                                            href=""
+                                            onclick="return confirm('Are you sure you want to delete this?');">
+                                            Delete
+                                            </a> -->
 <script type="text/javascript">
     $(document).ready(function () {
 
-        var producttbl = $('#producttbl').dataTable();
+        var producttbl = $('#producttbl').DataTable();
     });
     function addp() {
         $('.modal-content').load('<?php echo base_url() ?>admin/master/loadmodal_addinvoice_condition/', function (result) {
@@ -74,4 +82,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $('#productmodal').modal({show: true,backdrop: 'static', keyboard: false});
         });
     }
+
+    function deleteinv(id){
+        
+         $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('admin/master/delete_condition/' .$id); ?>",
+            data: {id: id},
+            success: function(json){
+                var resultData = JSON.parse(json);
+                
+                if(resultData.fb==true){
+                     $.notify(" Term & Condition Deleted Sucessfully.", "Success");
+                    producttbl.ajax.reload(null, false);
+                }else{
+                    $.notify( "Term & Condition Not Deleted.", "warning");
+                    return false;
+                }
+            }
+        });
+    }
+
 </script>

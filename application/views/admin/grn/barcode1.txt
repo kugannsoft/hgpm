@@ -1,3 +1,7 @@
 Company,ProductCode,ProductName,Price
 
-H G P M Automobiles (pvt)Ltd.,100001,BENZ C200 OIL FILTER MAN,1000
+H G P M Automobiles (pvt)Ltd.,101842,TO-BELT ASSAY FOR TRUCK,5000
+H G P M Automobiles (pvt)Ltd.,101842,TO-BELT ASSAY FOR TRUCK,5000
+H G P M Automobiles (pvt)Ltd.,101842,TO-BELT ASSAY FOR TRUCK,5000
+H G P M Automobiles (pvt)Ltd.,101842,TO-BELT ASSAY FOR TRUCK,5000
+H G P M Automobiles (pvt)Ltd.,101842,TO-BELT ASSAY FOR TRUCK,5000

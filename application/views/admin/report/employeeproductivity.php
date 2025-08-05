@@ -66,13 +66,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>Total</th>
                                     <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                  
+                                    <th id ="totalQty"></th>
+                                    <th id ="totalFlatQty"></th>
+                                    <th id ="totalCostPrice"></th>
+                                    <th id ="totalCostQty"></th>
+                                    <th id ="totalCostFlatQty"></th>
+                                    <th id ="totalProfit"></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -118,8 +119,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             success: function (data) {
                 $('#saletable tbody').empty();
                 drawTable(JSON.parse(data));
-                $('#totalca').html(accounting.formatMoney(sumcolumn('cashamount')));
-               
+                $('#totalQty').html(accounting.formatMoney(sumcolumn('totalQty')));
+               $('#totalFlatQty').html(accounting.formatMoney(sumcolumn('totalFlatQty')));
+               $('#totalCostPrice').html(accounting.formatMoney(sumcolumn('totalCostPrice')));
+               $('#totalCostQty').html(accounting.formatMoney(sumcolumn('totalCostQty')));
+               $('#totalCostFlatQty').html(accounting.formatMoney(sumcolumn('totalCostFlatQty')));
+               $('#totalProfit').html(accounting.formatMoney(sumcolumn('totalProfit')));
             }
         })
     });
@@ -136,12 +141,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         row.append($("<td>" + rowData.RepName + "</td>"));
         row.append($("<td>" + rowData.Date + "</td>"));
-        row.append($("<td>" + rowData.Qty  + "</td>"));
-        row.append($("<td>" + rowData.FlatQty  + "</td>"));
-        row.append($("<td>" + rowData.CostPrice  + "</td>"));
-         row.append($("<td>" + rowData.CostPrice * rowData.Qty  + "</td>"));
-         row.append($("<td>" + rowData.CostPrice * rowData.FlatQty  + "</td>"));
-        row.append($("<td>" + rowData.ProfitAmount  + "</td>"));
+        row.append($("<td class='totalQty'>" + rowData.Qty  + "</td>"));
+        row.append($("<td class='totalFlatQty'>" + rowData.FlatQty  + "</td>"));
+        row.append($("<td class='totalCostPrice'>" + rowData.CostPrice  + "</td>"));
+         row.append($("<td class='totalCostQty'>" + rowData.CostPrice * rowData.Qty  + "</td>"));
+         row.append($("<td class='totalCostFlatQty'>" + rowData.CostPrice * rowData.FlatQty  + "</td>"));
+        row.append($("<td class='totalProfit'>" + rowData.ProfitAmount  + "</td>"));
     
     }
     

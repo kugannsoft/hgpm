@@ -70,7 +70,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <input type="text" class="form-control" required="required"  name="floatAmount" id="floatAmount"  placeholder="">
                                         </div>
                                 </div>
+
+                               <div class="form-group">
+                                    <label for="payType" class="col-sm-5 control-label">Payment Type<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="payType">
+                                            <!--<option value="0">-Select-</option>-->
+                                            <option value="1">Cash</option>
+                                            <option value="2">Bank</option>
+                                            <option value="3">Cheque</option>
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                
                             </div>
+                        
                             <div class="col-sm-6">
                                 <table class="table">
                                     <tr><td></td><td></td><td class="text-right"></td></tr>
@@ -80,6 +96,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     
                                 </table>
                             </div>
+                        </div>
+                        <div class="row" id='bankSec'>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="bank" class="control-label">Bank <span class="required">*</span></label>
+                                     <select class="col-sm-5 form-control"   name="bank" id="bank">
+                                        <option value="">Select a Bank</option>
+                                        <?php foreach($bank as $banks){?>
+                                            <option value="<?php echo $banks->BankCode; ?>"><?php echo $banks->BankName; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="row" id='chequeData'>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="chequeNo" class="control-label">Cheque No <span class="required">*</span></label>
+                                        <input type="text" class="form-control" required="required"  name="chequeNo" id="chequeNo">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="chequeReciveDate" class="control-label">Cheque Received date <span class="required">*</span></label>
+                                        <input type="text" class="form-control" required="required"  name="chequeReciveDate" id="chequeReciveDate">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="chequeDate" class="control-label">Date of Cheque<span class="required">*</span></label>
+                                        <input type="text" class="form-control" required="required"  name="chequeDate" id="chequeDate">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="chequeReference" class="control-label">Cheque Reference<span class="required"></span></label>
+                                        <textarea  class="form-control" name="chequeReference" id="chequeReference">
+
+                                        </textarea>
+                                    </div>
+                                </div>
                         </div>
 
                         <div class="row">
@@ -103,16 +161,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <tr>
                                         <th>#</th>
                                         <th>Float No</th>
-                                        <th>Counter No</th>
+                                    
                                         <th>Float Date</th>
                                         <th>Entered Date</th>
-                                        <th >Transaction Code</th>
+                                       
                                         <th>Transaction Name</th>
                                         <th >Remarks</th>
+                                        <th>Pay Type</th>
                                         <th>Is Expenses</th>
-                                        <th  class="text-right"> Earnings</th>
-                                        <th  class="text-right">Expenses</th>
-                                        <th  class="text-right">Current Blance</th>
+                                        <th> Earnings</th>
+                                        <th>Expenses</th>
+                                        <!-- <th  class="text-right">Current Blance</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th ></th>
+                                        <th></th>
+                                  
+                                        <th>Total</th>
+                                        <th id="totErn"> Earnings</th>
+                                        <th  id="totExp">Expenses</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+<!--                        <span id="lastTranaction">Last Cancel Invoice : </span>-->
+                    </div>
+                    <br>
+
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="tbl_paymentExtra" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Float No</th>
+                                        <th>Float Date</th>
+                                        <th>Entered Date</th>
+                                        <th>Transaction Name</th>
+                                        <th >Remarks</th>
+                                        <th>Pay Type</th>
+                                        <th>Is Expenses</th>
+                                        <th>Bank Name</th>
+                                        <th>Cheque No</th>
+                                        <th> Earnings</th>
+                                        <th>Expenses</th>
+                                        <!-- <th  class="text-right">Current Blance</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -128,15 +231,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th ></th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
                                         <th>Total</th>
-                                        <th  class="text-right" id="totErn"> Earnings</th>
-                                        <th  class="text-right" id="totExp">Expenses</th>
+                                        <th id="totErnExtra"> Earnings</th>
+                                        <th id="totExpExtra">Expenses</th>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
 <!--                        <span id="lastTranaction">Last Cancel Invoice : </span>-->
-                    </div><!-- /.box-body -->
+                    </div>
                 </div><!-- /.box -->
             </div>
         </div>

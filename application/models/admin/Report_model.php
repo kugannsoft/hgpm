@@ -2244,7 +2244,7 @@ foreach($row as $country => $cities) {
             SUM(creditgrndetails.CreditAmount) AS TotalCredit, 
             SUM(creditgrndetails.SettledAmount) AS TotalSettledAmount, 
             SUM(creditgrndetails.NetAmount) AS TotalDue, 
-            supplier.SupName, 
+            supplier.SupName,creditgrndetails.GRNDate,
             supplier.MobileNo'
         );
         $this->db->from('creditgrndetails');
@@ -2252,15 +2252,30 @@ foreach($row as $country => $cities) {
         $this->db->where('creditgrndetails.IsCloseGRN', 0);
         $this->db->where('creditgrndetails.IsCancel', 0);
         $this->db->where('supplier.IsActive', 1);
+        
         if ($isall == 1) {
-       
+            // Show everything
             $this->db->group_by('creditgrndetails.SupCode');
             $this->db->order_by('supplier.SupName', 'ASC');
-            return $this->db->get()->result(); 
         } else {
-            $this->db->where('creditgrndetails.SupCode', $supCode);
-            return $this->db->get()->result(); 
+            // If date range is selected, apply filter
+            if (!empty($startdate) && !empty($enddate)) {
+                $this->db->where('DATE(creditgrndetails.GRNDate) >=', $startdate);
+                $this->db->where('DATE(creditgrndetails.GRNDate) <=', $enddate);
+            }
+
+            // If specific supplier selected, apply filter
+            if (!empty($supCode)) {
+                $this->db->where('creditgrndetails.SupCode', $supCode);
+            }
+
+            $this->db->group_by('creditgrndetails.SupCode');
+            $this->db->order_by('supplier.SupName', 'ASC');
         }
+
+            return $this->db->get()->result();
+
+        
     }
     
 

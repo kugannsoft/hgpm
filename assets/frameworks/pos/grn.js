@@ -676,7 +676,13 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
                             "' proVat='" + proVat +
                             "' proNbt='" + proNbt + 
                             "'+ proName='" + prdName + "'>\n\
-                    <td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + "</td><td>" + prdName + "</td><td>" + unit + "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty,4) + "</td><td class='text-right'>" + accounting.formatNumber(costPrice) + "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + "</td><td class='text-center'>" + discount_precent + "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + "</td><td class='text-right' >" + accounting.formatMoney(proVat) + "</td><td>" +accounting.formatMoney(proVat +totalNet) + "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
+                    <td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + 
+                    "</td><td>" + prdName + 
+                    "</td><td>" + unit + 
+                    "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty,4) + 
+                    "</td><td class='fQ" + i + "'>" + accounting.formatNumber(freeQty,4) + 
+                    "</td><td class='text-right'>" + accounting.formatNumber(costPrice) + 
+                    "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + "</td><td class='text-center'>" + discount_precent + "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + "</td><td class='text-right' >" + accounting.formatMoney(proVat) + "</td><td>" +accounting.formatMoney(proVat +totalNet) + "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
     
                         if (is_serail != 1) {
                             clear_gem_data();
@@ -754,7 +760,13 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
                             "' proVat='" + proVat +
                             "' proNbt='" + proNbt + 
                             "'+ proName='" + prdName + "'>\n\
-                    <td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + "</td><td>" + prdName + "</td><td>" + unit + "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty,4) + "</td><td class='text-right'>" + accounting.formatNumber(costPrice) + "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + "</td><td class='text-center'>" + discount_precent + "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + "</td><td class='text-right' >" + accounting.formatMoney(proVat) + "</td><td>" + accounting.formatMoney(proVat +totalNet) + "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
+                    <td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + 
+                    "</td><td>" + prdName + 
+                    "</td><td>" + unit + 
+                    "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty,4) + 
+                    "</td><td class='fQ" + i + "'>" + accounting.formatNumber(freeQty,4) + 
+                    "</td><td class='text-right'>" + accounting.formatNumber(costPrice) + 
+                    "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + "</td><td class='text-center'>" + discount_precent + "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + "</td><td class='text-right' >" + accounting.formatMoney(proVat) + "</td><td>" + accounting.formatMoney(proVat +totalNet) + "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
     
                         if (is_serail != 1) {
                             clear_gem_data();
@@ -823,7 +835,13 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
                             "' proVat='" + proVat +
                             "' proNbt='" + proNbt + 
                             "'+ proName='" + prdName + "'>\n\
-                    <td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + "</td><td>" + prdName + "</td><td>" + unit + "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty,4) + "</td><td class='text-right'>" + accounting.formatNumber(costPrice) + "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + "</td><td class='text-center'>" + discount_precent + "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + "</td><td class='text-right' >" + accounting.formatMoney(proVat) + "</td><td>" + accounting.formatMoney(proVat +totalNet) + "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
+                    <td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + 
+                    "</td><td>" + prdName + 
+                    "</td><td>" + unit + 
+                    "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty,4) + 
+                    "</td><td class='fQ" + i + "'>" + accounting.formatNumber(freeQty,4) + 
+                    "</td><td class='text-right'>" + accounting.formatNumber(costPrice) + 
+                    "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + "</td><td class='text-center'>" + discount_precent + "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + "</td><td class='text-right' >" + accounting.formatMoney(proVat) + "</td><td>" + accounting.formatMoney(proVat +totalNet) + "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
     
                         if (is_serail != 1) {
                             clear_gem_data();
@@ -890,7 +908,18 @@ $("input[name='isProNbt']").on('ifChanged', function(event){
                             "' proVat='" + proVat +
                             "' proNbt='" + proNbt + 
                             "'+ proName='" + prdName + "'>\n\
-                    <td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + "</td><td>" + prdName + "</td><td>" + unit + "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty,4) + "</td><td class='text-right'>" + accounting.formatNumber(costPrice) + "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + "</td><td class='text-center'>" + discount_precent + "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + "</td><td class='text-right' >" + accounting.formatMoney(proVat) + "</td><td>" + accounting.formatMoney(proVat +totalNet) + "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
+                    <td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + 
+                    "</td><td>" + prdName + 
+                    "</td><td>" + unit + 
+                    "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty,4) + 
+                     "</td><td class='fQ" + i + "'>" + accounting.formatNumber(freeQty,4) + 
+                    "</td><td class='text-right'>" + accounting.formatNumber(costPrice) + 
+                    "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + 
+                    "</td><td class='text-center'>" + discount_precent + 
+                    "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + 
+                    "</td><td class='text-right' >" + accounting.formatMoney(proVat) + 
+                    "</td><td>" + accounting.formatMoney(proVat +totalNet) + 
+                    "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
     
                         if (is_serail != 1) {
                             clear_gem_data();

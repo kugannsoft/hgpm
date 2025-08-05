@@ -68,6 +68,7 @@ class Cash_model extends CI_Model {
     }
     
     public function saveCashFloat($table,$float) {
+        // echo var_dump($float);die;
         $this->db->trans_start();
         $this->db->insert($table,$float);
         $this->db->trans_complete();

@@ -318,6 +318,7 @@ $(document).ready(function() {
             success: function(data)
             {
                 var resultData = JSON.parse(data);
+                console.log('resultData',resultData);
                 var exp = 0;
                 var ern = 0;
                 $.each(resultData, function(key, value) {

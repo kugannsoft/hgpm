@@ -9,6 +9,9 @@ $(document).ready(function() {
         format: 'yyyy-mm-dd'
     });
 
+    $("#chequeData").hide();
+    $("#bankSec").hide();
+
     var paymentId = 0;
     var paymentNo = 0;
     var invNo = 0;
@@ -45,41 +48,139 @@ $(document).ready(function() {
         });
     });
     loadFloatData();
+    loadFloatDataExtra();
     function loadFloatData(){
-$("#tbl_payment tbody").html('');
-totalExpens = 0;totalEarn=0; totalBal =0;
-    $.ajax({
-        type: "POST",
-        url: "getTransactionByDate",
-        data: {cash_date: cash_date, location: location},
-        success: function(data)
-        {
-            var resultData = JSON.parse(data);
-         
-            var exp = 0;var ern=0;
-            $.each(resultData, function(key, value) {
-                if(value.IsExpenses==1){
-                    totalExpens +=parseFloat(value.FlotAmount);
-                    exp=parseFloat(value.FlotAmount);
-                    ern=0;
+        $("#tbl_payment tbody").html('');
+        totalExpens = 0;totalEarn=0; totalBal =0;
+            $.ajax({
+                type: "POST",
+                url: "getTransactionByDate",
+                data: {cash_date: cash_date, location: location},
+                success: function(data)
+                {
+                    var resultData = JSON.parse(data);
+                
+                    var exp = 0;var ern=0;
+                    $.each(resultData, function(key, value) {
+                        if(value.IsExpenses==1){
+                            totalExpens +=parseFloat(value.FlotAmount);
+                            exp=parseFloat(value.FlotAmount);
+                            ern=0;
+                        }
+                        else if(value.IsExpenses==0){
+                            totalEarn+=parseFloat(value.FlotAmount);
+                        ern=parseFloat(value.FlotAmount);
+                            exp=0;
+                        }
+                        totalBal = totalEarn - totalExpens;
+                    
+                        $("#tbl_payment tbody").append("<tr ><td>" + (key + 1) + 
+                        "</td><td  class='invoiceNo'>" + value.FlotNo + 
+                       
+                        "</td><td>" + value.FlotDate + 
+                        "</td><td>" + value.DateORG + 
+                       
+                        "</td><td>" + value.TransactionName + 
+                        "</td><td>" + value.re + 
+                        "</td><td>" + value.PayType + 
+                        "</td><td>" + value.IsExpenses + 
+                       "</td><td>" + accounting.formatMoney(ern)+ 
+                        "</td><td>" + accounting.formatMoney(exp)+ 
+                        
+                        "</b></td></tr>");
+                        $("#totalAmount,#totExp").html(accounting.formatMoney(totalExpens));
+                        $("#totalDis,#totErn").html(accounting.formatMoney(totalEarn));
+                    
+                    });
+                    // var lastBalance = $("#tbl_payment tbody tr:last").find(".current-balance").text();
+                    // $("#totalBal").html(lastBalance);
                 }
-                else if(value.IsExpenses==0){
-                    totalEarn+=parseFloat(value.FlotAmount);
-                ern=parseFloat(value.FlotAmount);
-                    exp=0;
-                }
-                totalBal = totalEarn - totalExpens;
-            
-                $("#tbl_payment tbody").append("<tr ><td>" + (key + 1) + "</td><td  class='invoiceNo'>" + value.FlotNo + "</td><td>" + value.CounterNo + "</td><td>" + value.FlotDate + "</td><td>" + value.DateORG + "</td><td>" + value.TransactionCode + "</td><td>" + value.TransactionName + "</td><td>" + value.re + "</td><td>" + value.IsExpenses + "</td><td class='text-right'><b>" + accounting.formatMoney(ern) + "</b></td><td class='text-right'><b>" + accounting.formatMoney(exp) + "</b></td><td class='text-right current-balance'><b>" + value.CurrentBlance + "</b></td></tr>");
-                $("#totalAmount,#totExp").html(accounting.formatMoney(totalExpens));
-                $("#totalDis,#totErn").html(accounting.formatMoney(totalEarn));
-              
             });
-            var lastBalance = $("#tbl_payment tbody tr:last").find(".current-balance").text();
-            $("#totalBal").html(lastBalance);
-        }
-    });
     }
+
+     function loadFloatDataExtra(){
+        $("#tbl_payment tbody").html('');
+        totalExpenseExtra = 0;totalEarnExtra=0; totalBal =0;
+            $.ajax({
+                type: "POST",
+                url: "getTransactionByDateExtra",
+                data: {cash_date: cash_date, location: location},
+                success: function(data)
+                {
+                    var resultData = JSON.parse(data);
+                
+                    var exp = 0;var ern=0;
+                    $.each(resultData, function(key, value) {
+                        if(value.IsExpenses==1){
+                            totalExpenseExtra +=parseFloat(value.FlotAmount);
+                            exp=parseFloat(value.FlotAmount);
+                            ern=0;
+                        }
+                        else if(value.IsExpenses==0){
+                            totalEarnExtra+=parseFloat(value.FlotAmount);
+                        ern=parseFloat(value.FlotAmount);
+                            exp=0;
+                        }
+                        totalBal = totalEarnExtra - totalExpenseExtra;
+                    
+                        $("#tbl_paymentExtra tbody").append("<tr ><td>" + (key + 1) + 
+                         "</td><td  class='invoiceNo'>" + value.FlotNo + 
+                       
+                        "</td><td>" + value.FlotDate + 
+                        "</td><td>" + value.DateORG + 
+                       
+                        "</td><td>" + value.TransactionName + 
+                        "</td><td>" + value.re + 
+                        "</td><td>" + value.PayType + 
+                        "</td><td>" + value.IsExpenses + 
+                        "</td><td>" + value.BankName + 
+                        "</td><td>" + value.ChequeNo + 
+                       "</td><td>" + accounting.formatMoney(ern)+ 
+                        "</td><td>" + accounting.formatMoney(exp)+ 
+                        "</b></td></tr>");
+                        $("#totalAmountExtra,#totExpExtra").html(accounting.formatMoney(totalExpenseExtra));
+                        $("#totalAmountExtra,#totErnExtra").html(accounting.formatMoney(totalEarnExtra));
+                    
+                    });
+                    // var lastBalance = $("#tbl_payment tbody tr:last").find(".current-balance").text();
+                    // $("#totalBal").html(lastBalance);
+                }
+            });
+    }
+
+       $("#payType").change(function() {
+        var payType = ($(this).val());
+    
+        if(payType == 1){
+            $("#bankSec").hide();
+            $("#bankSec").val('');
+            $("#chequeData").hide();
+            $("#chequeDate").val('');
+            $('#chequeReciveDate').datetimepicker({ dateFormat: 'yy-mm-dd', timeFormat: "HH:mm:ss" });
+          
+       
+             $("#chequeReference").val('');
+        }
+        if(payType == 2){
+            $("#bankSec").show();
+            $("#chequeDate").val('');
+            $("#chequeReference").val('');
+            $('#chequeReciveDate').datetimepicker({ dateFormat: 'yy-mm-dd', timeFormat: "HH:mm:ss" });
+            $("#chequeData").hide();
+           
+     
+        
+        }
+        if (payType == 3) {
+            $("#bankSec").show();
+            $("#chequeData").show();
+            $("#chequeDate").val('');
+            $("#chequeReference").val('');
+            $('#chequeReciveDate').datetimepicker({ dateFormat: 'yy-mm-dd', timeFormat: "HH:mm:ss" });
+             $("#bankSec").val('');
+
+        } 
+    });
     
 $('#invDate').datepicker().on('changeDate', function(e) {
     cash_date = $(this).val();
@@ -89,6 +190,7 @@ $('#invDate').datepicker().on('changeDate', function(e) {
 
   
     $("#pay").click(function() {
+         var payType = $("#payType option:selected").val();
         var payDate = $("#invDate").val();
         var remark = $("#remark").val();
         var invUser = $("#invUser").val();
@@ -97,7 +199,12 @@ $('#invDate').datepicker().on('changeDate', function(e) {
         location = $("#location").val();
         var sendItem_code = JSON.stringify(ItemCodeArr);
         var cashType = $("input[name='cash_type']:checked").val();
-        
+        var chequeDate = $("#chequeDate").val();
+        var chequeReference = $("#chequeReference").val();
+        var chequeReciveDate = $('#chequeReciveDate').val();
+        var chequeNo = $('#chequeNo').val();
+        var bank = $("#bank").val();
+       
         var r = confirm("Do you want to save this amount?");
         if (r == true) {
             if (transCode == '' || transCode == 0) {
@@ -110,7 +217,9 @@ $('#invDate').datepicker().on('changeDate', function(e) {
                 $.ajax({
                     type: "POST",
                     url: "saveCashFloat",
-                    data: {transCode:transCode,floatAmount:floatAmount, paymentNo: paymentNo, remark: remark, payDate: payDate, invUser: invUser, cusCode: cusCode, invNo: invNo, Item_codeArr: sendItem_code, location: location,cashType:cashType},
+                    data: {transCode:transCode,floatAmount:floatAmount, paymentNo: paymentNo, remark: remark, payDate: payDate,
+                         invUser: invUser, cusCode: cusCode, invNo: invNo, Item_codeArr: sendItem_code, location: location,
+                         cashType:cashType,chequeDate:chequeDate,chequeReference:chequeReference,chequeReciveDate:chequeReciveDate,chequeNo:chequeNo,bank:bank,payType:payType},
                     success: function(data)
                     {
                         var resultData = JSON.parse(data);
@@ -119,6 +228,7 @@ $('#invDate').datepicker().on('changeDate', function(e) {
                         var cancelNo = resultData['CancelNo'];
                         if (feedback == 1) {
                            loadFloatData();
+                           loadFloatDataExtra();
                             $("#tblData tbody").append("<tr><td>"+paymentNo+"</td><td>"+floatAmount+"</td></tr>");
                             rid = 0;
                             floatAmount=0;

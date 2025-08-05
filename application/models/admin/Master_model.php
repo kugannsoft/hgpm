@@ -156,5 +156,10 @@ class Master_model extends CI_Model {
         $this->db->trans_complete();
         return $query;
     }
+
+    public function deleteInvCon($table, $id) {
+        $this->db->where('InvRemarkId', $id); 
+        return $this->db->delete($table);
+    }
     
 }

@@ -144,21 +144,24 @@ class Salesinvoice extends Admin_Controller {
              //invoice updates
              $this->data['invUpdate']=$this->db->select('editinvoices.*,users.first_name,users.last_name')->from('editinvoices')->join('users', 'editinvoices.UpdateUser = users.id', 'INNER')->where('editinvoices.InvoiceNo', $invNo)->where('editinvoices.EditType', 2)->order_by('UpdateDate','DESC')->get()->result();
 
-            $result=$this->db->select('jobinvoicedtl.*,jobtype.jobtype_name AS SubDescription , jobtypeheader.jobhead_name AS Description')
+            $result=$this->db->select('jobinvoicedtl.*,jobtype.jobtype_name AS SubDescription , jobtype.jobtype_name AS Description')
             ->from('jobinvoicedtl')->join('jobtype', 'jobinvoicedtl.JobType = jobtype.jobtype_id', 'INNER')
-            ->join('jobtypeheader', 'jobtypeheader.jobhead_id = jobtype.jobhead', 'INNER')
-            ->where('jobinvoicedtl.JobInvNo', $invNo)->order_by('jobtypeheader.jobhead_order', 'ASC')
-            ->order_by('jobtype.jobtype_order', 'ASC')->order_by('jobinvoicedtl.JobinvoiceTimestamp','ASC')
+            // ->join('jobtypeheader', 'jobtypeheader.jobhead_id = jobtype.jobhead', 'INNER')
+            ->where('jobinvoicedtl.JobInvNo', $invNo)
+            // ->order_by('jobtypeheader.jobhead_order', 'ASC')
+            ->order_by('jobtype.jobtype_order', 'ASC')
+            ->order_by('jobinvoicedtl.JobinvoiceTimestamp','ASC')
             ->order_by('jobinvoicedtl.EstLineNo', 'ASC')->get();
-        
-             $this->data['term'] = $this->db->select()->from('invoice_condition')->where('InvType', 2)->get()->result();
+            
+            $this->data['term'] = $this->db->select()->from('invoice_condition')->where('InvType', 2)->get()->result();
             $list = array();
             foreach ($result->result() as $row) {
                 $list[$row->Description][] = $row;
             }
             
         
-            $this->data['invDtl']=$list;         
+            $this->data['invDtl']=$list;      
+            // echo json_encode($list);die;   
             $this->template->admin_render('admin/sales/view-invoice', $this->data);
     }
 

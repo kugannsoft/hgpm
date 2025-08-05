@@ -197,7 +197,7 @@
                                                     </th>
                                                     <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width:5%;"
                                                         class='text-right'>Qty</th>
-                                                    <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width: 10px;%; "
+                                                    <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width: 10%; "
                                                         class='text-right'>Unit price</th>
                                                     <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width:10%;"
                                                         class='text-right'>Quoted Amount</th>
@@ -334,7 +334,7 @@
                                                     </th>
                                                     <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width:5%;"
                                                         class='text-right'>Qty</th>
-                                                    <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width: 10px;%; "
+                                                    <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width: 10%; "
                                                         class='text-right'>Unit price</th>
                                                     <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width:10%;"
                                                         class='text-right'>Quoted Amount</th>
@@ -454,10 +454,10 @@
 
                                                 <tr>
                                                     <th colspan="5"
-                                                        style="text-align:right;font-size:10px;padding: 5px;!important;border-bottom:1px solid #000;border-right:1px solid #000;border-top:1px solid #000;border-left:1px solid #000;">
+                                                        style="text-align:right;font-size:12px;padding: 5px;!important;border-bottom:1px solid #000;border-right:1px solid #000;border-top:1px solid #000;border-left:1px solid #000;">
                                                         Estimate Amount &nbsp;&nbsp; Rs</th>
                                                     <th
-                                                        style='text-align:right;padding: 5px;font-size:10px;!important;border-bottom:1px solid #000;border-right:1px solid #000;border-top:1px solid #000;'>
+                                                        style='text-align:right;padding: 5px;font-size:12px;!important;border-bottom:1px solid #000;border-right:1px solid #000;border-top:1px solid #000;'>
                                                         <?php echo number_format($estHed->EstimateAmount,2) ?>&nbsp;
                                                     </th>
                                                     <th
@@ -509,10 +509,10 @@
 
                                                 <tr>
                                                     <th colspan="5"
-                                                        style="text-align:right;padding: 5px;font-size:10px; !important;border-bottom:1px solid #000;border-right:1px solid #000;border-top:1px solid #000;border-left:1px solid #000;">
+                                                        style="text-align:right;padding: 5px;font-size:12px; !important;border-bottom:1px solid #000;border-right:1px solid #000;border-top:1px solid #000;border-left:1px solid #000;">
                                                         Estimate Amount &nbsp;&nbsp; Rs</th>
                                                     <th
-                                                        style='text-align:right;padding: 5px;font-size:10px; !important;border-bottom:1px solid #000;border-right:1px solid #000;border-top:1px solid #000;'>
+                                                        style='text-align:right;padding: 5px;font-size:12px; !important;border-bottom:1px solid #000;border-right:1px solid #000;border-top:1px solid #000;'>
                                                         <?php echo number_format($estHed->EstimateAmount,2) ?>&nbsp;
                                                     </th>
                                                     <th
@@ -558,8 +558,14 @@
                                                 </tr>
                                                 <?php } ?>
                                                 <?php } ?>
+                                                
                                                 <tr>
-                                                    <th colspan="6" style="text-align:left">Remark: <span
+                                                    <th colspan="6" style="text-align:left">
+                                                            <br>
+                                                    </th>
+                                                </tr>
+                                                 <tr>
+                                                    <th colspan="6" style="text-align:left">REMARK: <span
                                                             id="lblremark1"><?php echo $estUser->remark ?></span><br><br>
                                                     </th>
                                                 </tr>
@@ -615,7 +621,7 @@
 
                                                 <th colspan="1"
                                                     style="border:1px solid #000; width:200px; text-align:center;">
-                                                    <br><br>
+                                                    <br>
 
 
                                                     VAT would be added to net invoice valve.

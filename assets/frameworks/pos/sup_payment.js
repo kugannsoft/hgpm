@@ -13,6 +13,7 @@ $(document).ready(function() {
     $("#chequeData").hide();
     $("#load_return").hide();
     $("#returnPayment").hide();
+    $("#bankSec").hide();
 
 $('.prd_icheck').iCheck({
         checkboxClass: 'icheckbox_square-blue',
@@ -290,8 +291,31 @@ $('.prd_icheck').iCheck({
 
     $("#payType").change(function() {
         var payType = ($(this).val());
-
+     
+        if(payType == 1){
+            $("#bankSec").hide();
+            $("#bankSec").val('');
+            $("#chequeData").hide();
+            $("#chequeDate").val('');
+            $('#chequeReciveDate').datetimepicker({ dateFormat: 'yy-mm-dd', timeFormat: "HH:mm:ss" });
+            $("#load_return").hide();
+            $("#payAmount").val(0);
+            $("#payAmount").prop("readonly",false);
+             $("#chequeReference").val('');
+        }
+        if(payType == 2){
+            $("#bankSec").show();
+            $("#chequeDate").val('');
+            $("#chequeReference").val('');
+            $('#chequeReciveDate').datetimepicker({ dateFormat: 'yy-mm-dd', timeFormat: "HH:mm:ss" });
+            $("#chequeData").hide();
+            $("#load_return").hide();
+            $("#payAmount").val(0);
+            $("#returnInvoice").val('');
+            $("#payAmount").prop("readonly",false);
+        }
         if (payType == 3) {
+            $("#bankSec").show();
             $("#chequeDate").val('');
             $("#chequeReference").val('');
             $('#chequeReciveDate').datetimepicker({ dateFormat: 'yy-mm-dd', timeFormat: "HH:mm:ss" });
@@ -300,26 +324,21 @@ $('.prd_icheck').iCheck({
             $("#payAmount").val(0);
             $("#returnInvoice").val('');
             $("#payAmount").prop("readonly",false);
+             $("#bankSec").val('');
 
         } else if (payType == 4) {
+            $("#bankSec").hide();
             $("#load_return").show();
             $("#chequeDate").val('');
+            $("#bankSec").val('');
             $("#chequeReference").val('');
             $('#chequeReciveDate').datetimepicker({ dateFormat: 'yy-mm-dd', timeFormat: "HH:mm:ss" });
             $("#chequeData").hide();
             $("#payAmount").prop("readonly",true);
-        } else {
-            $("#chequeDate").val('');
-            $("#chequeReference").val('');
-            $('#chequeReciveDate').datetimepicker({ dateFormat: 'yy-mm-dd', timeFormat: "HH:mm:ss" });
-            $("#chequeData").hide();
-            $("#load_return").hide();
-            $("#payAmount").val(0);
-            $("#returnInvoice").val('');
-            $("#payAmount").prop("readonly",false);
-
-        }
+        } 
     });
+
+   
 
     $("#payAmount").blur(function() {
         pay_amount = parseFloat($("#payAmount").val());
@@ -357,6 +376,7 @@ $("input[name='disablePrint']").on('ifChanged', function() {
        console.log(payAmount);
        var cashType =$("#cashType").val();
        var returnInvoice = $("#returnInvoice").val();
+        var bank = $("#bank").val();
 
             //pay autometically
     //         if (auto_payment == 2) {
@@ -650,7 +670,7 @@ $("input[name='disablePrint']").on('ifChanged', function() {
                                    payDate: payDate, settleAmount: settle_amount, isInvoiceColse: isInvoiceColse, chequeNo: chequeNo,
                                     credit_invoice: sendCredit_invoice, cus_credit_amount: sendCus_credit_amount, cus_settle_amount: sendCus_settle_amount,
                                      total_settle: total_settle, cus_inv_payment: sendCus_inv_payment,
-                                      over_pay_amount: over_pay_amount, over_pay_inv: over_pay_inv,cashType:cashType,payAmount:payAmount,returnInvoice:returnInvoice},
+                                      over_pay_amount: over_pay_amount, over_pay_inv: over_pay_inv,cashType:cashType,payAmount:payAmount,returnInvoice:returnInvoice,bank:bank},
                                       success: function(data)
                                                               {
                                                                   var resultData = JSON.parse(data);

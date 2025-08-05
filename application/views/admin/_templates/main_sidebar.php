@@ -824,7 +824,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </a>
                 <ul class="treeview-menu">
                     <li class="<?= active_link_function('cash_float') ?>"><a
-                                href="<?php echo site_url('admin/cash/cash_float'); ?>">Cash Float</a></li>
+                                href="<?php echo site_url('admin/cash/cash_float'); ?>">Main Cash Float</a></li>
                 </ul>
                 <ul class="treeview-menu">
                     <li class="<?= active_link_function('cash_float_balance') ?>"><a

@@ -1588,11 +1588,11 @@ public function editBankAccount() {
         die();
     }
 
-        public function deleteInvCon() {
-        $inv = $this->input->post('inv');
-   
+        public function delete_condition() {
+     $inv = $this->input->post('id');
+            
 
-        $table = '';
+        
         
                 $table = 'invoice_condition';
               

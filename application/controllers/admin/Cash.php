@@ -53,7 +53,7 @@ class Cash extends Admin_Controller {
             $location = $_SESSION['location'];
             $this->load->model('admin/Cash_model');
             $this->data['transType'] = $this->db->get_where('transactiontypes', array('IsExpenses' => 1))->result();
-
+             $this->data['bank']=$this->db->select('bank_account.*,bank.BankName,bank.BankCode')->from('bank_account')->join('bank','BankCode=acc_bank')->get()->result();
             $id3 = array('CompanyID' => $location);
             $this->data['company'] = $this->Cash_model->get_data_by_where('company', $id3);
 
@@ -107,7 +107,23 @@ class Cash extends Admin_Controller {
                     ->join('transactiontypes', 'transactiontypes.TransactionCode = maincashflot.TransactionCode', 'INNER')
                     ->where('Location' ,$location)
                     ->where('DATE(FlotDate)' ,$date)
-                   
+                    ->where('PayType','Cash')
+                    ->get()->result_array();
+            echo json_encode($data);
+            die;
+    }
+
+     public function getTransactionByDateExtra() {
+            $date = ($_REQUEST['cash_date']);
+            $location = ($_REQUEST['location']);
+            
+            $data =$this->db->select('*,maincashflot.Remark AS re, DATE(FlotDate) As FlotDate,bank.BankName')
+                    ->from('maincashflot')
+                    ->join('transactiontypes', 'transactiontypes.TransactionCode = maincashflot.TransactionCode', 'INNER')
+                    ->join('bank', 'bank.BankCode = maincashflot.Bank', 'INNER')
+                    ->where('Location' ,$location)
+                    ->where('DATE(FlotDate)' ,$date)
+                    ->where('PayType !=', 'Cash')
                     ->get()->result_array();
             echo json_encode($data);
             die;
@@ -174,13 +190,23 @@ class Cash extends Admin_Controller {
         die;
     }
     public function saveCashFloat() {
+        
         $cancelNo = $this->db->select_max('FlotNo')->get('maincashflot')->row()->FlotNo;
         $currentBalance = $this->db->select('CurrentBlance')->from('maincashflot')->where('FlotNo', $cancelNo)->get()->row()->CurrentBlance;
         
         $datetime = date("Y-m-d H:i:s");
         $cashType = $_POST['cashType'];
         $floatAmount = $_POST['floatAmount'];
-    
+         $Paytype = $_POST['payType'];
+
+        if($Paytype == 1){
+            $paymode ="Cash";
+        }elseif( $Paytype == 2){
+           
+             $paymode = "bank";
+        }elseif( $Paytype == 3){
+             $paymode = "Cheque";
+        }
         
         $invCanel = [
             'AppNo' => '1',
@@ -192,16 +218,23 @@ class Cash extends Admin_Controller {
             'CounterNo' => 1,
             'Remark' => $_POST['remark'],
             'FlotAmount' => $floatAmount,
-            'SystemUser' => $_POST['invUser']
+            'SystemUser' => $_POST['invUser'],
+            'PayType' =>$paymode,
+            'ChequeNo' => $_POST['chequeNo'],
+            'chequeDate' => $_POST['chequeDate'],
+            'chequeReference' => $_POST['chequeReference'],
+            'chequeRecivedDate' => $_POST['chequeRecivedDate'],
+            'Bank' =>$_POST['bank'],
         ];
+
     
-        if ($cashType == 1) {
-            $invCanel['CurrentBlance'] = $currentBalance - $floatAmount;
-            $res2 = $this->Cash_model->saveCashFloat('maincashflot', $invCanel);
-        }else{
-            $invCanel['CurrentBlance'] = $currentBalance + $floatAmount;
-            $res2 = $this->Cash_model->saveCashFloat('maincashflot', $invCanel);
-        }
+        // if ($cashType == 1) {
+        //     $invCanel['CurrentBlance'] = $currentBalance - $floatAmount;
+        //     $res2 = $this->Cash_model->saveCashFloat('maincashflot', $invCanel);
+        // }else{
+        //     $invCanel['CurrentBlance'] = $currentBalance + $floatAmount;
+        // }
+        $res2 = $this->Cash_model->saveCashFloat('maincashflot', $invCanel);
     
     
         echo json_encode([

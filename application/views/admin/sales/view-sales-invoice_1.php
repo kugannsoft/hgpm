@@ -557,7 +557,8 @@
                             <tr style="text-align:left;font-size:13px;">
                                 <td colspan="3" rowspan="5"
                                     style="border:1px solid #000; font-size:13px; width:250px; padding:5px; vertical-align: top;">
-                                    Remarks:
+                                    Remarks:<?php echo ($invHed->salesInvRemark);?>
+
 
 
                                 </td>
