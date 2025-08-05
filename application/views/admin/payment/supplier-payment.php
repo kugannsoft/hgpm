@@ -54,11 +54,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <select class="form-control" id="payType">
                                             <!--<option value="0">-Select-</option>-->
                                             <option value="1">Cash</option>
+                                            <option value="2">Bank</option>
                                             <option value="3">Cheque</option>
                                             <option value="4">Return</option>
                                         </select>
                                     </div>
                                 </div>
+                                
+                            
                                 <div class="form-group" id="load_return">
                                     <label for="returnInvoice" class="col-sm-5 control-label">Return Invoices<span class="required">*</span></label>
                                     <div class="col-sm-6">
@@ -143,40 +146,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                             
                         </div>
-                        <div class="row" id='chequeData'>
+                        <div class="row" id='bankSec'>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="bank" class="control-label">Bank <span class="required">*</span></label>
-                                    <select class="form-control" required="required"  name="bank" id="bank"></select>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="chequeNo" class="control-label">Cheque No <span class="required">*</span></label>
-                                    <input type="text" class="form-control" required="required"  name="chequeNo" id="chequeNo">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="chequeReciveDate" class="control-label">Cheque Received date <span class="required">*</span></label>
-                                    <input type="text" class="form-control" required="required"  name="chequeReciveDate" id="chequeReciveDate">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="chequeDate" class="control-label">Date of Cheque<span class="required">*</span></label>
-                                    <input type="text" class="form-control" required="required"  name="chequeDate" id="chequeDate">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="chequeReference" class="control-label">Cheque Reference<span class="required"></span></label>
-                                    <textarea  class="form-control" name="chequeReference" id="chequeReference">
-
-                                    </textarea>
+                                     <select class="col-sm-5 form-control"   name="bank" id="bank">
+                                        <option value="">Select a Bank</option>
+                                        <?php foreach($bank as $banks){?>
+                                            <option value="<?php echo $banks->BankCode; ?>"><?php echo $banks->BankName; ?></option>
+                                            <?php } ?>
+                                        </select>
                                 </div>
                             </div>
                         </div>
+                        <div class="row" id='chequeData'>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="chequeNo" class="control-label">Cheque No <span class="required">*</span></label>
+                                        <input type="text" class="form-control" required="required"  name="chequeNo" id="chequeNo">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="chequeReciveDate" class="control-label">Cheque Received date <span class="required">*</span></label>
+                                        <input type="text" class="form-control" required="required"  name="chequeReciveDate" id="chequeReciveDate">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="chequeDate" class="control-label">Date of Cheque<span class="required">*</span></label>
+                                        <input type="text" class="form-control" required="required"  name="chequeDate" id="chequeDate">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="chequeReference" class="control-label">Cheque Reference<span class="required"></span></label>
+                                        <textarea  class="form-control" name="chequeReference" id="chequeReference">
+
+                                        </textarea>
+                                    </div>
+                                </div>
+                        </div>
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

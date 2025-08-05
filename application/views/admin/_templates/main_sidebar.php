@@ -502,6 +502,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li class="<?= active_link_function('salesbyproduct') ?>">
                                 <a href="<?php echo site_url('admin/report/salesbyproduct'); ?>">Product wise sale</a>
                             </li>
+                             <li class="<?= active_link_function('profitReport') ?>">
+                                <a href="<?php echo site_url('admin/report/profitReport'); ?>">Product Profit Report</a>
+                            </li>
+                               <li class="<?= active_link_function('profitSummuryReport') ?>">
+                                <a href="<?php echo site_url('admin/report/profitSummuryReport'); ?>"> Profit Summary Report</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -818,7 +824,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </a>
                 <ul class="treeview-menu">
                     <li class="<?= active_link_function('cash_float') ?>"><a
-                                href="<?php echo site_url('admin/cash/cash_float'); ?>">Cash Float</a></li>
+                                href="<?php echo site_url('admin/cash/cash_float'); ?>">Main Cash Float</a></li>
                 </ul>
                 <ul class="treeview-menu">
                     <li class="<?= active_link_function('cash_float_balance') ?>"><a

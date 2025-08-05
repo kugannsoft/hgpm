@@ -273,7 +273,7 @@ $(document).ready(function() {
     });
 
     function updateAdvanceSelectionDisplay() {
-        let advance_amount  = 0;
+         advance_amount  = 0;
 
         console.log('Calculating total for:', selectedAdvancePayments);
 
@@ -294,7 +294,7 @@ $(document).ready(function() {
         console.log('Total amount:', advance_amount);
 
         $("#advance_amount").val(advance_amount.toFixed(2));
-        $("#madvance").html(advance_amount.toFixed(2));
+    
          addPayment(cashAmount, creditAmount, cardAmount,chequeAmount,cusType,advance_amount,bank_amount,return_amount);
     }
 
@@ -785,7 +785,7 @@ $(document).ready(function() {
                                     resultData.product.Prd_Description,
                                     resultData.product.ProductCode,
                                     resultData.price_stock.Price,
-                                    resultData.product.Prd_CostPrice,
+                                    resultData.price_stock.UnitCost,
                                     0,
                                     resultData.product.IsSerial,
                                     resultData.product.IsFreeIssue,
@@ -817,6 +817,8 @@ $(document).ready(function() {
                 $("#flatQty").hide();
                 $("#dropdownMenuButton").hide();
                  $("#stockSec").hide();
+                $("#spartDiv").hide();
+                $("#jobDescDiv").show();
             } else if (workType == 4) {
                 $("#flatQty").show();
                 $("#dropdownMenuButton").show();
@@ -878,7 +880,7 @@ $(document).ready(function() {
         var workTypes = $("#workType option:selected").html();
        
         var workId = $("#workType option:selected").val();
-       
+   
         
         
         var workOrder = $("#workType option:selected").attr('jobOrder');
@@ -909,7 +911,8 @@ $(document).ready(function() {
         var isNewNbt = $("input[name='isProNbt']:checked").val();
         var newNbtRatio = parseFloat($("#proNbtRatio").val());
         var estprice = parseFloat($("#estPrice").val());
-        var costprice = parseFloat($("#costPrice").val());
+        var costprice = parseFloat($("#cost_price").val());
+       
         var selectedEmployees = [];
         $('input[name="employees[]"]:checked').each(function() {
             selectedEmployees.push($(this).val()); 
@@ -1090,35 +1093,7 @@ $(document).ready(function() {
                 if (parts2ArrIndex < 0) {
                     netprice = qty * sellPrice;
                     totalPrice= qty * sellPrice;
-                    calculateProductWiseDiscount(netprice, discount, discount_type, discount_precent, discount_amount, 0);
-                    totalPriceWithDiscount=parseFloat(totalPrice-product_discount);
-                    proVat=addProductVat((totalPriceWithDiscount),isNewVat,isNewNbt,newNbtRatio);
-                    proNbt=addProductNbt((totalPriceWithDiscount),isNewVat,isNewNbt,newNbtRatio) ;
-                    netprice +=proVat ;
-                    netprice +=proNbt ;
-                    $("#tbl_job tbody").append("<tr estlineno='"+estLine+"' cost_price='"+costprice+"' est_price='"+estprice+"' discount_type='"+discount_type+"'  proDiscount='"+product_discount+"' disPrecent='"+prodiscount_precent+"' totalPrice='"+totalPrice+"' isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"' job='" + jobdesc + "' jobid='" + workId + "' qty='" + qty + "' jobOrder='" + workOrder + "'  netprice='" + netprice + "' sellprice='" + sellPrice + "' isIns='" + isInsurance + "' insurance='" + insurance + "' work_id='" + jobRef + "' timestamp='" + timestamp + "'><td>" + k + "</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td class='text-right'>" + accounting.formatNumber(qty) + "</td><td class='text-right'>" + accounting.formatNumber(sellPrice) + "</td><td class='text-right'>" + accounting.formatNumber(prodiscount_precent) + "</td><td class='text-right'>" + accounting.formatNumber(estprice) + "</td><td class='text-right'>" + accounting.formatNumber(netprice) + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
-                    if (jobRef != 0 || jobRef != '') { parts2Arr.push(jobRef); }
-                    $("#jobdesc").val('');
-                    $("#jobdesc2").val('');
-                    $('#stock').text('');
-                     $('#flatQty').val('');
-                    totalAmount += parseFloat(totalPrice);
-                    totalNetAmount +=parseFloat(netprice);
-                    totalProVAT+=parseFloat(proVat);
-                    totalProNBT+=parseFloat(proNbt);
-                    clearProductData();
-                    k++;
-                } else {
-                    //alert("Job Already exists");
-                    $.notify("Job Already exists.", "warning");
-                }
-            } else if (workId == 5 && jobdesc != '') {
-                //paints
-                var parts3ArrIndex = $.inArray(jobRef, parts3Arr);
-
-                if (parts3ArrIndex < 0) {
-                    netprice = qty * sellPrice;
-                    totalPrice= qty * sellPrice;
+                    totalflatPrice = flatQty;
                     calculateProductWiseDiscount(netprice, discount, discount_type, discount_precent, discount_amount, 0);
                     totalPriceWithDiscount=parseFloat(totalPrice-product_discount);
                     proVat=addProductVat((totalPriceWithDiscount),isNewVat,isNewNbt,newNbtRatio);
@@ -1146,12 +1121,92 @@ $(document).ready(function() {
                         "' isIns='" + isInsurance + 
                         "' insurance='" + insurance + 
                         "' work_id='" + jobRef + 
-                        "' timestamp='" + timestamp + "'><td>" + k +"</td><td work_id='" + workId + "'>" + workTypes + "</td><td>" + jobdesc + "</td><td class='text-right'>" + accounting.formatNumber(qty) + "</td><td class='text-right'>" + accounting.formatNumber(sellPrice) + "</td><td class='text-right'>" + accounting.formatNumber(prodiscount_precent) + "</td><td class='text-right'>" + accounting.formatNumber(estprice) + "</td><td class='text-right'>" + accounting.formatNumber(netprice) + "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
-                    if (jobRef != 0 || jobRef != '') { parts3Arr.push(jobRef); }
+                        "' timestamp='" + timestamp +
+                        "' totalflatPrice='" + totalflatPrice + 
+                        "' selectedEmployees='" + selectedEmployeesJson + 
+                        "'><td>" + k +
+                        "</td><td work_id='" + workId +
+                        "'>" + workTypes +
+                        "</td><td>" + jobdesc + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(qty) + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(sellPrice) + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(prodiscount_precent) + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(estprice) + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(netprice) + 
+                         "</td><td class='text-right' style='display: none;'>" + accounting.formatNumber(totalflatPrice) +
+                        "<td class='text-right'style='display: none;'>" + selectedEmployeesJson + "</td>" + 
+                        "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
+                    if (jobRef != 0 || jobRef != '') { parts2Arr.push(jobRef); }
                     $("#jobdesc").val('');
                     $("#jobdesc2").val('');
                     $('#stock').text('');
                      $('#flatQty').val('');
+                    $('input[name="employees[]"]').prop('checked', false); 
+                    totalAmount += parseFloat(totalPrice);
+                    totalNetAmount +=parseFloat(netprice);
+                    totalProVAT+=parseFloat(proVat);
+                    totalProNBT+=parseFloat(proNbt);
+                    clearProductData();
+                    k++;
+                } else {
+                    //alert("Job Already exists");
+                    $.notify("Job Already exists.", "warning");
+                }
+            } else if ((workId == 5 && jobdesc != '') || (workId == 6 && jobdesc != '') || (workId == 7 && jobdesc != '') || (workId == 9 && jobdesc != '') || (workId == 10 && jobdesc != '') || (workId == 11 && jobdesc != '')) {
+                //paints
+                var parts3ArrIndex = $.inArray(jobRef, parts3Arr);
+
+                if (parts3ArrIndex < 0) {
+                    netprice = qty * sellPrice;
+                    totalPrice= qty * sellPrice;
+                     totalflatPrice = flatQty;
+                    calculateProductWiseDiscount(netprice, discount, discount_type, discount_precent, discount_amount, 0);
+                    totalPriceWithDiscount=parseFloat(totalPrice-product_discount);
+                    proVat=addProductVat((totalPriceWithDiscount),isNewVat,isNewNbt,newNbtRatio);
+                    proNbt=addProductNbt((totalPriceWithDiscount),isNewVat,isNewNbt,newNbtRatio) ;
+                    netprice +=proVat ;
+                    netprice +=proNbt ;
+                    $("#tbl_job tbody").append("<tr estlineno='"+estLine+
+                        "' cost_price='"+costprice+
+                        "' est_price='"+estprice+
+                        "' discount_type='"+discount_type+
+                        "'  proDiscount='"+product_discount+
+                        "' disPrecent='"+prodiscount_precent+
+                        "' totalPrice='"+totalPrice+
+                        "' isvat='"+isNewVat+
+                        "' isnbt='"+isNewNbt+
+                        "' nbtRatio='"+newNbtRatio+
+                        "' proVat='"+proVat+
+                        "' proNbt='"+proNbt+
+                        "' job='" + jobdesc + 
+                        "' jobid='" + workId + 
+                        "' qty='" + qty + 
+                        "' jobOrder='" + workOrder + 
+                        "'  netprice='" + netprice + 
+                        "' sellprice='" + sellPrice + 
+                        "' isIns='" + isInsurance + 
+                        "' insurance='" + insurance + 
+                        "' work_id='" + jobRef + 
+                        "' timestamp='" + timestamp +
+                         "' totalflatPrice='" + totalflatPrice + 
+                        "' selectedEmployees='" + selectedEmployeesJson + 
+                        "'><td>" + k +
+                        "</td><td work_id='" + workId + 
+                        "'>" + workTypes + "</td><td>" + jobdesc + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(qty) + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(sellPrice) + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(prodiscount_precent) + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(estprice) + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(netprice) + 
+                         "</td><td class='text-right' style='display: none;'>" + accounting.formatNumber(totalflatPrice) +
+                        "<td class='text-right'style='display: none;'>" + selectedEmployeesJson + "</td>" + 
+                        "</td><td>&nbsp;<i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i>&nbsp;<i class='remove btn btn-danger btn-xs glyphicon glyphicon-remove-circle'></i></td></tr>");
+                    if (jobRef != 0 || jobRef != '') { parts3Arr.push(jobRef); }
+                    $("#jobdesc").val('');
+                    $("#jobdesc2").val('');
+                    $('#stock').text('');
+                    $('#flatQty').val('');
+                    $('input[name="employees[]"]').prop('checked', false); 
                     totalAmount += parseFloat(totalPrice);
                     totalNetAmount +=parseFloat(netprice);
                     totalProVAT+=parseFloat(proVat);
@@ -1289,14 +1344,14 @@ $(document).ready(function() {
                 flatQty = ui.item.flatQty;
                 $("#qty").val(1);
                 $("#sellPrice").val(jobCost);
-                $("#costPrice").val(jobCost);
+                $("#cost_price").val(jobCost);
                 $("#flatQty").val(flatQty);
             } else {
                 jobRef = 0;
                 jobCost = 0;
                 $("#qty").val(1);
                 $("#sellPrice").val(jobCost);
-                $("#costPrice").val(jobCost);
+                $("#cost_Price").val(jobCost);
                 $("#flatQty").val(flatQty);
             }
         }
@@ -1375,7 +1430,7 @@ $(document).ready(function() {
         var disPercent=[];
         var disType=[];
         var estimatePrice=[];
-        var costPrice =[];
+        var costprice =[];
         var estLineNo=[];
         var totalflatPrice = [];
         var selectedEmployees = [];
@@ -1401,7 +1456,7 @@ $(document).ready(function() {
             disPercent.push($(this).attr('disPrecent'));
             disType.push($(this).attr('discount_type'));
             estimatePrice.push($(this).attr('estprice'));
-            costPrice.push($(this).attr('cost_price'));
+            costprice.push($(this).attr('cost_price'));
             estLineNo.push($(this).attr('estlineno'));
             totalflatPrice.push($(this).attr('totalflatPrice'));
             var employeeData = $(this).attr('selectedEmployees');
@@ -1440,7 +1495,7 @@ $(document).ready(function() {
         var disPercentArr = JSON.stringify(disPercent);
         var disTypeArr = JSON.stringify(disType);
         var estimatePriceArr = JSON.stringify(estimatePrice);
-        var costPriceArr = JSON.stringify(costPrice);
+        var costPriceArr = JSON.stringify(costprice);
         var estLineNoArr = JSON.stringify(estLineNo);
         var totalflatPrice = JSON.stringify(totalflatPrice);
         var advancePaymentNo = JSON.stringify(selectedAdvancePayments);
@@ -1524,7 +1579,7 @@ $(document).ready(function() {
                         bank_amount:bank_amount,cashAmount:cashAmount,creditAmount:creditAmount,chequeAmount:chequeAmount,cardAmount:cardAmount,advance_amount:advance_amount,
                         advance_pay_no:advance_payment_no,return_payment_no:return_payment_no,return_amount:return_amount,ccAmount: ccAmountArr, ccRef: ccRefArr, ccType: ccTypeArr,
                         ccName: ccNameArr,chequeNo:chequeNo,bank: bank,chequeReference: chequeReference, chequeRecivedDate: chequeReciveDate, chequeDate: chequeDate,pay_remark:pay_remark,
-                        totalflatPrice:totalflatPrice,advancePaymentNo:advancePaymentNo},
+                        totalflatPrice:totalflatPrice,advancePaymentNo:advancePaymentNo,selectedEmployeesArr:selectedEmployeesArr},
                     success: function(data) {
                         var newdata = JSON.parse(data);
                         var fb = newdata.fb;
@@ -1532,13 +1587,13 @@ $(document).ready(function() {
 
                         if (fb) {
                             $("#lastJob").html('');
-                            $("#btnSave,#btnSaveInv").prop('disabled',true);
+                            $("#btnSave,#btnSaveInv,#btnSaveTemp").prop('disabled',true);
                             // $("#lastJob").html(lastproduct_code);
                             $.notify("Job Invoice successfully saved.", "success");
                             $("#modelNotifi").html(" Last Job Invoice NUmber = "+lastproduct_code);
 
                             loadInvoiceData(lastproduct_code);
-                            $("#btnSave,#btnSaveInv").prop('disabled',true);
+                            $("#btnSave,#btnSaveInv,#btnSaveTemp").prop('disabled',true);
                             total_amount = 0;
                             total_discount = 0;
                             totalNetAmount = 0;
@@ -1565,7 +1620,7 @@ $(document).ready(function() {
                             SupNumber = 0;
                         } else {
                             $("#lastJob").html('');
-                            $('#btnSave,#btnSaveInv').attr('disabled', false);
+                            $('#btnSave,#btnSaveInv,#btnSaveTemp').attr('disabled', false);
                         }
                     }
                 });
@@ -1906,7 +1961,7 @@ $(document).ready(function() {
         $("#prdName").val(mname);
         $("#itemCode").val(mcode);
         $("#sellPrice").val(msellPrice);
-        $("#costPrice").val(mcostPrice);
+        $("#cost_price").val(mcostPrice);
         $("#isSerial").val(misSerial);
         $("#upc").val(upc);
 
@@ -1926,7 +1981,7 @@ $(document).ready(function() {
         $("#prdName").val('');
         $("#qty").val('');
         $("#sellPrice").val('');
-        $("#costPrice").val('');
+        $("#cost_price").val('');
         $("#product").val('');
         $('#isInsurance').iCheck('uncheck');
         $("#insurance").val('');

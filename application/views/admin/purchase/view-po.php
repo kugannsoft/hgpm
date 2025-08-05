@@ -138,21 +138,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <td style="">&nbsp;</td>
                                             <td style="border-bottom:1px dashed #000;width:200px">&nbsp;</td>
                                             <td style="">&nbsp;</td>
-                                            <td style="">&nbsp;</td>
+                                            <td style="border-bottom:1px dashed #000;width:200px">&nbsp;</td>
                                         </tr>
                                         <tr>
                                             <td style="width:100px;text-align: center">Prepared By</td>
                                             <td style="">&nbsp;</td>
                                             <td style="width:200px;text-align: center">Authorised Signature</td>
                                             <td style="">&nbsp;</td>
-                                            <td style="">&nbsp;</td>
+                                            <td style="width:200px;text-align: center">Issued Date</td>
                                         </tr>
                                         <tr>
                                             <td style="width:100px;text-align: center">( <?php echo $po_hed->first_name; ?> )</td>
                                             <td style="">&nbsp;</td>
                                             <td style="width:200px;text-align: center"></td>
                                             <td style="">&nbsp;</td>
-                                            <td style="text-align: center"></td>
+                                            <td style="width:200px;text-align: center"></td>
                                         </tr>
                                     </table>
                                     <input type="Hidden" name="estNo" id="estNo" value="<?php //echo $QuotationNo;?>">

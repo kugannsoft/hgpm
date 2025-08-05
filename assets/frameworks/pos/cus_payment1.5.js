@@ -362,36 +362,53 @@ console.log('key',key);
                                 "<td></td></tr>");
                              z=z+1;
                         }
-                       // $("#cusOutstand").html(accounting.formatMoney(total_due_amount));
+                       
+                    });
+
+                    $('#tbl_advance_payment tbody').empty();
+                    $.each(resultData.advance_payments, function(key, value) {
+                        let row = `
+                            <tr>
+                                <td>${key + 1}</td>
+                                <td>${value.CusPayNo}</td>
+                                <td>${parseFloat(value.PayAmount).toFixed(2)}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-danger remove-advance" data-id="${value.CusPayNo}">
+                                       To Cancel
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        $('#tbl_advance_payment tbody').append(row);
                     });
 
 
-                    // $.each(resultData.return_data, function(key, value) {
-                    //
-                    //     var paymentNo = value.InvoiceNo;
-                    //     var invDate = value.InvoiceDate;
-                    //      var totalNetAmount = parseFloat(value.NetAmount);
-                    //     var creditAmount = parseFloat(value.CreditAmount);
-                    //     var settleAmount = parseFloat(value.SettledAmount);
-                    //     var returnAmount = parseFloat(0);
-                    //     var customerPayment = parseFloat(value.payAmount);
-                    //     // var totalNetAmount = value.NetAmount;
-                    //     // var creditAmount = value.CreditAmount;
-                    //     // var settleAmount = value.SettledAmount;
-                    //     // var customerPayment = value.payAmount;
-                    //     var dueAmount = 0;
-                    //     total_due_amount += (creditAmount - settleAmount-returnAmount);
-                    //
-                    //     $("#over_payment_rows").append("<tr style='background-color:#fbb5b5;' ><td>" + (key + 1) + "&nbsp;&nbsp;</td><td  class='invoiceNo'>" + paymentNo + " Return </td><td>" + invDate + "</td><td class='text-right'>" + accounting.formatMoney(totalNetAmount) + "</td><td class='text-right creditAmount'>" + accounting.formatMoney(creditAmount) + "</td><td class='text-right settleAmount' invPay='0'>" + accounting.formatMoney(0) + "</td><td class='text-right returnAmount' invPay='0'>" + accounting.formatMoney(settleAmount) + "</td><td class='text-right dueAmount' isColse='0'>" + accounting.formatMoney(creditAmount - settleAmount-returnAmount) + "</td><td></td></tr>");
-                    //     // $("#cusOutstand").html(accounting.formatMoney(total_due_amount));
-                    // });
-
-                    // $("#tbl_payment").dataTable().fnDestroy();
+                   
                 }
             });
 
 
         }
+    });
+
+
+    $('#tbl_advance_payment').on('click', '.remove-advance', function () {
+        let payNo = $(this).data('id');
+         let row = $(this).closest('tr');
+
+         $.ajax({
+                type: "POST",
+                url: "../../admin/Payment/CancelAdvance",
+                data: { payNo: payNo},
+                success: function (response) {
+                    $.notify('Advance Payment Cancel successfully.',"success"); 
+                    row.remove();
+                },
+                error: function () {
+                    $.notify('Something went wrong while Advance Payment Cancel.',"warning");
+                }
+            });
+          
     });
 
     $("#bank").select2({
@@ -842,9 +859,7 @@ console.log('key',key);
                             due_amount = parseFloat(accounting.unformat($("#tbl_payment tbody").find("[id='" + autorowid + "']").children('.dueAmount').html()));
                             credit_amount = parseFloat(accounting.unformat($("#tbl_payment tbody").find("[id='" + autorowid + "']").children('.creditAmount').html()));
                             settle_amount = parseFloat(accounting.unformat($("#tbl_payment tbody").find("[id='" + autorowid + "']").children('.settleAmount').html()));
-                            alert(due_amount);
-                            alert(credit_amount);
-                            alert(settle_amount);
+                           
                             if (due_amount <= pay_amount) {
                                 var due_amount3 = due_amount;
                                 var pay_amount3 = pay_amount;

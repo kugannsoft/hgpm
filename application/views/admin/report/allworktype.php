@@ -39,10 +39,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="col-md-1">
                                         <button type="submit" class="btn btn-flat btn-success">Show</button>
                                     </div>
-                                    <div class="col-md-1">
-                                        <button onclick="printdiv()" class="btn btn-flat btn-default">Print</button>
-                                    </div>
+                                    
                             </form>
+                            <div class="col-md-1">
+                                <button onclick="printdiv()" class="btn btn-flat btn-default">Print</button>
+                            </div>
 
                         </div>
                     </div>
@@ -118,6 +119,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     });
 
     $('#product').select2();
+
+    function loadprint() {
+        $('.modal-content').load('<?php echo base_url() ?>admin/report/', function(result) {
+            $('#salesbydateprint').modal({show: true});
+        });
+    }
+    function printdiv() {
+        $("#saletable").print({
+            prepend: "<h3 style='text-align:center'>All Work Type Wise Amount</h3><hr/>",
+            title: 'All Work Type Wise Amount'
+        });
+    }
 
    $('#filterform').submit(function(e) {
         e.preventDefault();
@@ -210,18 +223,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         return sum;
     }
 
-    function loadprint() {
-        $('.modal-content').load('<?php echo base_url() ?>admin/report/', function(result) {
-            $('#salesbydateprint').modal({show: true});
-        });
-    }
-    function printdiv() {
-        $("#saletable").print({
-            prepend: "<h3 style='text-align:center'>Product vise Sales Report</h3><hr/>",
-            title: 'Date vise Sales Report'
-        });
-    }
-
+    
     function formatDate(date) {
         var hours = date.getHours();
         var minutes = date.getMinutes();

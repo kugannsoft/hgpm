@@ -434,7 +434,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table style="border-collapse:collapse;width:683px;padding:2px;font-size: 12px;">
                         <tr>
                             <td rowspan="3" style='padding:5px;padding-right:20px;border:1px solid #000; text-align:left;font-size: 12px;width:350px;'>
-                            I agree with above condition & I hand over to you for carry out work <br>
+                            I agree with above condition & I hand over to you for carry out work & I assure you there are novaluables in my Vehicle.<br>
 
                             <br>
                             …………………………………………………………………………….

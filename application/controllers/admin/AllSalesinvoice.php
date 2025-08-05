@@ -78,11 +78,17 @@ class AllSalesinvoice extends Admin_Controller {
         $location = $_SESSION['location'];
     
         $this->datatables->select('tempjobinvoicehed.*, customer.CusName, customer.DisplayName, 
-            (CASE 
-                WHEN EXISTS (SELECT 1 FROM jobinvoicehed WHERE jobinvoicehed.JobCardNo = tempjobinvoicehed.JobCardNo) 
-                THEN "Pending" 
-                ELSE "Complete" 
-            END) as invoice_status');
+            (   CASE 
+                        WHEN EXISTS (
+                            SELECT 1 
+                            FROM jobinvoicehed 
+                            WHERE jobinvoicehed.JobCardNo = tempjobinvoicehed.JobCardNo
+                        )
+                        THEN "Complete"
+                        ELSE "Pending"
+                    END
+                ) as invoice_status
+            ');
     
         $this->datatables->from('tempjobinvoicehed')
             ->join('customer', 'customer.CusCode = tempjobinvoicehed.JCustomer', 'left');

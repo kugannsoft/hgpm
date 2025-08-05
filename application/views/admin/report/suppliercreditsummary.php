@@ -30,13 +30,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="form-group">
                                         
                                     </div> -->
-                                <div class="col-md-3">
-                                    <label for="isall" class="control-label">
-                                        <input class="rpt_icheck" type="checkbox" name="isall"> 
+                                <div class="col-md-1">
+                                        <div class="form-group">
+                                        <label for="isall" class="control-label">
+                                            <input class="rpt_icheck" type="checkbox" name="isall" id="isall"> 
                                             All
-                                    </label>
-                                </div>
-                                <div class="col-md-3">
+                                        </label>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-daterange input-group" id="datepicker">
+                                            <input type="text" class="form-control" name="startdate" id="startdate"  value="<?php echo date("Y-m-d") ?>"/>
+                                            <span class="input-group-addon">to</span>
+                                            <input type="text" class="form-control" name="enddate" id="enddate" value="<?php echo date("Y-m-d") ?>"/>
+                                        </div>
+                                       
+                                    </div>
+                                <div class="col-md-2">
                                     <button type="submit" class="btn btn-flat btn-success">Show</button>
                                 </div>
                             </form>
@@ -95,6 +105,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </tr> 
                             <tr style="text-align:center;font-size:15px;font-family: Arial, Helvetica, sans-serif;">
                                 <td colspan="6"><b><?php echo $company['AddressLine01'] ?><?php echo $company['AddressLine02'] ?><?php echo $company['AddressLine03'] ?> &nbsp;&nbsp;  <?php echo $company['LanLineNo'] ?>, <?php echo $company['Fax'] ?> <?php echo $company['MobileNo'] ?></b></td>
+                            </tr>
+                             <tr style="text-align:center;font-size:15px;font-family: Arial, Helvetica, sans-serif;">
+                            <td colspan="6">
+                                <b id="date-range-text">Start Date: ___ End Date: ___</b>
+                            </td>
                             </tr>
                         </table>
                     </div>
@@ -220,9 +235,21 @@ $("input[name='isall']").on('ifChanged', function(event){
         });
     }
     function printdiv() {
+        var isAll = $("input[name='isall']").is(':checked') ? 1 : 0;
+        if(isAll==0){
+            var startdate = $('#startdate').val(); 
+            var enddate = $('#enddate').val();
+
+   
+            $('#date-range-text').html(`<b>Start Date: ${startdate} &nbsp;&nbsp;&nbsp; End Date: ${enddate}</b>`);
+        }else{
+             $('#date-range-text').hide();
+        }
+        
         $("#report").print({
             prepend: $("#Report_header").html(),
-            title: 'Date vise Sales Report'
+            title: 'Supplier Outstanding Summary'
+          
         });
     }
 

@@ -155,6 +155,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <span class="thumbnail">   <!--&nbsp; &nbsp; Automatically &nbsp;<input type="radio"  class="prd_icheck" checked="checked" name="payAuto" id="payAuto" value="1">--> 
                                 &nbsp; &nbsp; Manual &nbsp; <input type="radio" class="prd_icheck" checked="checked" name="payAuto" id="payAuto2" value="2"> </span>
                                
+                               <div class="box-body">
+                                    <div class="table-responsive">
+                                        <table id="tbl_advance_payment" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>No</th>
+                                                    <th>Amount</th>
+                                                   
+                                                    <th>###</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                            <tfoot id="over_payment_rows">
+                                            </tfoot>
+                                        </table>
+                                    </div>                    
+                                </div>
                             </div>
                         </div>
                         <div class="row" id='bankData'>
@@ -226,6 +244,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                             </div>
                         </div>
+                       
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

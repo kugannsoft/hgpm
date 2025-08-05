@@ -396,7 +396,9 @@ class Salesinvoice_model extends CI_Model {
         }elseif ($SalesInvType==2) {
            $this->update_max_code('TaxInvoiceNo'.$location);
         }elseif ($SalesInvType==3) {
-           $this->update_max_code('CreditInvoiceNo'.$location);
+           
+           //$this->update_max_code('CreditInvoiceNo'.$location);
+             $this->update_max_code('SalesInvoiceNo'.$location);
         }
 
         
@@ -810,7 +812,7 @@ class Salesinvoice_model extends CI_Model {
     {
         $query = $this->db->select('*')->where('FormName',$form)->get('codegenerate');
         foreach ($query->result_array() as $row) {
-           $input = $row['AutoNumber'];
+            $input = $row['AutoNumber'];
         } 
         $this->db->update('codegenerate',array('AutoNumber'=>($input+1)),array('FormName'=>($form)));
     }

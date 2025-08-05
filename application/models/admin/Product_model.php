@@ -80,7 +80,7 @@ class Product_model extends CI_Model {
     public function loadproductbyid($product) {
         return $this->db->select('product.*,productcondition.*')->from('product')
                         ->where('product.ProductCode', $product)
-                        ->where('product.Prd_IsActive', 1)
+                        // ->where('product.Prd_IsActive', 1)
                         ->join('productcondition', 'productcondition.ProductCode = product.ProductCode')
                         ->get()->row();
     }
@@ -90,6 +90,13 @@ class Product_model extends CI_Model {
                 ->from('productprice')->where('ProductCode', $product)
                 ->join('pricelevel','pricelevel.PL_No = productprice.PL_No')
                 ->get()->result();
+    }
+
+    public function loadPriceStockPrice($product){
+        return $this->db->select('Price')
+                    ->from('pricestock')
+                    ->where('PSCode', $product)
+                    ->get()->result();
     }
 
     public function loadproductlocationbyid($product) {
@@ -132,7 +139,7 @@ class Product_model extends CI_Model {
 
     public function loadpricestockbyid($product,$location,$price)
     {
-            return $this->db->select('Stock,Price')
+            return $this->db->select('Stock,Price,UnitCost')
             ->from('pricestock')
             ->where('PSCode', $product)
             ->where('PSLocation', $location)

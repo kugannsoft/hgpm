@@ -302,7 +302,7 @@ var toatl_discount =0;
     function printdiv() {
         $("#report").print({
             prepend: $("#Report_header").html(),
-            title: 'Date vise Sales Report'
+            title: 'Vehicle wise Job summary'
         });
     }
 

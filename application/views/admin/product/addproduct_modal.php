@@ -346,7 +346,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="productCode" class="control-label">Set a Price with VAT<span class="required">*</span></label>
+                                <label for="productCode" class="control-label">Selling Price with VAT<span class="required">*</span></label>
                                 <input type="text" class="form-control" required="required" min="0" value="0" name="setaprice" id="setaprice">
                             </div>
                             <!--                            <div class="form-group">

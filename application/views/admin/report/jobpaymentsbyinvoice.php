@@ -344,7 +344,7 @@ var toatl_discount =0;
     function printdiv() {
         $("#saletable").print({
             prepend: "<h3 style='text-align:center'>Invoice Payment Report</h3><hr/>",
-            title: 'Invoice Payment Report'
+            title: ''
         });
     }
 

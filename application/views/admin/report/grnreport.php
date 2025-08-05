@@ -434,8 +434,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function printdiv() {
         $("#saletable").print({
-            prepend: "<h3 style='text-align:center'>Product Detail Report</h3><hr/>",
-            title: 'Date vise Sales Report'
+            prepend: "<h3 style='text-align:center'>Goods Recevied Note by Grn Report</h3><hr/>",
+            title: 'Goods Recevied Note by Grn'
         });
     }
     
