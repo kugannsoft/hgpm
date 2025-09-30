@@ -577,7 +577,6 @@ class Payment extends Admin_Controller {
 
     public function cancelCusPayment() {
         
-
         $location = $_POST['location'];
         $canDate = $_POST['payDate'];
         $paymentNo = $_POST['invNo'];
@@ -587,8 +586,9 @@ class Payment extends Admin_Controller {
         $PaymentType = $this->db->select('PaymentType')->from('customerpaymenthed')->where('CusPayNo',$paymentNo)->get()->row()->PaymentType;
         $CancelAmount = $this->db->select('TotalPayment')->from('customerpaymenthed')->where('CusPayNo',$paymentNo)->get()->row()->TotalPayment;
         
-            $cancelNo = $this->Payment_model->get_max_code('Cancel Cus Payments');
+        $cancelNo = $this->Payment_model->get_max_code('Cancel Cus Payments');
         if($PaymentType==1){
+           
             $res2 = $this->Payment_model->cancelCusPayment($cancelNo, $location, $canDate, $paymentNo, $remark, $user, $customer);
         }else{
              $invCanel = array(
@@ -600,7 +600,7 @@ class Payment extends Admin_Controller {
             'CusCode' => $customer,
             'CancelAmount' => $CancelAmount,
             'CancelRemark' => $remark,
-            'CancelUser' => $_SESSION['user_id']);
+            'CancelUser' =>$user);
 
         $this->db->insert('cancelcustomerpayment', $invCanel);
 

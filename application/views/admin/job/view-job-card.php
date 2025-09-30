@@ -317,7 +317,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <strong>Chassi  No: <?php echo $invVehi->ChassisNo?></strong><br> 
 
                             <a href="<?php echo base_url('admin/payment/view_customer/') . $invCus->CusCode; ?>">
-                                Customer Name: <?php echo $invCus->DisplayName; ?>
+                                Customer Name: <?php echo $invCus->RespectSign; ?>:<?php echo $invCus->DisplayName; ?>
                             </a>
                             <br>
 

@@ -875,11 +875,18 @@ class Salesinvoice extends Admin_Controller {
             ->from('system_permission_set')
             ->where('role_id',$user->role)
             ->where('per_code', 'SM43')
-            ->get()->row();     
-          
-            $this->data['is_save'] =    $is_save;  
+            ->get()->row(); 
+            
+            //  $tempEditDelete = $this->db->select('tempEditDelete')
+            // ->from('system_permission_set')
+            // ->where('role_id',$user->role)
+            // ->where('per_code', 'SM44')
+            // ->get()->row();
 
-            // echo var_dump($this->data['is_save']);die;
+            
+            $this->data['is_save'] =    $is_save;  
+            // $this->data['tempEditDelete'] =  $tempEditDelete;  
+            //echo var_dump($this->data['tempEditDelete']);die;
             $this->data['worktype'] = $this->db->select()->from('jobtype')->get()->result();
             $this->data['jobdesc'] = $this->db->select()->from('jobdescription')->get()->result();
             $this->data['jobtype'] = $this->db->select()->from('estimate_jobtype')->get()->result();
@@ -888,25 +895,26 @@ class Salesinvoice extends Admin_Controller {
             $this->data['vehicle_company'] = $this->db->select()->from('vehicle_company')->where('VComCategory', 3)->get()->result();
             $this->data['bank_acc']=$this->db->select('bank_account.*,bank.BankName')->from('bank_account')->join('bank','BankCode=acc_bank')->get()->result();
             $this->data['bank'] = $this->db->select()->from('bank')->get()->result();
-            $this->data['salespersons'] = $this->db->select()->from(' salespersons')->where('IsTec',1)->where('IsActive',1)->get()->result();
+            $this->data['salespersons'] = $this->db->select()->from('salespersons')->where('IsTec',1)->where('IsActive',1)->get()->result();
             $this->data['Odoout'] = $this->Salesinvoice_model->selectOdoout($id);
-
+            
             // $this->db->insert('insu_company', array('InsuranceName' => 'Union Insurance', ));
             if($type=='inv'){
                 $this->data['JobInvoiceNo'] = base64_decode($id);
                 
             }elseif($type=='job'){
                 $this->data['JobNo'] = base64_decode($id);
-                 $this->data['TempNo'] = $this->db->select('JobInvNo')->from('tempjobinvoicehed')->where('JobCardNo',base64_decode($id))->get()->row();
-                }elseif($type=='est'){
-                    $this->data['EstimateNo'] = base64_decode($id);
-                }elseif($type=='tempinv'){
-                    $this->data['TempNo'] = base64_decode($id);
-                    $this->data['IsInvoice'] = $this->db->select('IsInvoice')->from('tempjobinvoicehed')->where('JobInvNo',$this->data['TempNo'])->get()->row();
-                    // echo var_dump( $this->data['IsInvoice']);die;
+                $this->data['TempNo'] = $this->db->select('JobInvNo')->from('tempjobinvoicehed')->where('JobCardNo',base64_decode($id))->get()->row();
+            }elseif($type=='est'){
+                $this->data['EstimateNo'] = base64_decode($id);
+            }elseif($type=='tempinv'){
+                $this->data['TempNo'] = base64_decode($id);
+                $this->data['IsInvoice'] = $this->db->select('IsInvoice')->from('tempjobinvoicehed')->where('JobInvNo',$this->data['TempNo'])->get()->row();
+                //echo var_dump( $this->data['IsInvoice']);die;
             }
-                $this->data['supNo'] = $sup;
-
+            $this->data['supNo'] = $sup;
+           
+            
             /* Load Template */
             $this->template->admin_render('admin/sales/job-invoice', $this->data);
         }
@@ -1107,6 +1115,12 @@ class Salesinvoice extends Admin_Controller {
                 $arr['job_desc'] =null;
             }
         }
+            $user = $this->db->select('role')->from('users')->get()->row();
+           $arr['tempEditDelete'] = $this->db->select('tempEditDelete')
+            ->from('system_permission_set')
+            ->where('role_id',$user->role)
+            ->where('per_code', 'SM44')
+            ->get()->row();
         echo json_encode($arr);
         die;
     }
@@ -1243,7 +1257,6 @@ class Salesinvoice extends Admin_Controller {
 
     public function saveTempInvoices() {
         
-       
         $totalCost=0;
         $location=$_SESSION['location'];
         $action = $_POST['action'];
@@ -1373,6 +1386,7 @@ class Salesinvoice extends Admin_Controller {
                     'JobinvoiceTimestamp' => $estTimestmp,
                     'FlatQty' => $flatQty,
                     'Employee' => json_encode($employeeData),
+                    'EstimateSellingPrice' =>$estPriceArr[$i],
                     );
                   
                  $this->db->insert('tempjobinvoicedtl',$jobDtl);
@@ -1475,9 +1489,10 @@ class Salesinvoice extends Admin_Controller {
                     'JobinvoiceTimestamp' => $estTimestmp,
                     'FlatQty' => $flatQty,
                     'Employee' => json_encode($employeeData),
+                    'EstimateSellingPrice' =>$estPriceArr[$i],
                     );
                  $this->db->insert('tempjobinvoicedtl',$jobDtl);
-           
+          
                      if (!is_string($employeeData)) {
                         $employeeList = $employeeData; 
                     } else {
@@ -1651,8 +1666,10 @@ class Salesinvoice extends Admin_Controller {
             $proDiscountArr = json_decode($_POST['proDiscount']);
             $disPrecentArr = json_decode($_POST['disPercent']);
             $discountTypeArr = json_decode($_POST['discountType']);
-            $estPriceArr = json_decode($_POST['estPrice']);
+            $estPriceArr = json_decode($_POST['estPrice'], true); 
+        
             $costPriceArr = json_decode($_POST['costPrice']);
+           
             $estLineNoArr = json_decode($_POST['estLineNo']);
             $flatQtyArr = json_decode($_POST['totalflatPrice']); 
             $EmployeeArr = json_decode($_POST['selectedEmployeesArr']); 
@@ -1665,6 +1682,7 @@ class Salesinvoice extends Admin_Controller {
             }
             
             
+           
             if($action==1){
                 // echo var_dump('aaa');die;
                 if($EstJobType!=''){
@@ -1721,6 +1739,7 @@ class Salesinvoice extends Admin_Controller {
                         'JobQty' => $qtyArr[$i],
                         'JobPrice' => $sell_priceArr[$i],
                         'JobCost' => $costPriceArr[$i],
+                        'EstimateSellingPrice' => isset($estPriceArr[$i]) ? $estPriceArr[$i] : 0.00,
                         'JobQty' => $qtyArr[$i],
                         'JobIsVat' => $isVatArr[$i],
                         'JobIsNbt' => $isNbtArr[$i],
@@ -1734,14 +1753,14 @@ class Salesinvoice extends Admin_Controller {
                         'JobDiscountType' => $discountTypeArr[$i],
                         'JobNetAmount' => $net_priceArr[$i],
                         'JobinvoiceTimestamp' => $estTimestmp,
-                        'FlatQty' => $flatQty,
+                        'FlatQty' => $flatQty,	
                         'Employee' => json_encode($employeeData),
                     );
                     $this->db->insert('jobinvoicedtl',$jobDtl);
-                    
+                   
                     
                     if($job_idArr[$i]==2){
-                        $this->db->query("CALL SPP_UPDATE_PRICE_STOCK('$work_idArr[$i]','$qtyArr[$i]','1','0','$sell_priceArr[$i]','$location','','0','0','0')");
+                        $this->db->query("CALL SPP_UPDATE_PRICE_STOCK('$work_idArr[$i]','$qtyArr[$i]','1','0','$estPriceArr[$i]','$location','','0','0','0')");
                     }
                     
                     
@@ -1780,227 +1799,227 @@ class Salesinvoice extends Admin_Controller {
 
 
                   $invPay = array(
-            'JobInvNo'=>$invoiceNo,
-            'JobInvDate'=>$invDate,
-            'JobInvPayType'=>'Cash',
-            'JobInvPayAmount'=>$cashAmount,
-            'InsCompany'=>$customer,
-            'PayRemark'=>$payRemark);
-            $res2=0;
-
-        // insert invoice payment
-        if($cashAmount>0){
-            $r1= $this->db->insert('jobinvoicepaydtl', $invPay);
-            // $res2=$r1;
-         }
-         
-         if($cardAmount>0){
-            $cardpaymentNo = $this->Job_model->get_max_code('Customer Payment');
-            $ccAmountArr =json_decode($_POST['ccAmount']);
-            $ccTypeArr =json_decode($_POST['ccType']);
-            $ccRefArr =json_decode($_POST['ccRef']);
-            $ccNameArr =json_decode($_POST['ccName']);
-
-                for ($k = 0; $k < count($ccNameArr); $k++) {
-                $invPay2 = array(
                 'JobInvNo'=>$invoiceNo,
                 'JobInvDate'=>$invDate,
-                'JobInvPayType'=>'Card',
-                'Mode'=>$ccNameArr[$k],
-                'Reference'=>$ccRefArr[$k],
-                'JobInvPayAmount'=>$ccAmountArr[$k],
+                'JobInvPayType'=>'Cash',
+                'JobInvPayAmount'=>$cashAmount,
                 'InsCompany'=>$customer,
-                'PayRemark'=>$payRemark,
-                'ReceiptNo'=>$cardpaymentNo);
-                        
-                $r2= $this->db->insert('jobinvoicepaydtl',$invPay2);
+                'PayRemark'=>$payRemark);
+                $res2=0;
+
+                // insert invoice payment
+                if($cashAmount>0){
+                    $r1= $this->db->insert('jobinvoicepaydtl', $invPay);
+                    // $res2=$r1;
                 }
-                $this->Job_model->update_max_code('Customer Payment');
-            }
+            
+                if($cardAmount>0){
+                    $cardpaymentNo = $this->Job_model->get_max_code('Customer Payment');
+                    $ccAmountArr =json_decode($_POST['ccAmount']);
+                    $ccTypeArr =json_decode($_POST['ccType']);
+                    $ccRefArr =json_decode($_POST['ccRef']);
+                    $ccNameArr =json_decode($_POST['ccName']);
 
-            $advancePay = array(
-                
-                'JobInvNo'=>$invoiceNo,
-                'JobInvDate'=>$invDate,
-                'JobInvPayType'=>'Advance',
-                'Mode'=>$invoiceNo,
-                'Reference'=>$advancePayNo,
-                'JobInvPayAmount'=>$advanceAmount,
-                'InsCompany'=>$customer,
-                'PayRemark'=>$payRemark,
-                'ReceiptNo'=>$advancePayNo);
-
-            // insert invoice payment
-            if($advanceAmount>0){
-                $this->db->insert('jobinvoicepaydtl', $advancePay);
-
-                //release advance payment
-                //$this->db->update('customerpaymentdtl',array('IsRelease'=>1),array('CusPayNo'=>$advancePayNo));
-
-                $advancePayArray = json_decode($advancePayNo, true);
-
-                if (is_array($advancePayArray)) {
-                    foreach ($advancePayArray as $payNo) {
-                       $this->db->update('customerpaymentdtl', 
-                            ['IsRelease' => 1,'InvoiceNo' => $invoiceNo], 
-                            ['CusPayNo' => $payNo,]
-                        );
-                    }
-                }
-
-            }
-
-            // insert invoice payment
-            $returnPay = array(
+                        for ($k = 0; $k < count($ccNameArr); $k++) {
+                        $invPay2 = array(
                         'JobInvNo'=>$invoiceNo,
                         'JobInvDate'=>$invDate,
-                        'JobInvPayType'=>'Return',
-                        'Mode'=>$invoiceNo,
-                        'Reference'=>$returnPayNo,
-                        'JobInvPayAmount'=>$returnAmount,
+                        'JobInvPayType'=>'Card',
+                        'Mode'=>$ccNameArr[$k],
+                        'Reference'=>$ccRefArr[$k],
+                        'JobInvPayAmount'=>$ccAmountArr[$k],
                         'InsCompany'=>$customer,
                         'PayRemark'=>$payRemark,
-                        'ReceiptNo'=>$returnPayNo);
+                        'ReceiptNo'=>$cardpaymentNo);
+                                
+                        $r2= $this->db->insert('jobinvoicepaydtl',$invPay2);
+                        }
+                        $this->Job_model->update_max_code('Customer Payment');
+                    }
 
-            if($returnAmount>0){
-                $this->db->insert('jobinvoicepaydtl', $returnPay);
+                    $advancePay = array(
+                        
+                        'JobInvNo'=>$invoiceNo,
+                        'JobInvDate'=>$invDate,
+                        'JobInvPayType'=>'Advance',
+                        'Mode'=>$invoiceNo,
+                        'Reference'=>$advancePayNo,
+                        'JobInvPayAmount'=>$advanceAmount,
+                        'InsCompany'=>$customer,
+                        'PayRemark'=>$payRemark,
+                        'ReceiptNo'=>$advancePayNo);
 
-                //release advance payment
-                $this->db->update('returninvoicehed',array('IsComplete'=>1),array('ReturnNo'=>$returnPayNo));
+                    // insert invoice payment
+                    if($advanceAmount>0){
+                        $this->db->insert('jobinvoicepaydtl', $advancePay);
 
-                $completeDate = date("Y-m-d H:i:s");
-                $this->db->update('return_payment',array('IsComplete'=>1, 'Compete_date'=>$completeDate),array('ReturnNo'=>$returnPayNo));
+                        //release advance payment
+                        //$this->db->update('customerpaymentdtl',array('IsRelease'=>1),array('CusPayNo'=>$advancePayNo));
 
-                $this->db->query("CALL SPT_UPDATE_CUSOUTSTAND('$customer','$returnAmount','$returnAmount')");
+                        $advancePayArray = json_decode($advancePayNo, true);
 
-            }
+                        if (is_array($advancePayArray)) {
+                            foreach ($advancePayArray as $payNo) {
+                            $this->db->update('customerpaymentdtl', 
+                                    ['IsRelease' => 1,'InvoiceNo' => $invoiceNo], 
+                                    ['CusPayNo' => $payNo,]
+                                );
+                            }
+                        }
 
-            // insert invoice payment
-            if($bankAmount>0){
-                $bankpaymentNo = $this->Job_model->get_max_code('Customer Payment');
-                $bankPay = array(
-                
-                'JobInvNo'=>$invoiceNo,
-                'JobInvDate'=>$invDate,
-                'JobInvPayType'=>'Bank',
-                'Mode'=>$invoiceNo,
-                'Reference'=>$bank_account,
-                'JobInvPayAmount'=>$bankAmount,
-                'InsCompany'=>$customer,
-                'PayRemark'=>$payRemark,
-                'ReceiptNo'=>$bankpaymentNo);
+                    }
 
-                $this->db->insert('jobinvoicepaydtl', $bankPay);
+                    // insert invoice payment
+                    $returnPay = array(
+                                'JobInvNo'=>$invoiceNo,
+                                'JobInvDate'=>$invDate,
+                                'JobInvPayType'=>'Return',
+                                'Mode'=>$invoiceNo,
+                                'Reference'=>$returnPayNo,
+                                'JobInvPayAmount'=>$returnAmount,
+                                'InsCompany'=>$customer,
+                                'PayRemark'=>$payRemark,
+                                'ReceiptNo'=>$returnPayNo);
 
-            }
+                    if($returnAmount>0){
+                        $this->db->insert('jobinvoicepaydtl', $returnPay);
 
-            
-            if($creditAmount>0){
-                $invPay3 = array(
-                'JobInvNo'=>$invoiceNo,
-                'JobInvDate'=>$invDate,
-                'JobInvPayType'=>'Credit',
-                'JobInvPayAmount'=>$creditAmount,
-                'InsCompany'=>$customer,
-                'PayRemark'=>$payRemark);
-                
-                $invCredit = array(
-                'AppNo' => '2',
-                'InvoiceNo'=>$invoiceNo,
-                'InvoiceDate'=>$invDate,
-                'Location'=>$location,
-                'CusCode'=>$customer,
-                'NetAmount'=>$creditAmount,
-                'CreditAmount'=>$creditAmount,
-                'SettledAmount'=>0,
-                'IsCloseInvoice'=>0,
-                'IsCancel'=>0);
-                
-                $invnetAmount = $totalPay;
-                
-                $r3= $this->db->insert('jobinvoicepaydtl',$invPay3);
-                //add credit invoice data
-                $r4= $this->db->insert('creditinvoicedetails',$invCredit);
-                //update customer outsatnding
-                $this->db->query("CALL SPT_UPDATE_CUSOUTSTAND('$customer','$invnetAmount','$creditAmount')");
-                if($r3==1 && $r4 ==1){
-                    // $res2=1;
-                }
-            }
+                        //release advance payment
+                        $this->db->update('returninvoicehed',array('IsComplete'=>1),array('ReturnNo'=>$returnPayNo));
 
-            if($companyAmount>0){
-                $invPay4 = array(
-                'JobInvNo'=>$invoiceNo,
-                'JobInvDate'=>$invDate,
-                'JobInvPayType'=>'Company',
-                'JobInvPayAmount'=>$companyAmount,
-                'InsCompany'=>$customer,
-                'PayRemark'=>$payRemark);
-                
-                $invCompany = array(
-                'AppNo' => '1',
-                'ComInvoiceNo'=>$invoiceNo,
-                'ComInvoiceDate'=>$invDate,
-                'ComLocation'=>$insCompany,
-                'ComCusCode'=>$customer,
-                'ComNetAmount'=>$totalPay,
-                'ComCreditAmount'=>$companyAmount,
-                'ComSettledAmount'=>0,
-                'ComIsCloseInvoice'=>0,
-                'ComIsCancel'=>0);
-                
-                $invnetAmount = $totalPay;
-                
-                $r5= $this->db->insert('jobinvoicepaydtl',$invPay4);
-                //add credit invoice data
-                $r6= $this->db->insert('jobcompanyinvoicedetails',$invCompany);
-                //update customer outsatnding
-                //$this->db->query("CALL SPT_UPDATE_CUSOUTSTAND('$customer','$invnetAmount','$creditAmount')");
-                if($r5==1 && $r6 ==1){
-                    // $res2=1;
-                }
-            }
+                        $completeDate = date("Y-m-d H:i:s");
+                        $this->db->update('return_payment',array('IsComplete'=>1, 'Compete_date'=>$completeDate),array('ReturnNo'=>$returnPayNo));
 
-            if($chequeAmount>0){
-                $chequepaymentNo = $this->Job_model->get_max_code('Customer Payment');
-                $invPay5 = array(
-                'JobInvNo'=>$invoiceNo,
-                'JobInvDate'=>$invDate,
-                'JobInvPayType'=>'Cheque',
-                'JobInvPayAmount'=>$chequeAmount,
-                'InsCompany'=>$customer,
-                'PayRemark'=>$payRemark,
-                'ReceiptNo'=>$chequepaymentNo);
+                        $this->db->query("CALL SPT_UPDATE_CUSOUTSTAND('$customer','$returnAmount','$returnAmount')");
 
-                $invCheque = array(
-                'AppNo' => '1',
-                'ReceivedDate'=>$chequeRecivedDate,
-                'CusCode'=>$customer,
-                'ChequeOwner'=>$chequeReference,
-                'ReferenceNo'=>$invoiceNo,
-                'BankNo'=>$bank,
-                'ChequeNo'=>$chequeNo,
-                'ChequeDate'=>$chequeDate,
-                'ChequeAmount'=>$chequeAmount,
-                'Mode'=>'Job Invoice',
-                'IsCancel'=>0,
-                'IsRelease'=>0);
-                
-                $invnetAmount = $totalPay;
-                
-                $r7= $this->db->insert('jobinvoicepaydtl',$invPay5);
-                //add credit invoice data
-                $r8= $this->db->insert('chequedetails',$invCheque);
-                if($r7==1 && $r8 ==1){
-                    // $res2=1;
-                }
-                $this->Job_model->update_max_code('Customer Payment');
-            }
+                    }
+
+                    // insert invoice payment
+                    if($bankAmount>0){
+                        $bankpaymentNo = $this->Job_model->get_max_code('Customer Payment');
+                        $bankPay = array(
+                        
+                        'JobInvNo'=>$invoiceNo,
+                        'JobInvDate'=>$invDate,
+                        'JobInvPayType'=>'Bank',
+                        'Mode'=>$invoiceNo,
+                        'Reference'=>$bank_account,
+                        'JobInvPayAmount'=>$bankAmount,
+                        'InsCompany'=>$customer,
+                        'PayRemark'=>$payRemark,
+                        'ReceiptNo'=>$bankpaymentNo);
+
+                        $this->db->insert('jobinvoicepaydtl', $bankPay);
+
+                    }
 
                 
-                $this->Job_model->update_max_code('JobInvoice'.$location);
-                $this->db->trans_complete();
-                $res2= $this->db->trans_status();
+                    if($creditAmount>0){
+                        $invPay3 = array(
+                        'JobInvNo'=>$invoiceNo,
+                        'JobInvDate'=>$invDate,
+                        'JobInvPayType'=>'Credit',
+                        'JobInvPayAmount'=>$creditAmount,
+                        'InsCompany'=>$customer,
+                        'PayRemark'=>$payRemark);
+                        
+                        $invCredit = array(
+                        'AppNo' => '2',
+                        'InvoiceNo'=>$invoiceNo,
+                        'InvoiceDate'=>$invDate,
+                        'Location'=>$location,
+                        'CusCode'=>$customer,
+                        'NetAmount'=>$creditAmount,
+                        'CreditAmount'=>$creditAmount,
+                        'SettledAmount'=>0,
+                        'IsCloseInvoice'=>0,
+                        'IsCancel'=>0);
+                        
+                        $invnetAmount = $totalPay;
+                        
+                        $r3= $this->db->insert('jobinvoicepaydtl',$invPay3);
+                        //add credit invoice data
+                        $r4= $this->db->insert('creditinvoicedetails',$invCredit);
+                        //update customer outsatnding
+                        $this->db->query("CALL SPT_UPDATE_CUSOUTSTAND('$customer','$invnetAmount','$creditAmount')");
+                        if($r3==1 && $r4 ==1){
+                            // $res2=1;
+                        }
+                    }
+
+                    if($companyAmount>0){
+                        $invPay4 = array(
+                        'JobInvNo'=>$invoiceNo,
+                        'JobInvDate'=>$invDate,
+                        'JobInvPayType'=>'Company',
+                        'JobInvPayAmount'=>$companyAmount,
+                        'InsCompany'=>$customer,
+                        'PayRemark'=>$payRemark);
+                        
+                        $invCompany = array(
+                        'AppNo' => '1',
+                        'ComInvoiceNo'=>$invoiceNo,
+                        'ComInvoiceDate'=>$invDate,
+                        'ComLocation'=>$insCompany,
+                        'ComCusCode'=>$customer,
+                        'ComNetAmount'=>$totalPay,
+                        'ComCreditAmount'=>$companyAmount,
+                        'ComSettledAmount'=>0,
+                        'ComIsCloseInvoice'=>0,
+                        'ComIsCancel'=>0);
+                        
+                        $invnetAmount = $totalPay;
+                        
+                        $r5= $this->db->insert('jobinvoicepaydtl',$invPay4);
+                        //add credit invoice data
+                        $r6= $this->db->insert('jobcompanyinvoicedetails',$invCompany);
+                        //update customer outsatnding
+                        //$this->db->query("CALL SPT_UPDATE_CUSOUTSTAND('$customer','$invnetAmount','$creditAmount')");
+                        if($r5==1 && $r6 ==1){
+                            // $res2=1;
+                        }
+                    }
+
+                    if($chequeAmount>0){
+                        $chequepaymentNo = $this->Job_model->get_max_code('Customer Payment');
+                        $invPay5 = array(
+                        'JobInvNo'=>$invoiceNo,
+                        'JobInvDate'=>$invDate,
+                        'JobInvPayType'=>'Cheque',
+                        'JobInvPayAmount'=>$chequeAmount,
+                        'InsCompany'=>$customer,
+                        'PayRemark'=>$payRemark,
+                        'ReceiptNo'=>$chequepaymentNo);
+
+                        $invCheque = array(
+                        'AppNo' => '1',
+                        'ReceivedDate'=>$chequeRecivedDate,
+                        'CusCode'=>$customer,
+                        'ChequeOwner'=>$chequeReference,
+                        'ReferenceNo'=>$invoiceNo,
+                        'BankNo'=>$bank,
+                        'ChequeNo'=>$chequeNo,
+                        'ChequeDate'=>$chequeDate,
+                        'ChequeAmount'=>$chequeAmount,
+                        'Mode'=>'Job Invoice',
+                        'IsCancel'=>0,
+                        'IsRelease'=>0);
+                        
+                        $invnetAmount = $totalPay;
+                        
+                        $r7= $this->db->insert('jobinvoicepaydtl',$invPay5);
+                        //add credit invoice data
+                        $r8= $this->db->insert('chequedetails',$invCheque);
+                        if($r7==1 && $r8 ==1){
+                            // $res2=1;
+                        }
+                        $this->Job_model->update_max_code('Customer Payment');
+                    }
+
+                    
+                    $this->Job_model->update_max_code('JobInvoice'.$location);
+                    $this->db->trans_complete();
+                    $res2= $this->db->trans_status();
             }elseif ($action==2) { 
                 // update goes here
                 $data['JobInvNo'] = $_POST['invoiceNo'];
@@ -2039,7 +2058,8 @@ class Salesinvoice extends Admin_Controller {
                             // $employeeData1 = explode(',', trim($employeeData, '"'));
                             //  echo var_dump($employeeData);die;
 
-                    $flatQty = isset($flatQtyArr[$i]) ? $flatQtyArr[$i] : 0;                    
+                    $flatQty = isset($flatQtyArr[$i]) ? $flatQtyArr[$i] : 0;   
+                                    
                     $jobDtl = array(
                         'JobInvNo' => $data['JobInvNo'],
                         'JobCardNo' => $data['JobCardNo'],
@@ -2066,9 +2086,11 @@ class Salesinvoice extends Admin_Controller {
                         'JobNetAmount' => $net_priceArr[$i],
                         'JobinvoiceTimestamp' => $estTimestmp,
                         'FlatQty' => $flatQty,
-                        'Employee' => json_encode($employeeData),                        );
+                       'EstimateSellingPrice' => isset($estPriceArr[$i]) ? $estPriceArr[$i] : 0.00,
+                        'Employee' => json_encode($employeeData),
+                    );
                      $this->db->insert('jobinvoicedtl',$jobDtl);
-                  
+                   
 
                      
                         // if (!is_string($employeeData1)) {
@@ -3270,7 +3292,7 @@ class Salesinvoice extends Admin_Controller {
                             $loc = $row['SalesInvLocation'];
                             $pl = $row['SalesPriceLevel'];
                             $costp = $row['SalesCostPrice'];
-                            $selp = $row['SalesUnitPrice'];
+                            $selp = $row['SellingPriceORG'];
 
                             //update price stock
                             $this->db->query("CALL SPT_UPDATE_PRICE_STOCK('$proCode','$totalGrnQty','$pl','$costp','$selp','$loc')");
@@ -3367,7 +3389,7 @@ class Salesinvoice extends Admin_Controller {
                                 $loc = $row['SalesInvLocation'];
                                 $pl = $row['SalesPriceLevel'];
                                 $costp = $row['SalesCostPrice'];
-                                $selp = $row['SalesUnitPrice'];
+                                $selp = $row['SellingPriceORG'];
 
                                 //update price stock
                                 $this->db->query("CALL SPT_UPDATE_PRICE_STOCK('$proCode','$totalGrnQty','$pl','$costp','$selp','$loc')");

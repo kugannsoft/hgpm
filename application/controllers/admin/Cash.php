@@ -157,6 +157,7 @@ class Cash extends Admin_Controller {
                     ->join('transactiontypes','cashinout.TransCode=transactiontypes.TransactionCode','left')
                     ->where('Location' ,$location)
                     ->where('DATE(InOutDate)' ,$date)
+                    // ->where('cashinout.IsActive' ,1)
                     ->get()->result_array();
            echo json_encode($data);
             die;

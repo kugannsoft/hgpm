@@ -178,6 +178,7 @@ class Payment_model extends CI_Model {
     }
     
     public function cancelCusPayment($cancelNo,$location,$canDate,$paymentNo,$remark,$user,$customer) {
+         
         $this->db->trans_start();
         $this->db->query("CALL SPT_CANCEL_CUSTOMER_PAYMENT('$canDate','$paymentNo','$user','$remark','$customer','$cancelNo','$location')");
         

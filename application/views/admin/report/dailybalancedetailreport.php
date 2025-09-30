@@ -64,6 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <thead>
                                 <tr>
                                     <td>Date</td>
+                                    <td>Customer</td>
                                     <td>Invoice No</td>
                                     <td>Vehicle No</td>
                                     <td>Job Card No</td>
@@ -83,6 +84,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -550,6 +552,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         totalSale+=parseFloat(rowData.JobNetAmount);
         
         row.append($("<td>" + rowData.JobInvDate + "</td>"));
+        row.append($("<td>" + rowData.DisplayName + "</td>"));
         row.append($("<td>" + rowData.JobInvNo + "</td>"));
         row.append($("<td>" + rowData.JRegNo + "</td>"));
         row.append($("<td  align='left'>" + rowData.JobCardNo + "</td>"));
@@ -569,6 +572,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         totalSale+=parseFloat(rowData.NetAmount);
         
         row.append($("<td>" + rowData.PayDate + "</td>"));
+        row.append($("<td>" + rowData.CusName + "</td>"));
         row.append($("<td>" + rowData.CusPayNo + "</td>"));
         row.append($("<td>" + rowData.CusCode + "</td>"));
         row.append($("<td  align='left'>" + rowData.CusName + " - Job Advance </td>"));
@@ -588,6 +592,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         totalSale+=parseFloat(rowData.NetAmount);
         
         row.append($("<td>" + rowData.PayDate + "</td>"));
+        row.append($("<td>" + rowData.CusName + "</td>"));
         row.append($("<td>" + rowData.CusPayNo + "</td>"));
         row.append($("<td>" + rowData.CusCode + "</td>"));
         row.append($("<td  align='left'>" + rowData.CusName + " - Customer Payment</td>"));
@@ -628,6 +633,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         totalSale+=parseFloat(rowData.SalesNetAmount);
         
         row.append($("<td>" + rowData.InvDate + "</td>"));
+         row.append($("<td>" + rowData.CusName + "</td>"));
         row.append($("<td>" + rowData.SalesInvNo + "</td>"));
         row.append($("<td>" + rowData.SalesVehicle + "</td>"));
         row.append($("<td align='left'>" + rowData.AppearName + "</td>"));

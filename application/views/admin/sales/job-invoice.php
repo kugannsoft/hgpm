@@ -15,6 +15,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <button class="btn btn-primary close-item-options pull-right">Hide options</button>
             </div>
         </div>   
+        <!-- <input type="hidden" name="tempEditDelete" id="tempEditDelete" value="<?php {echo $tempEditDelete->tempEditDelete;}?>">
+        <input type="hidden" name="isInvoice" id="isInvoice" value="<?php {echo $IsInvoice->IsInvoice;}?>"> -->
         <div class="row">
             <div class="col-sm-12">
                 <div class="box box-success">
@@ -527,7 +529,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <span class="label">Advance Payment</span>
-                                        <input type="text" name="advance_payment_no" id="advance_payment_no"   class="form-control" placeholder="Advace Payment No">
+                                        <input type="text" name="advance_payment_no" id="advance_payment_no"   class="form-control" placeholder="Advance Payment No">
                                     </div>
                                     <div class="form-group" style="display:;">
                                         <span class="label">Return Payment</span>
@@ -725,16 +727,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         padding: 3px;
     }
 
-    ul.ui-autocomplete {
-    z-index: 1100;
+   
     
+
+
+.ui-autocomplete {
+    z-index: 1100 !important;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;  /* prevent horizontal scrollbar */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    position: absolute;  /* keeps it floating */
+    width: auto !important; /* make width consistent */
+    min-width: 200px;  /* ensure it's not too narrow */
+    box-sizing: border-box;
 }
 
- .ui-autocomplete {
-        z-index: 9999 !important;
-        max-height: 200px;
-        overflow-y: auto;
-        background-color: white;
-        border: 1px solid #ccc;
-    }
 </style>

@@ -69,6 +69,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         value="<?php echo $company['NBT']; ?>">
                                     <input type="hidden" name="nbtRatioRate" id="nbtRatioRate"
                                         value="<?php echo $company['NBT_Ratio']; ?>">
+                                         <input type="hidden" name="k" id="k"
+                                        value="">
                                 </div>
                             </div>
                             <div class="col-sm-2">

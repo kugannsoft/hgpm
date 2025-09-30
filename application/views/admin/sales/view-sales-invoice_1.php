@@ -66,7 +66,7 @@
                 <!--div class="col-sm-1"><a href="<?php echo base_url('admin/Salesinvoice/print_invoice_pdf/').base64_encode($invNo); ?>" target="blank_" class="btn btn-primary btn-sm">Pdf</a></div-->
                 <?php if (in_array("SM45", $blockEdit) || $blockEdit == null) { ?>
                 <div class="col-sm-1"><?php if($invHed->IsCancel==0){?>
-                    <a href="<?php echo base_url('admin/Salesinvoice/job_invoice?type=inv&id=').base64_encode($invNo); ?>"
+                    <a href="<?php echo base_url('admin/Salesinvoice/addSalesInvoice?action=2&id=') . base64_encode($invNo); ?>"
                         target="blank_" class="btn btn-info btn-sm">Edit</a>
                     <?php } ?>
                 </div>
@@ -316,7 +316,24 @@
 
 
 
-                                <?php if(($invHed->SalesDisAmount>0)){?>
+                                <?php if(($invHed->	SalesAdvancePayment>0)){?>
+
+                                <tr id="rowTotal">
+                                    <th colspan="5"
+                                        style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
+                                    </th>
+                                    <th
+                                        style='text-align:right;font-size: 12px;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;border-left: 1px solid #000'>
+                                        Advance &nbsp;&nbsp;</th>
+                                    <th colspan="" style="text-align:center;border-bottom: 1px solid #000;">
+                                        &nbsp;&nbsp;Rs.</th>
+                                    <th id="lbltotalPOAmount"
+                                        style='text-align:right;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>
+                                        <?php echo number_format($invHed->	SalesAdvancePayment,2); ?></th>
+                                </tr>
+                                <?php } ?>
+
+                                  <?php if(($invHed->SalesDisAmount>0)){?>
 
                                 <tr id="rowTotal">
                                     <th colspan="5"
@@ -395,7 +412,7 @@
                                         style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
                                     </th>
                                     <th
-                                        style='text-align:right;font-size: 12px;border-right: 1px solid #000;border-bottom: 1px solid #000;border-left: 1px solid #000;'>
+                                        style='text-align:right;font-size: 12px;border-right: 1px solid #000;border-left: 1px solid #000;'>
                                         Total &nbsp;&nbsp;</th>
                                     <th colspan=""
                                         style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">
@@ -408,7 +425,7 @@
                                 </tr>
                                 <?php } else { ?>
                                 <th colspan="5"
-                                    style='text-align:right;border-bottom:1px  solid  #000;font-size: 10px;font-weight: normal;text-align: left;'>
+                                    style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
                                 </th>
                                 <th
                                     style='text-align:right;font-size: 12px;border-top:1px solid #000;border-left:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>
@@ -511,6 +528,22 @@
                                 </tr>
 
                                 <?php } ?>
+
+                                <tr id="rowNBT">
+                                    <th colspan="5"
+                                        style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
+                                    </th>
+                                    <th
+                                        style='text-align:right;font-size: 12px;border-right: 1px solid #000;border-bottom: 1px solid #000;border-left:1px solid  #000;'>
+                                        Balance &nbsp;&nbsp;</th>
+                                    <th colspan=""
+                                        style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">
+                                        &nbsp;&nbsp;Rs.</th>
+                                    <th id="lbltotalDicount"
+                                        style='text-align:right;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>
+                                        <?php echo number_format($invHed->SalesCustomerPayment - $invHed->SalesNetAmount,2);?></th>
+
+                                </tr>
 
                             </tfoot>
                         </table>

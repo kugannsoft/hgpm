@@ -189,6 +189,18 @@ class Report extends Admin_Controller {
         $this->template->admin_render('admin/report/employeeproductivity', $this->data);
     }
 
+     public function employeesummaryproductivity() {
+        $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
+        $this->breadcrumbs->unshift(1, 'GRN', 'admin/report/Employee Summary Productivity Report');
+        $this->page_title->push(('Employee Summary Productivity Report'));
+        $this->data['pagetitle'] = $this->page_title->show();
+        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        // $this->data['locations'] = $this->Report_model->loadroot();
+        // $this->data['products'] = $this->Report_model->loadproduct();
+        $this->data['salesperson'] = $this->db->select()->from('salespersons')->where('IsActive',1)->get()->result();
+        $this->template->admin_render('admin/report/employeesummaryproductivity', $this->data);
+    }
+
     public function jobcardproductivity() {
         $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
         $this->breadcrumbs->unshift(1, 'GRN', 'admin/report/Vastage Report');
@@ -218,6 +230,17 @@ class Report extends Admin_Controller {
         $this->data['locations'] = $this->Report_model->loadroot();
         $this->data['products'] = $this->Report_model->loadproduct();
         $this->template->admin_render('admin/report/cashfloatreport', $this->data);
+    }
+
+     public function expenseandearningsummary() {
+        $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
+        $this->breadcrumbs->unshift(1, 'Stock', 'admin/report/Vastage Report');
+        $this->page_title->push(('Expenses/ Earninig'));
+        $this->data['pagetitle'] = $this->page_title->show();
+        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        $this->data['locations'] = $this->Report_model->loadroot();
+        $this->data['products'] = $this->Report_model->loadproduct();
+        $this->template->admin_render('admin/report/expenseandearningsummary', $this->data);
     }
     
     public function cashinout() {
@@ -276,6 +299,19 @@ class Report extends Admin_Controller {
         } else {
             $this->template->admin_render('admin/report/jobsalesumbydate', $this->data);
         }
+    }
+
+
+      public function pendingTempreport() {
+        $this->breadcrumbs->unshift(1, 'Reports', 'admin/report');
+        $this->breadcrumbs->unshift(1, 'Sales', 'admin/report/pendingTempreport');
+        $this->page_title->push(('Pending Temporary Summury'));
+        $this->data['pagetitle'] = $this->page_title->show();
+        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        $this->data['locations'] = $this->Report_model->loadroot();
+
+        $this->template->admin_render('admin/report/pendingTempreport', $this->data);
+        
     }
 
     public function jobsaledaysumbydate() {
@@ -714,6 +750,17 @@ class Report extends Admin_Controller {
         die;
     }
 
+     public function expenseandearningsummarycash() {
+        $this->output->set_content_type('application_json');
+        $enddate = $_POST['enddate'];
+        $startdate = $_POST['startdate'];
+       
+        $result = $this->Report_model->expenseandearningsummarycash($startdate, $enddate);
+//        var_dump($result);die();
+        echo json_encode($result);
+        die;
+    }
+
    
     
     public function loadreport10() {
@@ -936,6 +983,15 @@ class Report extends Admin_Controller {
         die;
     }
 
+      public function pendingTempInvoices() {
+        $this->output->set_content_type('application_json');
+        $enddate   = $_POST['enddate'];
+        $startdate = $_POST['startdate'];
+        $result    = $this->Report_model->pendingTempInvoices($startdate, $enddate);
+        echo json_encode($result);
+        die;
+    }
+
     public function loadjobdatesalesum() {
         $this->output->set_content_type('application_json');
         $enddate   = $_POST['enddate'];
@@ -965,6 +1021,17 @@ class Report extends Admin_Controller {
         $emp     = isset($_POST['customer']) ? $_POST['customer'] : NULL;
       
         $result    = $this->Report_model->loademployeeproductivity($startdate, $enddate, $emp);
+        echo json_encode($result);
+        die;
+    }
+
+     public function loadsummaryemployeeproductivity() {
+        $this->output->set_content_type('application_json');
+        $enddate   = $_POST['enddate'];
+        $startdate = $_POST['startdate'];
+        $emp     = isset($_POST['customer']) ? $_POST['customer'] : NULL;
+      
+        $result    = $this->Report_model->loadsummaryemployeeproductivity($startdate, $enddate, $emp);
         echo json_encode($result);
         die;
     }

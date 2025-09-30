@@ -355,6 +355,17 @@ class Report_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function pendingTempInvoices($startdate, $enddate) {
+        $this->db->select('JobInvNo,JobCardNo,JCustomer,JobTotalAmount,JobInvoiceDate,IsInvoice,IsCancel,customer.DisplayName');
+        $this->db->from('tempjobinvoicehed');
+        $this->db->join('customer', 'customer.CusCode = tempjobinvoicehed.JCustomer', 'INNER');
+        $this->db->where('DATE(JobInvoiceDate) <=', $enddate);
+        $this->db->where('DATE(JobInvoiceDate) >=', $startdate);
+        $this->db->where('IsInvoice',0);
+        $this->db->where('IsCancel',0);
+         return $this->db->get()->result();
+    }
+
     public function genjobsumreportbyroute($startdate, $enddate, $location = NULL,$locationAr = NULL) {
         if (isset($location) && $location != '') {
             $this->db->select('DATE(JobInvoiceDate) As InvDate,JobInvNo,(JobTotalDiscount) AS DisAmount,
@@ -473,14 +484,71 @@ class Report_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    //  public function loadsummaryemployeeproductivity($startdate, $enddate, $emp) {
+       
+    //         $this->db->select("salespersons.*,SUM(main_jobflat_details.Qty) AS Qty,SUM(main_jobflat_details.FlatQty) AS FlatQty,
+    //         SUM(main_jobflat_details.CostPrice) AS CostPrice,SUM(main_jobflat_details.ProfitAmount) AS ProfitAmount,main_jobflat_details.Date AS Date,
+    //        (CostPrice *Qty )AS totalcostQty ");
+    //         $this->db->from('salespersons');
+    //         $this->db->join('main_jobflat_details', 'main_jobflat_details.Emp_No = salespersons.RepId', 'INNER');
+            
+    //         $this->db->where('DATE(main_jobflat_details.Date) <=', $enddate);
+    //         $this->db->where('DATE(main_jobflat_details.Date) >=', $startdate);
+          
+    //         $this->db->group_by('main_jobflat_details.Emp_No', $emp);
+    //         $this->db->order_by('main_jobflat_details.Date', 'DESC');
+    //         if (isset($emp) && $emp != '') {
+    //             $this->db->where('main_jobflat_details.Emp_No', $emp);
+    //         }
+    //     return $this->db->get()->result();
+    // }
+
+    public function loadsummaryemployeeproductivity($startdate, $enddate, $emp) {
+        $this->db->select("
+            salespersons.RepName,
+            main_jobflat_details.Emp_No,
+            main_jobflat_details.Date AS Date,
+            SUM(main_jobflat_details.Qty) AS totalQty,
+            SUM(main_jobflat_details.FlatQty) AS totalFlatQty,
+            SUM(main_jobflat_details.CostPrice) AS totalCostPrice,
+            SUM(main_jobflat_details.CostPrice * main_jobflat_details.Qty) AS totalCostQty,
+            SUM(main_jobflat_details.CostPrice * main_jobflat_details.FlatQty) AS totalCostFlatQty,
+            SUM(main_jobflat_details.ProfitAmount) AS totalProfit
+        ");
+        $this->db->from('salespersons');
+        $this->db->join('main_jobflat_details', 'main_jobflat_details.Emp_No = salespersons.RepId', 'INNER');
+        
+        $this->db->where('DATE(main_jobflat_details.Date) <=', $enddate);
+        $this->db->where('DATE(main_jobflat_details.Date) >=', $startdate);
+
+        if (!empty($emp)) {
+            $this->db->where('main_jobflat_details.Emp_No', $emp);
+        }
+
+        $this->db->group_by('main_jobflat_details.Emp_No');
+        return $this->db->get()->result();
+    }
+
+
     public function loadejobcardproductivity($startdate, $enddate, $jobcardno) {
        
-        $this->db->select("jobinvoicehed.JobInvNo,main_jobflat_details.*");
+        $this->db->select("
+        jobinvoicehed.JobInvNo,
+        jobinvoicehed.JobCardNo,
+        jobinvoicehed.JRegNo,
+        main_jobflat_details.*,
+        GROUP_CONCAT(DISTINCT salespersons.RepName SEPARATOR ', ') as RepNames
+    ", false);
         $this->db->from('jobinvoicehed');
         $this->db->join('main_jobflat_details', 'main_jobflat_details.Job_Inv_No = jobinvoicehed.JobInvNo', 'INNER');
+        $this->db->join('salespersons' , 'salespersons.RepID =main_jobflat_details.Emp_No','LEFT');
         // $this->db->where('main_jobflat_details.Job_Inv_No',$jobcardno);
         $this->db->where('DATE(main_jobflat_details.Date) <=', $enddate);
         $this->db->where('DATE(main_jobflat_details.Date) >=', $startdate);
+
+        if (!empty($jobcardno)) {
+            $this->db->where('jobinvoicehed.JobCardNo', $jobcardno);
+        }
         // $this->db->where('jobinvoicehed.JobCardNo',$jobcardno);
         $this->db->group_by(['main_jobflat_details.Job_Inv_No', 'DATE(main_jobflat_details.Date)']);
         $this->db->order_by('main_jobflat_details.Date', 'DESC');
@@ -583,9 +651,10 @@ class Report_model extends CI_Model {
 
     public function genjobdaysalesumreportbypayment($startdate, $enddate, $location = NULL,$locationAr = NULL) {
         if (isset($location) && $location != '') {
-            $this->db->select('jobinvoicehed.*,jobinvoicepaydtl.*,jobcarddtl.JobDescription');
+            $this->db->select('jobinvoicehed.*,jobinvoicepaydtl.*,jobcarddtl.JobDescription,customer.DisplayName');
             $this->db->from('jobinvoicehed');
             $this->db->join('jobinvoicepaydtl', 'jobinvoicepaydtl.JobInvNo = jobinvoicehed.JobInvNo', 'INNER');
+             $this->db->join('customer', 'customer.CusCode = jobinvoicehed.JCustomer', 'INNER');
             $this->db->join('jobcarddtl', 'jobcarddtl.JobCardNo = jobinvoicehed.JobCardNo', 'INNER');
             // $this->db->where('JobInvPayType =', 'Cash');
             $this->db->where('DATE(JobInvDate) =', $enddate);
@@ -596,9 +665,10 @@ class Report_model extends CI_Model {
             $this->db->order_by('JobInvDate', 'DESC');
             // $this->db->limit(50);
         } else {
-            $this->db->select('jobinvoicehed.*,jobinvoicepaydtl.*,jobcarddtl.JobDescription');
+            $this->db->select('jobinvoicehed.*,jobinvoicepaydtl.*,jobcarddtl.JobDescription,customer.DisplayName');
             $this->db->from('jobinvoicehed');
             $this->db->join('jobinvoicepaydtl', 'jobinvoicepaydtl.JobInvNo = jobinvoicehed.JobInvNo', 'INNER');
+            $this->db->join('customer', 'customer.CusCode = jobinvoicehed.JCustomer', 'INNER');
             $this->db->join('jobcarddtl', 'jobcarddtl.JobCardNo = jobinvoicehed.JobCardNo', 'INNER');
             // $this->db->where('JobInvPayType =', 'Cash');
             $this->db->where('DATE(JobInvDate) =', $enddate);
@@ -1267,11 +1337,13 @@ class Report_model extends CI_Model {
 
     public function gencashreportbypart($startdate, $enddate, $location = NULL, $locationAr = NULL) {
         $this->db->select('SalesProductCode,
-                           salesinvoicehed.SalesInvNo,salesinvoicehed.SalesCashAmount,salesinvoicehed.SalesChequeAmount,salesinvoicehed.SalesBankAmount,salesinvoicehed.SalesCreditAmount,salesinvoicehed.SalesCCardAmount,
+                           salesinvoicehed.SalesInvNo,salesinvoicehed.SalesCashAmount,salesinvoicehed.SalesChequeAmount,salesinvoicehed.SalesBankAmount,
+                           salesinvoicehed.SalesCreditAmount,salesinvoicehed.SalesCCardAmount,
                            DATE(salesinvoicehed.SalesDate) AS InvDate,
                            SalesProductName AS AppearName,
                            SalesCostPrice,SalesVehicle,
                            SalesUnitPrice,
+                           customer.CusName,
                           (SalesQty) AS Qty,
                            (SalesFreeQty) AS FreeQty,
                           (SalesCostPrice * SalesQty) AS CostValue,
@@ -1284,6 +1356,7 @@ class Report_model extends CI_Model {
         $this->db->from('salesinvoicedtl');
         $this->db->join('salesinvoicehed', 'salesinvoicehed.SalesInvNo = salesinvoicedtl.SalesInvNo', 'INNER');
         $this->db->join('product', 'product.ProductCode = salesinvoicedtl.SalesProductCode', 'left');
+        $this->db->join('customer', 'customer.CusCode = salesinvoicehed.SalesCustomer', 'Left');
         $this->db->where('DATE(salesinvoicehed.SalesDate) =', $enddate);
         // $this->db->where('DATE(invoicehed.InvDate) >=', $startdate);
         $this->db->where('salesinvoicehed.InvIsCancel', 0);
@@ -1385,10 +1458,10 @@ class Report_model extends CI_Model {
     }
 
     public function searchjobcardjson($q) {
-        $this->db->select('JobInvNo AS id,JobInvNo AS text');
+        $this->db->select('JobCardNo AS id,JobCardNo AS text');
         $this->db->from(' jobinvoicehed');
-        $this->db->like('CONCAT(JobInvNo,JobInvNo)', $q, 'left');
-        $this->db->limit(50);
+        $this->db->like('CONCAT(JobCardNo,JobCardNo)', $q, 'left');
+       
         return $this->db->get()->result();
     }
 
@@ -1825,31 +1898,198 @@ class Report_model extends CI_Model {
     //     return $this->db->get()->result();
     // }
 
-    public function cashfloatbyroute($startdate, $enddate, $location = NULL,$locationAr = NULL,$tCode = NULL,$tCode_ar = NULL) {
-        //        var_dump($startdate);die();
-                    $this->db->select('*,users.first_name,cashinout.Remark As Remark');
-                    $this->db->from('cashinout');
-                    $this->db->join('transactiontypes', 'transactiontypes.TransactionCode = cashinout.TransCode', 'INNER');
-                    $this->db->join('users', 'users.id = cashinout.SystemUser', 'INNER');
-                    $this->db->where('DATE(cashinout.InOutDate) <=', $enddate);
-                    $this->db->where('DATE(cashinout.InOutDate) >=', $startdate);
-                    $this->db->where_in('cashinout.Location', $locationAr);
-                if (isset($tCode_ar) && $tCode_ar != '') {
-                    $this->db->where_in('transactiontypes.TransactionCode', $tCode_ar);
-                }
-                    // $this->db->limit(50);
+    // public function cashfloatbyroute($startdate, $enddate, $location = NULL,$locationAr = NULL,$tCode = NULL,$tCode_ar = NULL) {
+    //     //        var_dump($startdate);die();
+    //                 $this->db->select('*,users.first_name,cashinout.Remark As Remark');
+    //                 $this->db->from('cashinout');
+    //                 $this->db->join('transactiontypes', 'transactiontypes.TransactionCode = cashinout.TransCode', 'INNER');
+    //                 $this->db->join('users', 'users.id = cashinout.SystemUser', 'INNER');
+    //                 $this->db->where('DATE(cashinout.InOutDate) <=', $enddate);
+    //                 $this->db->where('DATE(cashinout.InOutDate) >=', $startdate);
+    //                 $this->db->where_in('cashinout.Location', $locationAr);
+    //             if (isset($tCode_ar) && $tCode_ar != '') {
+    //                 $this->db->where_in('transactiontypes.TransactionCode', $tCode_ar);
+    //             }
+    //                 // $this->db->limit(50);
         
-                $result=$this->db->get();
+    //             $result=$this->db->get();
         
-                $list = array();
-                foreach ($result->result() as $row) {
-                    $list[$row->TransactionName	][] = $row;
-                }
-                return $list;
+    //             $list = array();
+    //             foreach ($result->result() as $row) {
+    //                 $list[$row->TransactionName	][] = $row;
+    //             }
+    //             return $list;
         
         
-        //        return $this->db->get()->result();
-            }
+    //     //        return $this->db->get()->result();
+    //         }
+
+
+    // public function cashfloatbyroute($startdate, $enddate, $route,$routeAr,$tCode,$tCode_ar)
+    //     {
+          
+
+    //         $sql = "
+    //             SELECT 
+    //                 c.AppNo,
+    //                 c.Location,
+    //                 c.Emp,
+    //                 c.InOutID AS TranID,
+    //                 c.InOutDate AS TranDate,
+    //                 c.TransCode AS TransactionCode,
+    //                 t.TransactionName,
+    //                 u.first_name,
+    //                 'cashinout' AS source,
+    //                 c.Mode,
+    //                 c.CashAmount AS Amount,
+    //                 c.Remark,
+    //                 t.IsExpenses
+    //             FROM cashinout c
+    //             INNER JOIN transactiontypes t ON t.TransactionCode = c.TransCode
+    //             INNER JOIN users u ON u.id = c.SystemUser
+    //             WHERE DATE(c.InOutDate) BETWEEN ? AND ?
+    //             {$locationFilter}
+    //             {$tCodeFilter}
+
+    //             UNION ALL
+
+    //             SELECT 
+    //                 m.AppNo,
+    //                 m.Location,
+    //                 m.Emp,
+    //                 m.FlotNo AS TranID,
+    //                 m.DateORG AS TranDate,
+    //                 m.TransactionCode,
+    //                 t.TransactionName,
+    //                 u.first_name,
+    //                 'maincashflot' AS source,
+    //                 m.PayType AS Mode,
+    //                 m.FlotAmount AS Amount,
+    //                 m.Remark,
+    //                 t.IsExpenses
+    //             FROM maincashflot m
+    //             INNER JOIN transactiontypes t ON t.TransactionCode = m.TransactionCode
+    //             INNER JOIN users u ON u.id = m.SystemUser
+    //             WHERE DATE(m.DateORG) BETWEEN ? AND ?
+    //             {$locationFilter}
+    //             {$tCodeFilter}
+
+    //             ORDER BY TranDate ASC
+    //         ";
+
+    //         $query = $this->db->query($sql, [$startdate, $enddate, $startdate, $enddate]);
+    //         return $query->result();
+    // }
+
+
+    public function cashfloatbyroute($startdate, $enddate)
+{
+    $sql = "
+        SELECT 
+            c.AppNo,
+            c.Location,
+            c.Emp,
+            c.InOutID AS TranID,
+            c.InOutDate AS TranDate,
+            c.TransCode AS TransactionCode,
+            t.TransactionName,
+            u.first_name,
+            'cashinout' AS source,
+            c.Mode,
+            c.CashAmount AS Amount,
+            c.Remark,
+            t.IsExpenses
+        FROM cashinout c
+        INNER JOIN transactiontypes t ON t.TransactionCode = c.TransCode
+        INNER JOIN users u ON u.id = c.SystemUser
+        WHERE DATE(c.InOutDate) BETWEEN ? AND ?
+          AND c.IsActive = 1   
+
+        UNION ALL
+
+        SELECT 
+            m.AppNo,
+            m.Location,
+            m.Emp,
+            m.FlotNo AS TranID,
+            m.DateORG AS TranDate,
+            m.TransactionCode,
+            t.TransactionName,
+            u.first_name,
+            'maincashflot' AS source,
+            m.PayType AS Mode,
+            m.FlotAmount AS Amount,
+            m.Remark,
+            t.IsExpenses
+        FROM maincashflot m
+        INNER JOIN transactiontypes t ON t.TransactionCode = m.TransactionCode
+        INNER JOIN users u ON u.id = m.SystemUser
+        WHERE DATE(m.DateORG) BETWEEN ? AND ?
+
+        ORDER BY TranDate ASC
+    ";
+
+    $query = $this->db->query($sql, [$startdate, $enddate, $startdate, $enddate]);
+    return $query->result();
+}
+
+
+
+  public function expenseandearningsummarycash($startdate, $enddate)
+    {
+        $sql = "
+                    SELECT 
+                        c.AppNo,
+                        c.Location,
+                        c.Emp,
+                        c.InOutID AS TranID,
+                        c.InOutDate AS TranDate,
+                        c.TransCode AS TransactionCode,
+                        t.TransactionName,
+                        u.first_name,
+                        'cashinout' AS source,
+                        c.Mode,
+                        c.CashAmount AS Amount,
+                        c.Remark,
+                        t.IsExpenses
+                    FROM cashinout c
+                    INNER JOIN transactiontypes t ON t.TransactionCode = c.TransCode
+                    INNER JOIN users u ON u.id = c.SystemUser
+                    WHERE DATE(c.InOutDate) BETWEEN ? AND ?
+                    {$locationFilter}
+                    {$tCodeFilter}
+
+                    UNION ALL
+
+                    SELECT 
+                        m.AppNo,
+                        m.Location,
+                        m.Emp,
+                        m.FlotNo AS TranID,
+                        m.DateORG AS TranDate,
+                        m.TransactionCode,
+                        t.TransactionName,
+                        u.first_name,
+                        'maincashflot' AS source,
+                        m.PayType AS Mode,
+                        m.FlotAmount AS Amount,
+                        m.Remark,
+                        t.IsExpenses
+                    FROM maincashflot m
+                    INNER JOIN transactiontypes t ON t.TransactionCode = m.TransactionCode
+                    INNER JOIN users u ON u.id = m.SystemUser
+                    WHERE DATE(m.DateORG) BETWEEN ? AND ?
+                    {$locationFilter}
+                    {$tCodeFilter}
+
+                    ORDER BY TranDate ASC
+                ";
+
+                $query = $this->db->query($sql, [$startdate, $enddate, $startdate, $enddate]);
+                return $query->result();
+    }
+
+
     public function cashfloatbytype($startdate, $enddate, $location = NULL,$locationAr = NULL,$type,$emp) {
         
         $this->db->select('cashflot.*,transactiontypes.IsExpenses,users.first_name,cashflot.Remark As Remark');

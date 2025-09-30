@@ -224,6 +224,7 @@ $(document).ready(function() {
 
 
     function getEstByEstNoAndSupNo(est,sup){
+       
         clearCustomerData();
             clearVehicleData();
             clearInvoiceData();
@@ -1075,6 +1076,7 @@ $("#product").focus();
     $("#estimateType").change(function() {
         var action = $("#action").val();
         var estType = $(this).val();
+      
         var lastSup = 0;
         if((estimateNo=='' || estimateNo==0) && estType==2){
             $.notify("Please select an estimate number.", "warning");
@@ -1154,7 +1156,7 @@ function getKey(txt){
             data: { estNo: estNo, supNo: supNo },
             success: function(data) {
                 var resultData = JSON.parse(data);
-
+                
                 cusCode = resultData.cus_data.CusCode;
                 outstanding = resultData.cus_data.CusOustandingAmount;
                 available_balance = parseFloat(resultData.cus_data.CreditLimit) - parseFloat(outstanding);
@@ -1196,14 +1198,15 @@ function getKey(txt){
                         $("#lblesttype").html("GENERAL");
                     }
 
-                var k = 1;
+                
                 if(supNo>0){
-                    k=parseFloat(resultData.estlastNo)+1;
+                    kk=parseFloat(resultData.estlastNo)+1;
                 }else if(supNo==0){
-                    k=1;
+                    kk=parseFloat(resultData.estlastNo)+1;
                 }else{
-                    k=1;
+                    kk=parseFloat(resultData.estlastNo)+1;
                 }
+                
                 totalEstAmount = 0;
 
                 if(resultData.est_hed.EstJobType==1){
@@ -1212,10 +1215,10 @@ function getKey(txt){
 
                         for (var i = 0; i < value.length; i++) {
                             if (value[i].EstIsInsurance == 1) {
-                                $("#tbl_est_data").append("<tr><td class='borderdot' style='text-align:center;padding: 1px 3px;'>" + (k) + "</td><td class='borderdot' style='padding:  1px 3px;'>" + value[i].EstJobDescription + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + (value[i].EstQty) + "</td><td class='borderdot'  style='text-align:right;padding:  1px 3px;'>" + (value[i].EstInsurance) + "</td><td class='borderdot'  style='text-align:right;padding: 1px 3px;'></td></tr>");
+                                $("#tbl_est_data").append("<tr><td class='borderdot' style='text-align:center;padding: 1px 3px;'>" + (kk) + "</td><td class='borderdot' style='padding:  1px 3px;'>" + value[i].EstJobDescription + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + (value[i].EstQty) + "</td><td class='borderdot'  style='text-align:right;padding:  1px 3px;'>" + (value[i].EstInsurance) + "</td><td class='borderdot'  style='text-align:right;padding: 1px 3px;'></td></tr>");
                             } else {
                                 totalEstAmount += parseFloat(value[i].EstNetAmount);
-                                $("#tbl_est_data").append("<tr><td class='borderdot' style='text-align:center;padding:  1px 3px;'>" + (k) + "</td><td class='borderdot' style='padding:  1px 3px;'>" + value[i].EstJobDescription + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + (value[i].EstQty) + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + accounting.formatMoney(value[i].EstNetAmount) + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'></td></tr>")
+                                $("#tbl_est_data").append("<tr><td class='borderdot' style='text-align:center;padding:  1px 3px;'>" + (kk) + "</td><td class='borderdot' style='padding:  1px 3px;'>" + value[i].EstJobDescription + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + (value[i].EstQty) + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + accounting.formatMoney(value[i].EstNetAmount) + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'></td></tr>")
                             }
                             k++;
                         }
@@ -1227,10 +1230,10 @@ function getKey(txt){
 
                         for (var i = 0; i < value.length; i++) {
                             if (value[i].EstIsInsurance == 1) {
-                                $("#tbl_est_data").append("<tr><td class='borderdot' style='text-align:center;padding:  1px 3px;'>" + (k) + "</td><td class='borderdot' style='padding:  1px 3px;'>" + value[i].EstJobDescription + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + (value[i].EstQty) + "</td><td class='borderdot'  style='text-align:right;padding: 1px 3px;'>" + (value[i].EstInsurance) + "</td><td class='borderdot'  style='text-align:right;padding: 1px 3px;'></td></tr>");
+                                $("#tbl_est_data").append("<tr><td class='borderdot' style='text-align:center;padding:  1px 3px;'>" + (kk) + "</td><td class='borderdot' style='padding:  1px 3px;'>" + value[i].EstJobDescription + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + (value[i].EstQty) + "</td><td class='borderdot'  style='text-align:right;padding: 1px 3px;'>" + (value[i].EstInsurance) + "</td><td class='borderdot'  style='text-align:right;padding: 1px 3px;'></td></tr>");
                             } else {
                                 totalEstAmount += parseFloat(value[i].EstNetAmount);
-                                $("#tbl_est_data").append("<tr><td class='borderdot' style='text-align:center;padding:  1px 3px;'>" + (k) + "</td><td class='borderdot' style='padding:  1px 3px;'>" + value[i].EstJobDescription + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + (value[i].EstQty) + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + accounting.formatMoney(value[i].EstNetAmount) + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'></td></tr>")
+                                $("#tbl_est_data").append("<tr><td class='borderdot' style='text-align:center;padding:  1px 3px;'>" + (kk) + "</td><td class='borderdot' style='padding:  1px 3px;'>" + value[i].EstJobDescription + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + (value[i].EstQty) + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'>" + accounting.formatMoney(value[i].EstNetAmount) + "</td><td class='borderdot' style='text-align:right;padding:  1px 3px;'></td></tr>")
                             }
                             k++;
                         }
@@ -1537,7 +1540,7 @@ function getKey(txt){
             $("#estimateType").val(resultData.est_hed.EstType);
             $("#supplemetNo").val(resultData.est_hed.Supplimentry);
             $("#remark").val(resultData.est_hed.remark);
-
+            $('#k').val(resultData.est_dtl.length);
             if (resultData.est_hed.EstJobType == 1) {
                 $("#vehicleCompany").show();
                 $("#dvInsurance").hide();

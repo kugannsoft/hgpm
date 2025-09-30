@@ -1088,7 +1088,42 @@ var vatSellingPrice = 0;
                         $("#serialQty").val(serialQty);
                     }
 
-                    $("#tbl_item tbody").append("<tr serial_batch='0'  ri=" + i + " id=" + i + " isZero='"+isSellZero+"' proCode='" + itemCode + "' uc='" + unit + "' qty='" + qty + "' unit_price='" + sellingPrice + "'  vatunit_price='" + vatSellingPrice + "'  org_unit_price='" + orgSellingPrice + "' upc='" + upc + "' caseCost='" + casecost + "' isSerial='" + is_serail + "' serial='" + serialNo + "' discount_percent='" + discount_precent + "' cPrice='" + costPrice + "' pL='" + priceLevel + "' fQ='" + freeQty + "' nonDisTotalNet='" + totalNet2 + "' netAmount='" + totalNet + "' proDiscount='" + product_discount + "' proName='" + prdName + "'  isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"'  salesPerson='"+salesperson+"'  isbatchSerial='0'><td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + "</td><td>" + prdName + "</td><td>" + unit + "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty) + "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + "</td><td class='text-center'>" + discount_precent + "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + "</td><td>" + serialNo + "</td><td>"+salespname+"</td><td><i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i></td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
+                    $("#tbl_item tbody").append("<tr serial_batch='0'  ri=" + i + 
+                        " id=" + i + 
+                        " isZero='"+isSellZero+
+                        "' proCode='" + itemCode + 
+                        "' uc='" + unit + 
+                        "' qty='" + qty + 
+                        "' unit_price='" + sellingPrice +
+                        "'  vatunit_price='" + vatSellingPrice + 
+                        "'  org_unit_price='" + orgSellingPrice + 
+                        "' upc='" + upc + 
+                        "' caseCost='" + casecost + 
+                        "' isSerial='" + is_serail + 
+                        "' serial='" + serialNo + 
+                        "' discount_percent='" + discount_precent + 
+                        "' cPrice='" + costPrice + 
+                        "' pL='" + priceLevel + 
+                        "' fQ='" + freeQty + 
+                        "' nonDisTotalNet='" + totalNet2 + 
+                        "' netAmount='" + totalNet + 
+                        "' proDiscount='" + product_discount + 
+                        "' proName='" + prdName + 
+                        "'  isvat='"+isNewVat+
+                        "' isnbt='"+isNewNbt+
+                        "' nbtRatio='"+newNbtRatio+
+                        "' proVat='"+proVat+
+                        "' proNbt='"+proNbt+
+                        "'  salesPerson='"+salesperson+
+                        "'  isbatchSerial='0'><td class='text-center'>" + i + 
+                        "</td><td class='text-left'>" + itemCode + 
+                        "</td><td>" + prdName + 
+                        "</td><td>" + unit + 
+                        "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty) + 
+                        "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + 
+                        "</td><td class='text-center'>" + discount_precent + 
+                        "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + 
+                        "</td><td>" + serialNo + "</td><td>"+salespname+"</td><td><i class='glyphicon glyphicon-edit edit btn btn-info btn-xs'></i></td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
                     clear_gem_data();
                     // if (is_serail != 1) {
                     //     clear_gem_data();
@@ -1478,11 +1513,19 @@ var action=0;
                 $.ajax({
                     type: "post",
                     url: "saveNewSalesInvoice",
-                    data: {remark:remark,com_amount:com_amount, compayto:compayto,receiver_name:receiver_name,receiver_nic:receiver_nic, regNo:registerNo,cusCode:cusCode,grn_no:poNo,po_number:po_number,insCompany:insCompany,shippingLabel:shippingLabel,shipping:shipping,newsalesperson:newsalesperson,action:action,salesorder: salesorder, invType:invType, product_code: sendProduct_code, serial_no: sendSerial_no, qty: sendQty, unit_price: sendUnit_price,org_unit_price:sendOrgUnit_price,
-                        discount_precent: sendDiscount_precent, pro_discount: sendPro_discount, total_net: sendTotal_net, unit_type: sendUnit_type, price_level: sendPrice_level, upc: sendUpc,
-                        case_cost: sendCaseCost, freeQty: sendFree_qty, cost_price: sendCost_price, pro_total: sendPro_total, isSerial: sendIsSerial, proName: sendPro_name,isVat:isVatArr,isNbt:isNbtArr,nbtRatio:nbtRatioArr,proVat:proVatArr,proNbt:proNbtArr,salePerson:salePersonArr, total_cost: totalCost, totalProDiscount: totalProWiseDiscount, totalGrnDiscount: totalGrnDiscount,
-                        grnDate: grnDate, invUser: invUser, total_amount: total_amount, total_discount: total_discount, total_net_amount: totalNetAmount, location: location, supcode: supcode, maxSerialQty: maxSerialQty, serialAutoGen: serialAutoGen,nbtRatioRate: nbtRatioRate,isTotalVat:isTotalVat,isTotalNbt:isTotalNbt,totalVat:finalVat,totalNbt:finalNbt,bankacc:bankacc,bank_amount:bank_amount,cashAmount:cashAmount,creditAmount:creditAmount,chequeAmount:chequeAmount,cardAmount:cardAmount,advance_amount:advance_amount,advance_pay_no:advance_payment_no,return_payment_no:return_payment_no,return_amount:return_amount,
-                    ccAmount: ccAmountArr, ccRef: ccRefArr, ccType: ccTypeArr, ccName: ccNameArr,chequeNo:chequeNo,bank: bank, chequeReference: chequeReference, chequeRecivedDate: chequeReciveDate, chequeDate: chequeDate},
+                    data: {remark:remark,com_amount:com_amount, compayto:compayto,receiver_name:receiver_name,receiver_nic:receiver_nic, regNo:registerNo,cusCode:cusCode,
+                        grn_no:poNo,po_number:po_number,insCompany:insCompany,shippingLabel:shippingLabel,shipping:shipping,newsalesperson:newsalesperson,action:action,
+                        salesorder: salesorder, invType:invType, product_code: sendProduct_code, serial_no: sendSerial_no, qty: sendQty, unit_price: sendUnit_price,
+                        org_unit_price:sendOrgUnit_price,discount_precent: sendDiscount_precent, pro_discount: sendPro_discount, total_net: sendTotal_net, 
+                        unit_type: sendUnit_type, price_level: sendPrice_level, upc: sendUpc,case_cost: sendCaseCost, freeQty: sendFree_qty, cost_price: sendCost_price,
+                         pro_total: sendPro_total, isSerial: sendIsSerial, proName: sendPro_name,isVat:isVatArr,isNbt:isNbtArr,nbtRatio:nbtRatioArr,proVat:proVatArr,
+                         proNbt:proNbtArr,salePerson:salePersonArr, total_cost: totalCost, totalProDiscount: totalProWiseDiscount, totalGrnDiscount: totalGrnDiscount,
+                        grnDate: grnDate, invUser: invUser, total_amount: total_amount, total_discount: total_discount, total_net_amount: totalNetAmount, location: location, 
+                        supcode: supcode, maxSerialQty: maxSerialQty, serialAutoGen: serialAutoGen,nbtRatioRate: nbtRatioRate,isTotalVat:isTotalVat,isTotalNbt:isTotalNbt,
+                        totalVat:finalVat,totalNbt:finalNbt,bankacc:bankacc,bank_amount:bank_amount,cashAmount:cashAmount,creditAmount:creditAmount,chequeAmount:chequeAmount,
+                        cardAmount:cardAmount,advance_amount:advance_amount,advance_pay_no:advance_payment_no,return_payment_no:return_payment_no,return_amount:return_amount,
+                    ccAmount: ccAmountArr, ccRef: ccRefArr, ccType: ccTypeArr, ccName: ccNameArr,chequeNo:chequeNo,bank: bank, chequeReference: chequeReference, 
+                    chequeRecivedDate: chequeReciveDate, chequeDate: chequeDate},
                     success: function(data) {
                         var resultData = JSON.parse(data);
                         var feedback = resultData['fb'];
@@ -2415,41 +2458,87 @@ function addPayment(pcash, pcredit, pcard,pcheque,pcusType,padvance,pbank,pretur
 
 var ccard = [];
 
-    $("#addCard").click(function() {
+     $("#addCard").click(function() {
 
         var cref = $("#card_ref").val();
         var ctype = $("#card_type option:selected").val();
         var cname = $("#card_type option:selected").html();
         var camount = parseFloat($("#ccard_amount").val());
+        var mnetpay = ($("#mnetpay").html());
+        mnetpay = parseFloat(mnetpay.replace(/,/g, ''));
+
+        
+      
         var ccTypeArrIndex = $.inArray(ctype, ccard);
 
-        if (ctype == '' || ctype == 0) {
+        if(dueAmount == 0){
+            if(camount>mnetpay){
+                 $("#errCard").show();
+                $("#errCard").html('You Cant Pay morethan Net Amount').addClass('alert alert-danger alert-sm');
+                $("#errCard").fadeOut(1500);
+                return false;
+            }else if (ctype == '' || ctype == 0) {
+                $("#errCard").show();
+                $("#errCard").html('Please select a card type').addClass('alert alert-danger alert-sm');
+                $("#errCard").fadeOut(1500);
+                return false;
+
+            } else if (camount == '' || camount == 0) {
+                $("#errCard").show();
+                $("#errCard").html('Please enter card amount').addClass('alert alert-danger alert-xs');
+                $("#errCard").fadeOut(1500);
+                return false;
+            } else {
+                if (ccTypeArrIndex < 0) {
+                    $("#tblCard tbody").append("<tr ctype='" + ctype + "'  cref='" + cref + "'  camount='" + camount + "' cname='" + cname + "' ><td>" + cname + "</td><td>" + cref + "</td><td class='text-right'>" + accounting.formatMoney(camount) + "</td><td><a href='#' class='btn btn-danger removeCard' ><i class='fa fa-close'></i></a></td></tr>");
+                    ccard.push(ctype);
+                    cardAmount += camount;
+                    addPayment(cashAmount, creditAmount, cardAmount,chequeAmount,cusType,advance_amount,bank_amount,return_amount);
+                    $("#card_amount").val((cardAmount));
+                    $("#card_ref").val('');
+                    $("#card_type").val(0);
+                    $("#ccard_amount").val(0);
+                } else {
+                    $("#errCard").show();
+                    $("#errCard").html('Card type already exist').addClass('alert alert-danger alert-sm');
+                    $("#errCard").fadeOut(1500);
+                }
+            }
+        }else{
+            if(camount>dueAmount){
+                $("#errCard").show();
+                $("#errCard").html('You Cant Pay morethan Due Amount').addClass('alert alert-danger alert-sm');
+                $("#errCard").fadeOut(1500);
+                return false;
+            }else if (ctype == '' || ctype == 0) {
             $("#errCard").show();
             $("#errCard").html('Please select a card type').addClass('alert alert-danger alert-sm');
             $("#errCard").fadeOut(1500);
             return false;
 
-        } else if (camount == '' || camount == 0) {
-            $("#errCard").show();
-            $("#errCard").html('Please enter card amount').addClass('alert alert-danger alert-xs');
-            $("#errCard").fadeOut(1500);
-            return false;
-        } else {
-            if (ccTypeArrIndex < 0) {
-                $("#tblCard tbody").append("<tr ctype='" + ctype + "'  cref='" + cref + "'  camount='" + camount + "' cname='" + cname + "' ><td>" + cname + "</td><td>" + cref + "</td><td class='text-right'>" + accounting.formatMoney(camount) + "</td><td><a href='#' class='btn btn-danger removeCard' ><i class='fa fa-close'></i></a></td></tr>");
-                ccard.push(ctype);
-                cardAmount += camount;
-               addPayment(cashAmount, creditAmount, cardAmount,chequeAmount,cusType,advance_amount,bank_amount,return_amount);
-                $("#card_amount").val((cardAmount));
-                $("#card_ref").val('');
-                $("#card_type").val(0);
-                $("#ccard_amount").val(0);
-            } else {
+            } else if (camount == '' || camount == 0) {
                 $("#errCard").show();
-                $("#errCard").html('Card type already exist').addClass('alert alert-danger alert-sm');
+                $("#errCard").html('Please enter card amount').addClass('alert alert-danger alert-xs');
                 $("#errCard").fadeOut(1500);
+                return false;
+            } else {
+                if (ccTypeArrIndex < 0) {
+                    $("#tblCard tbody").append("<tr ctype='" + ctype + "'  cref='" + cref + "'  camount='" + camount + "' cname='" + cname + "' ><td>" + cname + "</td><td>" + cref + "</td><td class='text-right'>" + accounting.formatMoney(camount) + "</td><td><a href='#' class='btn btn-danger removeCard' ><i class='fa fa-close'></i></a></td></tr>");
+                    ccard.push(ctype);
+                    cardAmount += camount;
+                    addPayment(cashAmount, creditAmount, cardAmount,chequeAmount,cusType,advance_amount,bank_amount,return_amount);
+                    $("#card_amount").val((cardAmount));
+                    $("#card_ref").val('');
+                    $("#card_type").val(0);
+                    $("#ccard_amount").val(0);
+                } else {
+                    $("#errCard").show();
+                    $("#errCard").html('Card type already exist').addClass('alert alert-danger alert-sm');
+                    $("#errCard").fadeOut(1500);
+                }
             }
         }
+        
     });
 
 

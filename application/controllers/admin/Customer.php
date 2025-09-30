@@ -566,11 +566,12 @@ class Customer extends Admin_Controller {
 
     public function allVehicles() {
         $this->load->library('Datatables');
-        $this->datatables->select('vehicledetail.*,model.model,make.make,customer.CusName,customer.MobileNo');
+        $this->datatables->select('vehicledetail.*,model.model,make.make,customer.CusName,customer.MobileNo,customer.IsActive');
         $this->datatables->from('vehicledetail');
         $this->datatables->join('customer','customer.CusCode=vehicledetail.CusCode', 'left');
         $this->datatables->join('model','model.model_id=vehicledetail.Model', 'left');
         $this->datatables->join('make','make.make_id=model.makeid', 'left');
+        $this->datatables->where('customer.IsActive',1);
         echo $this->datatables->generate();
         die();
     }

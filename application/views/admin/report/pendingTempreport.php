@@ -1,16 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+
 <div class="content-wrapper">
     <section class="content-header">
         <?php echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
-     <style>
-         #hdsaletable thead {
-            background-color: rgb(202, 205, 245) !important;
-            }
-    </style>
+
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -25,12 +22,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <input type="text" class="form-control" name="enddate" value="<?php echo date("Y-m-d") ?>"/>
                                     </div>
                                 </div>
-                                    <div class="col-md-3">
-                                       <select class="form-control" name="customer" id="customer">
-                                            <option value="">--select Supplier--</option>
-                                        </select>
-                                        <input type="hidden" name="route_ar" id="route_ar">
-                                    </div>
+
+                                
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-flat btn-success">Show</button>
                                 </div>
@@ -50,32 +43,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="saletable" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td style="width: 160px;">Invoice No</td>
-                                    <td style="width: 160px;">Card No</td>
-                                    <td style="width: 160px;">Vehicle No</td>
-                                    <td style="width: 160px;">Employees</td>
-                                    <td style="width: 120px;">Date</td>
-                                    <td style="width: 120px;">Working Hours</td>
-                                    <td style="width: 100px;">Flat Qty</td>
-                                    <td style="width: 110px;">Cost Price</td>
-                                    <td style="width: 110px;">Labour Rate</td>
+                                    <td>Invoice Date</td>
+                                    <td>Customer</td>
+                                    <td>Invoice No</td>
+                                    <td>Card No</td>
+                                    
+                                    <td>Total Amount</td>
+                                  
                                 </tr>
-
                             </thead>
                             <tbody>
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>Total</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
+                                    <th id="totalcrda" style="color: #00aaf1;"></th>
                                   
+
                                 </tr>
                             </tfoot>
                         </table>
@@ -116,13 +103,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: "loadejobcardproductivity",
+            url: "pendingTempInvoices",
             data: $(this).serialize(),
             success: function (data) {
                 $('#saletable tbody').empty();
                 drawTable(JSON.parse(data));
-                $('#totalca').html(accounting.formatMoney(sumcolumn('cashamount')));
                
+                $('#totalcrda').html(accounting.formatMoney(sumcolumn('ccardamount')));
+           
             }
         })
     });
@@ -134,21 +122,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function drawRow(rowData) {
         var row = $("<tr/>");
-        
         $("#saletable").append(row);
         
-        row.append($("<td>" + rowData.JobInvNo + "</td>"));
-         row.append($("<td>" + rowData.JobCardNo + "</td>"));
-        row.append($("<td>" + rowData.JRegNo  + "</td>"));
-        row.append($("<td>" + rowData.RepNames  + "</td>"));
-        row.append($("<td>" + rowData.Date + "</td>"));
-        row.append($("<td>" + rowData.Qty  + "</td>"));
-        row.append($("<td>" + rowData.FlatQty  + "</td>"));
-        row.append($("<td>" + rowData.CostPrice  + "</td>"));
-        row.append($("<td>" + rowData.ProfitAmount  + "</td>"));
-    
+        row.append($("<td>" + rowData.JobInvoiceDate + "</td>"));
+         row.append($("<td>" + rowData.DisplayName + "</td>"));
+        row.append($("<td class='cashamount'>" + (rowData.JobInvNo) + "</td>"));
+        row.append($("<td class='creditamount'>" +(rowData.JobCardNo) + "</td>"));
+        row.append($("<td class='ccardamount'>" + accounting.formatMoney(rowData.JobTotalAmount) + "</td>"));
+       
     }
-    
     function sumcolumn(rclass) {
         var sum = 0;
         var elemnt = document.getElementsByClassName(rclass);
@@ -169,43 +151,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function printdiv() {
         $("#saletable").print({
-            prepend:"<h3 style='text-align:center'>Job Card Productivity Report</h3><hr/>",
-            title:'Job Card Productivity Report'
+            prepend:"<h3 style='text-align:center'>Date vise Sales Report</h3><hr/>",
+            title:''
         });
     }
-
-    
-    $("#customer").select2({
-        placeholder: "Select a job card No",
-        allowClear: true,
-        ajax: {
-            url: "jobcardjson",
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    q: params.term,
-                   
-                };
-            },
-            processResults: function(data) {
-                
-                return {
-                    results: data
-                };
-            },
-            transport: function (params, success, failure) {
-                var $request = $.ajax(params);
-
-                $request.then(success);
-                $request.fail(failure);
-
-                return $request;
-            },
-            cache: true
-        },
-        minimumInputLength: 2
-    });
-
-     $("#saletable").freezeHeader();
 </script>

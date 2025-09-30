@@ -39,6 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <td>###</td>
                                     <td>Status</td>
                                     <td>Add Invoice</td>
+                                    <td>Add Job</td>
                                     <td>Edit</td>
                                     <td>View</td>
                                 </tr>
@@ -127,19 +128,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 }
                             }
                         },
-                        {
-                            <?php if (in_array("SM45", $blockAdd) || $blockAdd == null) { ?>
+                    {
+                            <?php if (in_array("SM45", $blockAdd) || $blockAdd == null ) { ?>
                             "data": null, orderable: false, searchable: false,
                             mRender: function (data, type, row) {
-                                return '<a href="../Salesinvoice/job_invoice?type=est&id='+ Base64.encode(row.EstimateNo) +'&sup='+row.Supplimentry+'" class="btn btn-xs btn-primary" >Invoice</a>';
+                                if (row.EstJobCardNo === null || row.EstJobCardNo === "") {
+                                
+                                    return '<button class="btn btn-xs btn-secondary" disabled>Invoice</button>';
+                                } else {
+                                
+                                    return '<a href="../Salesinvoice/job_invoice?type=est&id='+ Base64.encode(row.EstimateNo) +'&sup='+row.Supplimentry+'" class="btn btn-xs btn-primary">Invoice</a>';
+                                }
                             }
-                            <?PHP  } else {?>
+                            <?PHP  } else { ?>
                             "data": null, orderable: false, searchable: false,
                             mRender: function (data, type, row) {
-                                return '<a href="../Salesinvoice/job_invoice?type=est&id='+ Base64.encode(row.EstimateNo) +'&sup='+row.Supplimentry+'" class="btn btn-xs btn-primary" >Invoice</a>';
+                                if (row.EstJobCardNo === null || row.EstJobCardNo === "") {
+                                    return '<button class="btn btn-xs btn-secondary" disabled>Invoice</button>';
+                                } else {
+                                    return '<a href="../Salesinvoice/job_invoice?type=est&id='+ Base64.encode(row.EstimateNo) +'&sup='+row.Supplimentry+'" class="btn btn-xs btn-primary">Invoice</a>';
+                                }
                             }
-                            <?php }?>
+                            <?php } ?>
                         },
+
+                        {
+                            <?php if (in_array("SM45", $blockAdd) || $blockAdd == null ) { ?>
+                            "data": null, orderable: false, searchable: false,
+                            mRender: function (data, type, row) {
+                                if (row.EstJobCardNo === null || row.EstJobCardNo === "") {
+                                
+                                    return '<a href="../job/index?type=cus&ccode='+ Base64.encode(row.EstCustomer) +'&regno='+ Base64.encode( row.EstRegNo) +'&estno='+ Base64.encode( row.EstimateNo)+'" class="btn btn-xs btn-primary" ><i class="fa fa-plus"></i> Job</a>';
+                                } else {
+                                
+                                    return '<a class="btn btn-xs btn-primary" disabled>Job</a>';
+                                }
+                            }
+                            <?PHP  } else { ?>
+                            "data": null, orderable: false, searchable: false,
+                            mRender: function (data, type, row) {
+                                if (row.EstJobCardNo === null || row.EstJobCardNo === "") {
+                                    return '<a href="../job/index?type=cus&ccode='+ Base64.encode(row.EstCustomer) +'&regno='+ Base64.encode( row.EstRegNo) +'&estno='+ Base64.encode( row.EstimateNo) +'" class="btn btn-xs btn-primary" ><i class="fa fa-plus"></i> Job</a>';
+                                } else {
+                                    return '<a class="btn btn-xs btn-primary" disabled>Job</a>';
+                                }
+                            }
+                            <?php } ?>
+                        },
+
                         {
                             <?php if (in_array("SM52", $blockEdit) || $blockEdit == null) { ?>
                             "data": null, orderable: false, searchable: false,
