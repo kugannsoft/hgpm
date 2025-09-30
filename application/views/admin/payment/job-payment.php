@@ -125,7 +125,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span class="label">Advance Payment</span>
-                                        <input type="text" name="advance_payment_no" id="advance_payment_no"   class="form-control input-lg" placeholder="Advace Payment No">
+                                        <input type="text" name="advance_payment_no" id="advance_payment_no"   class="form-control input-lg" placeholder="Advance Payment No">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">Card type</span>

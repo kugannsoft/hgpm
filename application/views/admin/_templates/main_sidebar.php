@@ -487,6 +487,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li class="<?= active_link_function('jobcategoryreport') ?>">
                                 <a href="<?php echo site_url('admin/report/jobcategoryreport'); ?>">Job Category Report</a>
                             </li>
+                            <li class="<?= active_link_function('pendingTempreport') ?>">
+                                <a href="<?php echo site_url('admin/report/pendingTempreport'); ?>">Pending Temparary Invoice Report</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -575,6 +578,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </li>
                             <li class="<?= active_link_function('cashfloat') ?>">
                                 <a href="<?php echo site_url('admin/report/cashfloat'); ?>">Expenses Earning</a>
+                            </li>
+                             <li class="<?= active_link_function('expenseandearningsummary') ?>">
+                                <a href="<?php echo site_url('admin/report/expenseandearningsummary'); ?>">Expenses Earning Summary</a>
                             </li>
                             <li class="<?= active_link_function('dailybalancedetail') ?>">
                                 <a href="<?php echo site_url('admin/report/dailybalancedetail'); ?>">Daily Cash
@@ -670,6 +676,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </li> -->
                             <li class="<?= active_link_function('employeeproductivity') ?>">
                                 <a href="<?php echo site_url('admin/report/employeeproductivity'); ?>">Employee Productivity Report</a>
+                            </li>
+                             <li class="<?= active_link_function('employeesummaryproductivity') ?>">
+                                <a href="<?php echo site_url('admin/report/employeesummaryproductivity'); ?>">Employee Summary Productivity Report</a>
                             </li>
                             <li class="<?= active_link_function('jobcardproductivity') ?>">
                                 <a href="<?php echo site_url('admin/report/jobcardproductivity'); ?>">Job Card Productivity Report</a>

@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <?php $this->load->view('admin/_templates/company_header.php',true); ?>
                                     <table style="border-collapse:collapse;width:700px;margin:5px;font-family: Arial, Helvetica, sans-serif;" border="0">
                                         <tr style="text-align:left;font-size:13px;">
-                                            <td> Delevery Date</td>
+                                            <td> PO Date</td>
                                             <td> :</td>
                                             <td id="lblinvDate"><?php echo $po_hed->PO_DeleveryDate?></td>
                                             <td> &nbsp;</td>
@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <td></td>
                                             <td id="lblPoNo"><?php echo $po_hed->JobNo?></td>
                                             <td> &nbsp;</td>
-                                            <td colspan="3">Ship to :</td>
+                                            <td colspan="3">Deliver to :</td>
                                         </tr>
                                         <tr style="text-align:left;font-size:13px;">
                                             <td> Vendor</td>
@@ -57,13 +57,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <td> &nbsp;</td>
                                             <td> &nbsp;</td>
                                             <td colspan="3" rowspan="3" style="width:300px;font-size:14px;border: #000 solid 1px;padding:10px;">
+                                                Job No : <?php echo $po_hed->JobNo ?><br>
                                                 <?php echo $company['CompanyName'] ?> <?php echo $company['CompanyName2'] ?><br>
                                                 <?php echo $company['AddressLine01'] ?><br><?php echo $company['AddressLine02'] ?><?php echo $company['AddressLine03'] ?><br>
                                                 Contact Us - <?php echo $company['LanLineNo'] ?>
+                                                <br>
                                             </td>
                                         </tr>
                                         <tr style="text-align:left;font-size:13px;">
                                             <td  id="lblSupplier" colspan="3"  style="width:300px;font-size:14px;border: #000 solid 1px;padding:5px;">
+                                                   Code : <?php echo $po_hed->SupCode?>
+                                                <br>
                                             <?php echo $po_hed->SupName."<br>".$po_hed->Address01." ".$po_hed->Address02."<br>".$po_hed->Address03; ?>
                                             </td>
                                             <td> &nbsp;</td>
@@ -92,7 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                  ?>
                                             <tr style="font-size:13px;">
                                                <td style="padding: 5px"><?php echo $i;?></td>
-                                               <td style="padding: 5px"><?php echo $dtl->PO_ProName?></td>
+                                               <td style="padding: 5px"><?php echo $dtl->Prd_Description?></td>
                                                <td style="padding: 5px"><?php echo $dtl->PO_Qty/$dtl->PO_UPC?></td>
                                                <!-- <td style="padding: 5px"><?php echo $dtl->PO_Type?></td> -->
                                                <td class="text-right"  style="padding: 5px"><?php echo number_format($dtl->PO_UnitPrice,2)?></td>
@@ -118,13 +122,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <tr style="text-align:left;font-size:13px;">
                                             
                                            
-                                            <td colspan="3">
+                                            <!-- <td colspan="3">
                                                 <h4>Bank Details</h4>
                                                 <p>Bank Name:<?php echo $po_hed->BankName ?></p>
                                                 <p>Branch Name:<?php echo $po_hed->BranchName ?></p>
                                                 <p>Acc No:<?php echo $po_hed->AccNo ?></p>
                                               
-                                            </td>
+                                            </td> -->
                                         </tr>
                                      
                                     </table>
@@ -134,23 +138,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <tr><td colspan="5" style="text-align:right;">&nbsp;</td></tr>
                                         <tr><td colspan="5" style="text-align:right;">&nbsp;</td></tr>
                                          <tr>
-                                            <td style="border-bottom:1px dashed #000;width:100px" >&nbsp;</td>
+                                            <td style="border-bottom:1px dashed #000;width:200px" >&nbsp;</td>
                                             <td style="">&nbsp;</td>
-                                            <td style="border-bottom:1px dashed #000;width:200px">&nbsp;</td>
+                                            <!-- <td style="border-bottom:1px dashed #000;width:200px">&nbsp;</td> -->
                                             <td style="">&nbsp;</td>
                                             <td style="border-bottom:1px dashed #000;width:200px">&nbsp;</td>
                                         </tr>
                                         <tr>
                                             <td style="width:100px;text-align: center">Prepared By</td>
                                             <td style="">&nbsp;</td>
-                                            <td style="width:200px;text-align: center">Authorised Signature</td>
+                                            <!-- <td style="width:200px;text-align: center">Authorised Signature</td> -->
                                             <td style="">&nbsp;</td>
                                             <td style="width:200px;text-align: center">Issued Date</td>
                                         </tr>
                                         <tr>
-                                            <td style="width:100px;text-align: center">( <?php echo $po_hed->first_name; ?> )</td>
+                                            <!-- <td style="width:100px;text-align: center">( <?php echo $po_hed->first_name; ?> )</td> -->
                                             <td style="">&nbsp;</td>
-                                            <td style="width:200px;text-align: center"></td>
+                                            <!-- <td style="width:200px;text-align: center"></td> -->
                                             <td style="">&nbsp;</td>
                                             <td style="width:200px;text-align: center"></td>
                                         </tr>

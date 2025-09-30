@@ -65,13 +65,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="saletable" class="table table-bordered">
                             <thead>
                                 <tr style="text-align: center;">
-                                    <td style="width: 100px;">Float No</td>
-                                    <td style="width: 100px;">Date</td>
-                                    <td style="width: 120px;">Mode</td>
-                                    <td style="width: 250px;">Remark</td>
-                                    <td style="width: 120px;">Expense Amount</td>
-                                    <td style="width: 120px;">Earning Amount</td>
-                                    <td style="width: 190px;">User</td>
+                                    <td style="width: 25%;"></td>
+                                    <td style="width: 25%"></td>
+                                    <td style="width: 25%;">Expense Amount</td>
+                                    <td style="width: 25%">Earning Amount</td>
+                                  
                                 </tr>
 
                             </thead>
@@ -80,12 +78,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <tfoot>
                                 <tr>
                                     <th></th>
-                                    <th id="totalca" style="text-align: right;color: #00aaf1;"></th>
-                                    <th id="totalcra" style="text-align: right;color: #00aaf1;"></th>
-                                    <th id="totalcrda" style="text-align: right;color: #00aaf1;"></th>
+                                    <th></th>
                                     <th id="totalcha" style="text-align: right;color: #00aaf1;"></th>
                                     <th id="totalcoa" style="text-align: right;color: #00aaf1;"></th>
-                                    <th id="totala" style="text-align: right;color: #00aaf1;"></th>
+                                    
                                 </tr>
                             </tfoot>
                         </table>
@@ -149,8 +145,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                const parsed = JSON.parse(data);
                drawTable(parsed);
                 
-                $('#totalcha').html(accounting.formatMoney(sumcolumn('totalamount')));
-                $('#totalcoa').html(accounting.formatMoney(sumcolumn('totalneta')));
+                $('#totalcha').html(accounting.formatMoney(sumcolumn('totalcha')));
+                $('#totalcoa').html(accounting.formatMoney(sumcolumn('totalcoa')));
             }
         });
     });
@@ -190,9 +186,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             if (i == (value.length - 1)) {
                 $("#saletable").append(
                     "<tr style='background-color:#A9A9A9;color:#fff;'>" +
-                        "<td align='right' colspan='4' >Total</td>" +
-                        "<td align='right'><b>" + accounting.formatMoney(exptot) + "</b></td>" +
-                        "<td align='right'><b>" + accounting.formatMoney(earntot) + "</b></td>" +
+                        "<td align='right' colspan='2' >Total</td>" +
+                        "<td class='totalcha' align='right'><b>" + accounting.formatMoney(exptot) + "</b></td>" +
+                        "<td class='totalcoa' align='right'><b>" + accounting.formatMoney(earntot) + "</b></td>" +
                         "<td><b></b></td>" +
                     "</tr>"
                 );
@@ -221,13 +217,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         earn = amt;
     }
 
-    row.append($("<td class='cashamount' align='right'>" + (rowData[index].TranID || '') + "</td>"));
-    row.append($("<td class='creditamount' align='right'>" + (rowData[index].TranDate || '') + "</td>"));
-    row.append($("<td class='ccardamount' align='right'>" + (rowData[index].Mode || '') + "</td>"));
-    row.append($("<td class='chequeamount' align='right'>" + (rowData[index].Remark || '') + "</td>"));
-    row.append($("<td class='totalamount' align='right'>" + accounting.formatMoney(exp) + "</td>"));
-    row.append($("<td class='totalneta' align='right'>" + accounting.formatMoney(earn) + "</td>"));
-    row.append($("<td class='disamount' align='right'>" + (rowData[index].first_name || '') + "</td>"));
 }
     function sumcolumn(rclass) {
         var sum = 0;
@@ -249,8 +238,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function printdiv() {
         $("#saletable").print({
-            prepend:"<h3 style='text-align:center'>Expenses/ Earninig Report</h3><hr/>",
-            title:'Expenses/ Earninig'
+            prepend:"<h3 style='text-align:center'>Expenses/ Earninig Summarry Report</h3><hr/>",
+            title:'Expenses/ Earninig Summarry'
         });
     }
      $("#saletable").freezeHeader();

@@ -114,7 +114,10 @@
                                                         </span>
                                                         <br>
 
-                                                        <span>Customer VAT No:<?php echo $invCus->VatNumber; ?></span>
+                                                        <span>Customer VAT No:<?php echo $invCus->VatNumber; ?></span> <br>
+                                                     <?php if($estHed->VComName !== 0) { ?>
+                                                        <span>Insurance: <?php echo $estHed->VComName; ?></span>
+                                                    <?php } ?>
                                                     </td>
 
                                                     <td>&nbsp;&nbsp;</td>
@@ -159,7 +162,7 @@
                                                     </td>
                                                     <td colspan="4"
                                                         style="text-align:left;;border-top:1px solid #fff;font-size:10px;">
-                                                        &nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?php  if(isset($invVehi)){ echo $invVehi->model;}?>
+                                                        &nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;:<?php  if(isset($invVehi)){ echo $invVehi->model;}?>
                                                     </td>
 
                                                 </tr>
@@ -296,7 +299,7 @@
                                                     </td>
                                                     <td colspan="4"
                                                         style="text-align:left;;border-top:1px solid #fff;font-size:10px;">
-                                                        &nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?php  if(isset($invVehi)){ echo $invVehi->model;}?>
+                                                        &nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;:<?php  if(isset($invVehi)){ echo $invVehi->model;}?>
                                                     </td>
 
                                                 </tr>

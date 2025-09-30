@@ -63,8 +63,10 @@ class Purchase extends Admin_Controller {
         $this->data['company'] = $this->Purchase_model->get_data_by_where('company', $id3);
 
         $this->data['po'] = $this->Purchase_model->loadPoById($grnNo);
+        
          $this->data['po_hed'] = $this->db->select('purchaseorderhed.*,supplier.*,users.first_name')->from('purchaseorderhed')->join('users','purchaseorderhed.PO_User=users.id','left')->join('supplier', 'supplier.SupCode = purchaseorderhed.SupCode')->where('purchaseorderhed.PO_No', $grnNo)
        ->get()->row();
+     
         $this->data['location'] = $this->Purchase_model->loadlocations();
         $this->template->admin_render('admin/purchase/view-po', $this->data);
     }

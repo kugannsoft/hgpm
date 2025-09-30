@@ -184,7 +184,7 @@ class Salesinvoice_model extends CI_Model {
             if($sell_priceArr[$i]==0){
                 $sellPrice=$orgSell_priceArr[$i];
             }else{
-                $sellPrice=$sell_priceArr[$i];
+                $sellPrice=$orgSell_priceArr[$i];
             }
             //update stock
              $this->db->query("CALL SPP_UPDATE_PRICE_STOCK('$product_codeArr[$i]','$qtyArr[$i]','$price_levelArr[$i]','$cost_priceArr[$i]','$sellPrice','$location','$serial_noArr[$i]','$freeQtyArr[$i]','0','0')");
@@ -457,7 +457,7 @@ class Salesinvoice_model extends CI_Model {
                                 $loc = $row['SalesInvLocation'];
                                 $pl = $row['SalesPriceLevel'];
                                 $costp = $row['SalesCostPrice'];
-                                $selp = $row['SalesUnitPrice'];
+                                $selp = $row['SellingPriceORG'];
 
                             //update price stock
                            $this->db->query("CALL SPT_UPDATE_PRICE_STOCK('$proCode','$totalGrnQty','$pl','$costp','$selp','$loc')");
@@ -542,12 +542,12 @@ class Salesinvoice_model extends CI_Model {
                     'SellingPriceORG'=>$orgSell_priceArr[$i]
                 );
             $this->db->insert('salesinvoicedtl', $grnDtl);
-            $sellPrice =0;
+            // $sellPrice =0;
 
             if($sell_priceArr[$i]==0){
                 $sellPrice=$orgSell_priceArr[$i];
             }else{
-                $sellPrice=$sell_priceArr[$i];
+                $sellPrice=$orgSell_priceArr[$i];
             }
             //update stock
              $this->db->query("CALL SPP_UPDATE_PRICE_STOCK('$product_codeArr[$i]','$qtyArr[$i]','$price_levelArr[$i]','$cost_priceArr[$i]','$sellPrice','$location','$serial_noArr[$i]','$freeQtyArr[$i]','0','0')");

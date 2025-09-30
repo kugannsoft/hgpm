@@ -102,6 +102,13 @@ class SetPermission extends Admin_Controller
                     }else{
                         $save=0;
                     }
+
+                    if (isset($_POST['chk_editTemp'][$first_value_1])) {
+                        $tempEditDelete=$_POST['chk_editTemp'][$first_value_1];
+                       
+                    }else{
+                        $tempEditDelete=0;
+                    }
                   
                     $checkpermission = $this->SetPermission_model->where_permssion($roleId, $first_value_1);
                   
@@ -114,7 +121,8 @@ class SetPermission extends Admin_Controller
                         'is_add' => $add,
                         'is_edit' => $edit,
                         'is_delete' => $delete,
-                        'is_save' => $save
+                        'is_save' => $save,
+                        'tempEditDelete' => $tempEditDelete
                     );
 
                     $deleteData = array(
@@ -133,7 +141,8 @@ class SetPermission extends Admin_Controller
                         'is_add' => $add,
                         'is_edit' => $edit,
                         'is_delete' => $delete,
-                        'is_save' => $save
+                        'is_save' => $save,
+                        'tempEditDelete' => $tempEditDelete
                     );
                         $this->db->where('role_id', $roleId);
                         $this->db->where('per_code', $first_value_1);

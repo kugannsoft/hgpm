@@ -25,6 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                <thead>
 	                    <tr>
 	                        <td>GRN No</td>
+                            <td>Invoice No</td>
 	                        <td>Date</td>
 	                        <td>Supplier</td>
 	                        <td>Total Amount No</td>
@@ -59,6 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	"columns":
 	        [
 	            {"data": "GRN_No"},
+                {"data": "GRN_InvoiceNo"},
 	            {"data": "GRN_Date"},
 	            {"data": "GRN_SupCode"},
 	            {"data": "GRN_Amount"},

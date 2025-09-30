@@ -20,6 +20,8 @@ class Job extends Admin_Controller {
         $type = isset($_GET['type'])?$_GET['type']:NULL;
         $cuscode = isset($_GET['ccode'])?$_GET['ccode']:0;
         $regno = isset($_GET['regno'])?$_GET['regno']:0;
+       
+        $estno = isset($_GET['estno'])?$_GET['estno']:0;
 
         if (!$this->ion_auth->logged_in() OR !$this->ion_auth->is_admin()) {
             redirect('auth/login', 'refresh');
@@ -60,6 +62,7 @@ class Job extends Admin_Controller {
             $this->data['vehicle_company'] = $this->db->select()->from('vehicle_company')->where('VComCategory', 3)->get()->result();
             $this->data['regno'] = base64_decode($regno);
             $this->data['cuscode'] = base64_decode($cuscode);
+            $this->data['estno'] = base64_decode($estno);
             // $this->db->insert('insu_company', array('InsuranceName' => 'Union Insurance', ));
 
             /* Load Template */
@@ -227,7 +230,10 @@ class Job extends Admin_Controller {
             $location =  $this->db->select('JLocation')->from('jobcardhed')->where('JobCardNo',$jno)->get()->row()->JLocation;
             $appoimnetDate =$this->db->select('appoimnetDate')->from('jobcardhed')->where('JobCardNo', $jno)->get()->row()->appoimnetDate;
             $this->data['invCus']= $this->db->select('customer.*')
-                ->from('customer')->join('vehicledetail','vehicledetail.CusCode=customer.CusCode')->join('paytype','paytype.payTypeId=customer.payMethod')->where('customer.CusCode',$cusCode)->get()->row();
+                ->from('customer')
+                ->join('vehicledetail','vehicledetail.CusCode=customer.CusCode')
+                ->join('paytype','paytype.payTypeId=customer.payMethod')
+                ->where('customer.CusCode',$cusCode)->get()->row();
             $this->data['invVehi']= $this->db->select('vehicledetail.ChassisNo,vehicledetail.contactName,make.make,model.model,vehicledetail.Color AS body_color,fuel_type.fuel_type')
             ->from('vehicledetail')->join('make','make.make_id=vehicledetail.Make','left')->join('fuel_type','fuel_type.fuel_typeid=vehicledetail.FuelType','left')
             ->join('model','model.model_id=vehicledetail.Model','left')->where('vehicledetail.RegNo',$regNo)->get()->row();
@@ -450,6 +456,7 @@ class Job extends Admin_Controller {
             }
 
             $this->data['supNo'] = $supNo;
+           
 
             /* Data */
             $location = $this->db->select('EstLocation')->from('estimatehed')->where('EstimateNo',$estNo)->where('Supplimentry', $supNo)->get()->row()->EstLocation;
@@ -486,7 +493,7 @@ class Job extends Admin_Controller {
         $supNo = isset($_GET['sup'])?$_GET['sup']:0;
         $cuscode = isset($_GET['ccode'])?$_GET['ccode']:0;
         $regno = isset($_GET['regno'])?$_GET['regno']:0;
-      
+       
         
         if (!$this->ion_auth->logged_in() OR !$this->ion_auth->is_admin()) {
             redirect('auth/login', 'refresh');
@@ -557,7 +564,8 @@ class Job extends Admin_Controller {
             ->from('estimatehed')
             ->join('jobcardhed','jobcardhed.JobCardNo=estimatehed.EstJobCardNo')
             ->join('paytype','paytype.payTypeId=jobcardhed.JPayType')
-            ->where('estimatehed.EstimateNo', $estNo)->get()->row();
+            ->where('estimatehed.EstimateNo', $estNo)
+            ->get()->row();
           
             // $this->data['estDtl'] = $this->db->select()->from('estimatedtl')->where('EstimateNo',$estNo)->get()->result();
             $this->data['estDtl'] =$this->Job_model->getEstimateDtlbyid($estNo,$supNo);
@@ -1403,8 +1411,9 @@ class Job extends Admin_Controller {
 
          $isInvoice=0;
          $EstJobType =$this->db->select('EstJobType')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row()->EstJobType;
-
+        
          if($EstJobType==1){
+           
                 if($estimateNo!='' && $supplemetNo==0){
             
                      $isInvoice = $this->db->select('JobInvNo')->from('jobinvoicehed')->where('JobEstimateNo', $estimateNo)->where('JobSupplimentry', $supplemetNo)->where('IsCancel', 0)->get()->num_rows();
@@ -1416,7 +1425,12 @@ class Job extends Admin_Controller {
                         $jobNo =$this->db->select('EstJobCardNo')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row()->EstJobCardNo;
                         $arr['est_hed'] = $this->db->select()->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row();
                         // $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name')->from('estimatedtl')->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')->where('estimatedtl.EstimateNo', $estimateNo)->order_by('estimatedtlid')->get()->result();
-                         $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name,jobtype.jobhead')->from('estimatedtl')->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')->where('estimatedtl.EstimateNo', $estimateNo)->where('estimatedtl.SupplimentryNo', $supplemetNo)->order_by('estimatedtlid')->get()->result();
+                         $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name,jobtype.jobhead')
+                         ->from('estimatedtl')
+                         ->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')
+                         ->where('estimatedtl.EstimateNo', $estimateNo)
+                         ->where('estimatedtl.SupplimentryNo', $supplemetNo)
+                         ->order_by('estimatedtlid')->get()->result();
                         $arr['job_est'] = $this->Job_model->getEstimateDtlbyid($estimateNo,$supplemetNo);
                     }else{
                         $arr['est_dtl'] =null;
@@ -1435,7 +1449,7 @@ class Job extends Admin_Controller {
                         $arr['job_desc'] =null;
                     }
                 }elseif ($estimateNo!='' && $supplemetNo>0) {
-
+                    
                     $isInvoice = $this->db->select('JobCardNo')->from('jobinvoicehed')->where('JobEstimateNo', $estimateNo)->where('JobSupplimentry', $supplemetNo)->where('IsCancel', 0)->get()->num_rows();
                     $istempInvoice = $this->db->select('JobInvNo')->from('tempjobinvoicehed')->where('JobEstimateNo', $estimateNo)->where('JobSupplimentry', $supplemetNo)->where('IsCancel', 0)->get()->num_rows();
                     $cusCode = $this->db->select('EstCustomer')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row()->EstCustomer;
@@ -1444,7 +1458,12 @@ class Job extends Admin_Controller {
                 if($isEstimate>0){
                     $jobNo =$this->db->select('EstJobCardNo')->from('estimatehed')->where('EstimateNo', $estimateNo)->where('Supplimentry', $supplemetNo)->get()->row()->EstJobCardNo;
                     $arr['est_hed'] = $this->db->select()->from('estimatehed')->where('EstimateNo', $estimateNo)->where('Supplimentry', $supplemetNo)->get()->row();
-                    $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name,jobtype.jobhead')->from('estimatedtl')->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')->where('estimatedtl.EstimateNo', $estimateNo)->where('estimatedtl.SupplimentryNo', $supplemetNo)->order_by('estimatedtlid')->get()->result();
+                    $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name,jobtype.jobhead')
+                    ->from('estimatedtl')
+                    ->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')
+                    ->where('estimatedtl.EstimateNo', $estimateNo)
+                    ->where('estimatedtl.SupplimentryNo', $supplemetNo)
+                    ->order_by('estimatedtlid')->get()->result();
                     $arr['job_est'] = $this->Job_model->getEstimateDtlbyid($estimateNo,$supplemetNo);
                 }else{
                     $arr['est_dtl'] =null;
@@ -1465,7 +1484,9 @@ class Job extends Admin_Controller {
                 }
          }else{
                 //general estimate combine
-            $supplemetNo='';
+            
+             
+             if($supplemetNo==0){
                 $isInvoice = $this->db->select('JobInvNo')->from('jobinvoicehed')->where('JobEstimateNo', $estimateNo)->where('IsCancel', 0)->get()->num_rows();
                 $istempInvoice = $this->db->select('JobInvNo')->from('tempjobinvoicehed')->where('JobEstimateNo', $estimateNo)->where('IsCancel', 0)->get()->num_rows();
                     $cusCode = $this->db->select('EstCustomer')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row()->EstCustomer;
@@ -1473,8 +1494,13 @@ class Job extends Admin_Controller {
                     $isEstimate = $this->db->select('EstimateNo')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->num_rows();
                     if($isEstimate>0){
                         $jobNo =$this->db->select('EstJobCardNo')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row()->EstJobCardNo;
-                        $arr['est_hed'] = $this->db->select()->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row();
-                        $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name,jobtype.jobhead')->from('estimatedtl')->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')->where('estimatedtl.EstimateNo', $estimateNo)->order_by('estimatedtlid')->get()->result();
+                        $arr['est_hed'] = $this->db->select()->from('estimatehed')->where('EstimateNo', $estimateNo)->where('Supplimentry', $supplemetNo)->get()->row();
+                        $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name,jobtype.jobhead')
+                        ->from('estimatedtl')
+                        ->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')
+                        ->where('estimatedtl.EstimateNo', $estimateNo)
+                        ->where('estimatedtl.SupplimentryNo',0)
+                        ->order_by('estimatedtlid')->get()->result();
                         
                         $arr['job_est'] = $this->Job_model->getEstimateDtlbyid($estimateNo,$supplemetNo);
                     }else{
@@ -1493,6 +1519,41 @@ class Job extends Admin_Controller {
                         $arr['job_data'] =null;
                         $arr['job_desc'] =null;
                     }
+             }else{
+                $isInvoice = $this->db->select('JobInvNo')->from('jobinvoicehed')->where('JobEstimateNo', $estimateNo)->where('IsCancel', 0)->get()->num_rows();
+                $istempInvoice = $this->db->select('JobInvNo')->from('tempjobinvoicehed')->where('JobEstimateNo', $estimateNo)->where('IsCancel', 0)->get()->num_rows();
+                    $cusCode = $this->db->select('EstCustomer')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row()->EstCustomer;
+                    $regNo =$this->db->select('EstRegNo')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row()->EstRegNo;
+                    $isEstimate = $this->db->select('EstimateNo')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->num_rows();
+                    if($isEstimate>0){
+                        $jobNo =$this->db->select('EstJobCardNo')->from('estimatehed')->where('EstimateNo', $estimateNo)->get()->row()->EstJobCardNo;
+                        $arr['est_hed'] = $this->db->select()->from('estimatehed')->where('EstimateNo', $estimateNo)->where('Supplimentry', $supplemetNo)->get()->row();
+                        $arr['est_dtl'] = $this->db->select('estimatedtl.*,jobtype.jobtype_name,jobtype.jobhead')
+                        ->from('estimatedtl')
+                        ->join('jobtype', 'jobtype.jobtype_id = estimatedtl.EstJobType')
+                        ->where('estimatedtl.EstimateNo', $estimateNo)
+                        ->where('estimatedtl.SupplimentryNo',1)
+                        ->order_by('estimatedtlid')->get()->result();
+                        
+                        $arr['job_est'] = $this->Job_model->getEstimateDtlbyid($estimateNo,$supplemetNo);
+                    }else{
+                        $arr['est_dtl'] =null;
+                        $arr['est_hed']=null;
+                        $arr['job_est'] =null;
+                    }
+                     $arr['isInv'] = $isInvoice;
+                     $arr['istempInv'] = $istempInvoice;
+                    $arr['cus_data'] = $this->Job_model->getCustomersDataById($cusCode);
+                    $arr['vehicle_data'] = $this->Job_model->getVehicleDataById($regNo);
+                    if($jobNo!=''){
+                        $arr['job_data'] = $this->db->select()->from('jobcardhed')->where('JobCardNo', $jobNo)->get()->row();
+                        $arr['job_desc'] = $this->db->select()->from('jobcarddtl')->where('JobCardNo', $jobNo)->get()->result();
+                    }else{
+                        $arr['job_data'] =null;
+                        $arr['job_desc'] =null;
+                    }
+             }
+                
          }
 
         

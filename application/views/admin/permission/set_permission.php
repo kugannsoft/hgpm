@@ -57,6 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <th style="width: 100px; text-align: center;">EDIT</th>
                                 <th style="width: 100px; text-align: center;">CANCEL</th>
                                 <th style="width: 100px; text-align: center;">SAVE JOB INVOICE</th>
+                                 <th style="width: 100px; text-align: center;">EDIT/DELETE TEMP JOB INVOICE</th>
                             </tr>
                                 <?php foreach ($per_data AS $key=>$invdata) { ?>
                             <tr>
@@ -75,6 +76,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <input type="checkbox" class="deleteall mainchk" value="" val2="<?php echo $invdata[0]->module_id?>" id="deleteall<?php echo $invdata[0]->module_id?>"></span>
                                 </td>
                                 <td style="background-color:#5ca1a7; text-align: center;"><span class="badge bg-yellow">
+                                </td>
+                                 <td style="background-color:#5ca1a7; text-align: center;"><span class="badge bg-yellow">
                                 </td>
                             </tr>
                                 <?php foreach ($invdata as $item) {?>
@@ -96,15 +99,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <td style="text-align: center;"><span class="">
                                     <input type="checkbox" name="chk_delete[<?php echo $item->per_code;?>]" value="0" val2="<?php echo $item->module_id?>" class="delete<?php echo $item->module_id?> deletesub subchk" id="delete<?php echo $item->per_code;?>"></span>
                                 </td>
-                                <td style="text-align: center; <?php echo ($item->per_code !='SM43') ? 'display: none;' : ''; ?>">
-
-                                    <span class="">
-                                        <input type="checkbox" name="chk_save[<?php echo $item->per_code;?>]" value="0" 
+                                <td style="text-align: center;">
+                                    <?php if ($item->per_code == 'SM43') { ?>
+                                        <input type="checkbox" name="chk_save[<?php echo $item->per_code;?>]" 
                                             val2="<?php echo $item->module_id?>" 
-                                            class="save<?php echo $item->module_id?> savesub subchk" 
+                                            class="save<?php echo $item->module_id?>" 
                                             id="save<?php echo $item->per_code;?>">
-                                    </span>
+                                    <?php } ?>
                                 </td>
+                                <td style="text-align: center;">
+                                    <?php if ($item->per_code == 'SM44') { ?>
+                                        <input type="checkbox" name="chk_editTemp[<?php echo $item->per_code;?>]" 
+                                            val2="<?php echo $item->module_id?>" 
+                                            class="chk_editTemp<?php echo $item->module_id?>" 
+                                            id="chk_editTemp<?php echo $item->per_code;?>">
+                                    <?php } ?>
+                                </td>
+                            
+                                
+                              
                             </tr>
                                 <?php } ?>
                             <?php } ?>
@@ -247,6 +260,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         $('#save'+data.permission_data[i].per_code).prop('checked', true);
                     }else{
                         $('#save'+data.permission_data[i].per_code).prop('checked', false);
+                    }
+                      if (data.permission_data[i].tempEditDelete==1) {
+                        $('#chk_editTemp'+data.permission_data[i].per_code).prop('checked', true);
+                    }else{
+                        $('#chk_editTemp'+data.permission_data[i].per_code).prop('checked', false);
                     }
 
         var checkv = ($('.view'+x).filter(":checked").length == $('.view'+x).length);

@@ -54,6 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <td>Product</td>
                                     <td>Qty</td>
                                     <td>Cost Price</td>
+                                    <td>Discount</td>
                                     <td>Selling Price</td>
                                     <td>Profit</td>
                                      <td>Total Qty Profit</td>
@@ -65,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 
                                 <tr>
                                  
-                                    <td colspan="5" style="color:#f00;font-weight:bold">Total</td>
+                                    <td colspan="6" style="color:#f00;font-weight:bold">Total</td>
                                     <td id="totalca" style="color:#f00;font-weight:bold"></td>
                                     <td id="totalqtyca" style="color:#f00;font-weight:bold"></td>
                                 </tr>
@@ -155,10 +156,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         row.append($("<td>" + rowData.JobinvoiceTimestamp + "</td>"));
         row.append($("<td>" + rowData.JobDescription + "</td>"));
         row.append($("<td>" + (accounting.formatMoney(rowData.JobQty) || 0) + "</td>"));
-        row.append($("<td>" + (accounting.formatMoney(rowData.JobCost) || 0)+ "</td>"));
-        row.append($("<td>" + (accounting.formatMoney(rowData.JobPrice) || 0) + "</td>"));
-        row.append($("<td class='total'>" + (accounting.formatMoney(rowData.JobPrice - rowData.JobCost) || 0) + "</td>"));
-        row.append($("<td class='total_qty_profit'>" + (accounting.formatMoney((rowData.JobPrice - rowData.JobCost) * (rowData.JobQty)) || 0) + "</td>"));
+        row.append($("<td>" + (accounting.formatMoney(rowData.JobCost * rowData.JobQty) || 0)+ "</td>"));
+        row.append($("<td>" + (accounting.formatMoney(rowData.JobDiscount) || 0)+ "</td>"));
+        row.append($("<td>" + (accounting.formatMoney(rowData.JobPrice * rowData.JobQty) || 0) + "</td>"));
+        row.append($("<td class='total'>" + (accounting.formatMoney(rowData.JobPrice - rowData.JobCost -rowData.JobDiscount) || 0) + "</td>"));
+        row.append($("<td class='total_qty_profit'>" + (accounting.formatMoney((rowData.JobPrice - rowData.JobCost) * (rowData.JobQty) -(rowData.JobDiscount)) || 0) + "</td>"));
     }
     function sumcolumn(rclass) {
         var sum = 0;

@@ -247,9 +247,9 @@ class Job_model extends CI_Model {
         $this->db->join('jobtype', 'estimatedtl.EstJobType = jobtype.jobtype_id', 'INNER');  
         $this->db->join('jobtypeheader', 'jobtypeheader.jobhead_id = jobtype.jobhead', 'INNER');
         $this->db->where('estimatedtl.EstimateNo', $estNo);
-        // if($supNo!=''){
-        //     $this->db->where('estimatedtl.SupplimentryNo', $supNo); 
-        // }
+        if($supNo!=''){
+            $this->db->where('estimatedtl.SupplimentryNo', $supNo); 
+        }
         $this->db->order_by('jobtypeheader.jobhead_order', 'ASC');
         $this->db->order_by('estimatedtl.EstJobOrder', 'ASC');
         $this->db->order_by('estimatedtl.EstinvoiceTimestamp','ASC');

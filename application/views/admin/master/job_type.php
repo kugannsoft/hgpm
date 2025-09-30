@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <td>VAT</td>
                                     <td>NBT</td>
                                     <td>NBT Ratio</td>
-                                    <td>###</td>
+                                    <!-- <td>###</td> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <td><?php if($trns->isVat==1){ ?><label class="label label-info">Enabled</label><?php }else{?><label class="label label-danger">Disabled</label><?php }?></td>
                                     <td><?php if($trns->isNbt==1){ ?><label class="label label-info">Enabled</label><?php }else{?><label class="label label-danger">Disabled</label><?php }?></td>
                                     <td><?php echo $trns->nbtRatio; ?></td>
-                                    <td><a  class="btn btn-xs btn-primary" href="#" onclick="editp(<?php echo $trns->jobtype_id; ?>)" >Edit</a></td>
+                                   
                                 </tr>
                                 <?php } ?>
                             </tbody>
@@ -56,7 +56,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
         </div>
-    </section>
+    </section> 
+    <!-- <td><a  class="btn btn-xs btn-primary" href="#" onclick="editp(<?php echo $trns->jobtype_id; ?>)" >Edit</a></td> -->
     <!--add department modal-->
     <div id="productmodal" class="modal fade bs-add-category-modal-lg"  role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-lg" style="width: 50%;">

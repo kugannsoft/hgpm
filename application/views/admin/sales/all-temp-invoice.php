@@ -125,7 +125,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 {"data": null, orderable: false, searchable: false,
                             mRender: function (data, type, row) {
                                   if(row.invoice_status == 'Complete'){
-                                    return '<label class="label label-success">Created</label>';
+                                    return '<label class="label label-success">Completed</label>';
 
                                 }else if(row.invoice_status == 'Pending'){
                                     return '<label class="label label-warning">Pending</label>';

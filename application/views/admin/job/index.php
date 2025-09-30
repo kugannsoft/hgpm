@@ -128,7 +128,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="form-group">
                                         <label for="advance" class="col-sm-5 control-label">Estimate No<span class="required"></span></label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control"  name="estimateNo" id="estimateNo" placeholder="">
+                                            <input type="text" class="form-control"  name="estimateNo" id="estimateNo" placeholder="" value ="<?php echo ($estno);?>">
                                         </div>
                                     </div>
                                     <div class="form-group">

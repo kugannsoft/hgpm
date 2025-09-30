@@ -29,8 +29,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="col-md-3">
                                        <select class="form-control" name="customer" id="customer">
                                             <option value="">--Select Employee--</option>
+                                            <?php foreach ($salesperson AS $loc) { ?>
+                                               <option value="<?php echo $loc->RepID ?>"><?php echo $loc->RepName ?></option>
+                                            <?php } ?>
                                         </select>
-                                        <input type="hidden" name="route_ar" id="route_ar">
+                                       
                                     </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-flat btn-success">Show</button>
@@ -51,13 +54,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="saletable" class="table table-bordered">
                             <thead>
                                <tr>
-                                    <td style="width: 180px;">Name</td>
-                                    <td style="width: 120px;">Date</td>
-                                    <td style="width: 120px;">Working Hours</td>
-                                    <td style="width: 100px;">Flat Qty</td>
+                                    <td style="width: 120px;">Name</td>
+                                    <td style="width: 80px;">Date</td>
+                                    <td style="width: 80px;">Working Hours</td>
+                                    <td style="width: 100px;text-align:center;">Flat Qty</td>
                                     <td style="width: 100px;">Invoice Amount</td>
                                     <td style="width: 100px;">Working Inv Amount</td>
-                                     <td style="width: 100px;">Working Flat Inv Amount</td>
+                                     <td style="width:100px;">Working Flat Inv Amount</td>
                                     <td style="width: 100px;">Lost/Profit Rate</td>
                                 </tr>
 
@@ -68,12 +71,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <tr>
                                     <th>Total</th>
                                     <th></th>
-                                    <th id ="totalQty"></th>
-                                    <th id ="totalFlatQty"></th>
-                                    <th id ="totalCostPrice"></th>
-                                    <th id ="totalCostQty"></th>
-                                    <th id ="totalCostFlatQty"></th>
-                                    <th id ="totalProfit"></th>
+                                    <th style='text-align:center' id ="totalQty"></th>
+                                    <th style='text-align:center' id ="totalFlatQty"></th>
+                                    <th style='text-align:center' id ="totalCostPrice"></th>
+                                    <th style='text-align:center' id ="totalCostQty"></th>
+                                    <th style='text-align:center' id ="totalCostFlatQty"></th>
+                                    <th style='text-align:center' id ="totalProfit"></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -139,14 +142,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         $("#saletable").append(row);
         
-        row.append($("<td>" + rowData.RepName + "</td>"));
-        row.append($("<td>" + rowData.Date + "</td>"));
-        row.append($("<td class='totalQty'>" + rowData.Qty  + "</td>"));
-        row.append($("<td class='totalFlatQty'>" + rowData.FlatQty  + "</td>"));
-        row.append($("<td class='totalCostPrice'>" + rowData.CostPrice  + "</td>"));
-         row.append($("<td class='totalCostQty'>" + rowData.CostPrice * rowData.Qty  + "</td>"));
-         row.append($("<td class='totalCostFlatQty'>" + rowData.CostPrice * rowData.FlatQty  + "</td>"));
-        row.append($("<td class='totalProfit'>" + rowData.ProfitAmount  + "</td>"));
+        row.append($("<td style='width: 120px; text-align: right;'>" + rowData.RepName + "</td>"));
+        row.append($("<td style='width: 120px; text-align: right;'>" + rowData.Date + "</td>"));
+        row.append($("<td style='width: 120px; text-align: center;' class='totalQty'>" + rowData.Qty  + "</td>"));
+        row.append($("<td style='width: 120px; text-align: center;' class='totalFlatQty'>" + rowData.FlatQty  + "</td>"));
+        row.append($("<td style='width: 120px; text-align: center;' class='totalCostPrice'>" + rowData.CostPrice  + "</td>"));
+         row.append($("<td style='width: 120px; text-align: center;' class='totalCostQty'>" + rowData.CostPrice * rowData.Qty  + "</td>"));
+         row.append($("<td style='width: 120px; text-align: center;' class='totalCostFlatQty'>" + rowData.CostPrice * rowData.FlatQty  + "</td>"));
+        row.append($("<td style='width: 120px; text-align: center;' class='totalProfit'>" + rowData.ProfitAmount  + "</td>"));
     
     }
     
@@ -174,39 +177,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             title:'Employee Productivity Report'
         });
     }
-
-    
-    $("#customer").select2({
-        placeholder: "Select Employee",
-        allowClear: true,
-        ajax: {
-            url: "salespersonjson",
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    q: params.term,
-                   
-                };
-            },
-            processResults: function(data) {
-                
-                return {
-                    results: data
-                };
-            },
-            transport: function (params, success, failure) {
-                var $request = $.ajax(params);
-
-                $request.then(success);
-                $request.fail(failure);
-
-                return $request;
-            },
-            cache: true
-        },
-        minimumInputLength: 2
-    });
 
      $("#saletable").freezeHeader();
 </script>

@@ -324,7 +324,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="form-group">
                                             <label for="sellingPrice" class="col-sm-4 control-label">Selling Price <span class="required">*</span></label>
                                             <div class="col-sm-5">
-                                                <input type="number"  tabindex="13"  min="0" step="1" class="form-control" required="required"  name="sellingPrice" id="sellingPrice" placeholder="Enter Selling Price" onfocus="this.select();" > 
+                                                <input type="number"  tabindex="13"  min="0" step="1" class="form-control" required="required"  name="sellingPrice" id="sellingPrice"  placeholder="Enter Selling Price" onfocus="this.select(); " > 
                                                 
                                                 <input type="hidden" disabled class="form-control" required="required"  name="prdName" id="prdName" placeholder="Enter product Code">
                                                 <input type="hidden" class="form-control" required="required"  name="batchCode" id="batchCode">
@@ -434,7 +434,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </button>&nbsp;
 
                                 <!-- <button id="loadBarCode" class="btn btn-info">Barcode Generate</button>&nbsp; -->
-                              <!--    <button  tabindex="19" id="saveItems" class="btn btn-success">Save</button>&nbsp;--><button id="btnPrint" link="#" class="btn btn-primary">Print</button>&nbsp; 
+                              <!--    <button  tabindex="19" id="saveItems" class="btn btn-success">Save</button>&nbsp;-->
+                                  <!-- <button id="btnPrint" link="#" class="btn btn-primary">Print</button>&nbsp;  -->
                                  <button  tabindex="21" id="resetItems" class="btn btn-danger">Reset</button>&nbsp;
                                 <input type="hidden" name="action" id="action" value="<?php echo $action; ?>">
                                 
@@ -539,7 +540,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <span class="label">Advance Payment</span>
-                                        <input type="text" name="advance_payment_no" id="advance_payment_no"   class="form-control" placeholder="Advace Payment No">
+                                        <input type="text" name="advance_payment_no" id="advance_payment_no"   class="form-control" placeholder="Advance Payment No">
                                     </div>
                                     <div class="form-group" style="display:;">
                                         <span class="label">Return Payment</span>
