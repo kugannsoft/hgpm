@@ -1407,7 +1407,7 @@ class Report extends Admin_Controller {
 
         $this->db->select('goodsreceivenotedtl.*,product.Prd_Description,goodsreceivenotehed.GRN_IsComplete,goodsreceivenotehed.GRN_IsCancel,
         (goodsreceivenotehed.GRN_DateORG) AS TransDate,DATE(goodsreceivenotedtl.GRN_Date) AS grndate,
-        supplier.SupName,creditgrndetails.SettledAmount AS CLS,creditgrndetails.CreditAmount AS CLC');
+        supplier.SupName,creditgrndetails.SettledAmount AS CLS,creditgrndetails.CreditAmount AS CLC,goodsreceivenotehed.GRN_Remark AS Remarks');
         $this->db->from('goodsreceivenotedtl');
         if (isset($enddate) && $enddate != '' ) {
             $this->db->where('DATE(goodsreceivenotedtl.GRN_Date) <=', $enddate);
@@ -1436,7 +1436,7 @@ class Report extends Admin_Controller {
         
         $list = array();
         foreach ($data->result() as $row) {
-            $list[$row->GRN_No." - ".$row->grndate." - ".$row->SupName][] = $row;
+            $list[$row->GRN_No." - ".$row->grndate." - ".$row->SupName. "->". "Remarks:".$row->Remarks][] = $row;
         }
         echo json_encode($list);die;
     }
