@@ -445,10 +445,10 @@
                                 ?>
                                 <tr id="rowNBT">
                                     <th colspan="5"
-                                        style='text-align:right;border-left:1px solid  #000;border-bottom:1px  solid  #000;font-size: 10px;font-weight: normal;text-align: left;'>
+                                        style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
                                     </th>
                                     <th
-                                        style='text-align:right;font-size: 12px;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>
+                                        style='text-align:right;font-size: 12px;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;border-left:1px solid  #000;'>
                                         Bank Transfer &nbsp;&nbsp;</th>
                                     <th colspan=""
                                         style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">
@@ -467,11 +467,11 @@
                                 ?>
                                 <tr id="rowNBT">
                                     <th colspan="4"
-                                        style='text-align:right;border-left:1px solid  #000;border-bottom:1px  solid  #000;font-size: 10px;font-weight: normal;text-align: left;'>
+                                        style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
                                     </th>
                                     <th colspan=""
-                                        style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;border-right: 1px solid #000;">
-                                        &nbsp;&nbsp;Rs.</th>
+                                        style="text-align:center;border-right: 1px solid #000;">
+                                    </th>
                                     <th
                                         style='text-align:right;font-size: 12px;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>
                                         Cheque Amount &nbsp;&nbsp;</th>
@@ -491,10 +491,10 @@
                                 ?>
                                 <tr id="rowNBT">
                                     <th colspan="5"
-                                        style='text-align:right;border-left:1px solid  #000;border-bottom:1px  solid  #000;font-size: 10px;font-weight: normal;text-align: left;'>
+                                        style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
                                     </th>
                                     <th
-                                        style='text-align:right;font-size: 12px;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>
+                                        style='text-align:right;font-size: 12px;border-right: 1px solid #000;border-bottom: 1px solid #000;border-left: 1px solid #000;'>
                                         Return Payment &nbsp;&nbsp;</th>
                                     <th colspan=""
                                         style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">
@@ -513,10 +513,10 @@
                                 ?>
                                 <tr id="rowNBT">
                                     <th colspan="5"
-                                        style='text-align:right;border-left:1px solid  #000;border-bottom:1px  solid  #000;font-size: 10px;font-weight: normal;text-align: left;'>
+                                        style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
                                     </th>
                                     <th
-                                        style='text-align:right;font-size: 12px;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>
+                                        style='text-align:right;font-size: 12px;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;border-left: 1px solid #000;'>
                                         TOTAL PAYABLE &nbsp;&nbsp;</th>
                                     <th colspan=""
                                         style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">
@@ -529,12 +529,29 @@
 
                                 <?php } ?>
 
+                                
                                 <tr id="rowNBT">
                                     <th colspan="5"
                                         style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
                                     </th>
                                     <th
-                                        style='text-align:right;font-size: 12px;border-right: 1px solid #000;border-bottom: 1px solid #000;border-left:1px solid  #000;'>
+                                        style='text-align:right;font-size: 12px;border-right: 1px solid #000;border-bottom: 1px solid #000;border-left:1px solid  #000;border-top: 1px solid #000;'>
+                                        Paid Amt &nbsp;&nbsp;</th>
+                                    <th colspan=""
+                                        style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">
+                                        &nbsp;&nbsp;Rs.</th>
+                                    <th id="lbltotalDicount"
+                                        style='text-align:right;border-top:1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;'>
+                                        <?php echo number_format($invHed->SalesCustomerPayment,2);?></th>
+
+                                </tr>
+
+                                <tr id="rowNBT">
+                                    <th colspan="5"
+                                        style='text-align:right;font-size: 10px;font-weight: normal;text-align: left;'>
+                                    </th>
+                                    <th
+                                        style='text-align:right;font-size: 12px;border-right: 1px solid #000;border-bottom: 1px solid #000;border-left:1px solid  #000;border-top: 1px solid #000;'>
                                         Balance &nbsp;&nbsp;</th>
                                     <th colspan=""
                                         style="border-top:1px solid #000;text-align:center;border-bottom: 1px solid #000;">

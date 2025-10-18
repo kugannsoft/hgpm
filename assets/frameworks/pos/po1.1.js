@@ -244,20 +244,21 @@ $(document).ready(function() {
     });
 
      $("#addpro").click(function(e){
-        itemCode=customProCode;
+        // itemCode=customProCode;
         setCustomProduct();
         e.preventDefault();
         
     });
 
     function setCustomProduct(){
-         var mname = $("#itemCode").val();
+          var mname = $("#itemCode").val();
+         //console.log('mname',mname);
         $("#prdName").val(mname);
         $("#productName").html(mname);
         
         $("#qty").val(1);
         $("#qty").focus();
-        $("#itemCode").val(itemCode);
+        // $("#itemCode").val(itemCode);
         // $("#sellingPrice").val(0);
         // $("#orgSellPrice").val(0);
         // $("#proVatPrice").val(0);
@@ -613,6 +614,7 @@ var proNbt=0;
         sellingPrice = parseFloat($("#sellingPrice").val());
         var unit = $("#mUnit option:selected").val();
         var prdName = $("#prdName").val();
+        console.log('prdName',prdName);
         var serialNo = $("#serialNo").val();
         var is_serail = $("#isSerial").val();
          priceLevel = $("#priceLevel option:selected").val();
@@ -659,9 +661,9 @@ var proNbt=0;
         if (itemCode == '' || itemCode == 0) {
             $.notify("Please select a item.", "warning");
             return false;
-        } else if (sellingPrice == '' || sellingPrice == 0 || isNaN(sellingPrice) == true) {
-            $.notify("Selling price can not be 0.", "warning");
-           return false;
+        // } else if (sellingPrice == '' || sellingPrice == 0 || isNaN(sellingPrice) == true) {
+        //     $.notify("Selling price can not be 0.", "warning");
+        //    return false;
         } else if (costPrice == '' || costPrice == 0 || isNaN(costPrice) == true) {
             $.notify("Cost price can not be 0.", "warning");
             return false;
@@ -703,8 +705,38 @@ var proNbt=0;
                         $("#serialQty").val(serialQty);
                     }
 
-                    $("#tbl_item tbody").append("<tr ri=" + i + " id=" + i + " proCode='" + itemCode + "' uc='" + unit + "' qty='" + qty + "' unit_price='" + sellingPrice + "' upc='" + upc + "' caseCost='" + casecost + "' isSerial='" + is_serail + "' serial='" + serialNo + "' discount_percent='" + discount_precent + "' cPrice='" + costPrice + "' pL='" + priceLevel + "' fQ='" + freeQty + "' nonDisTotalNet='" + totalNet2 + "' netAmount='" + totalNet + "' proDiscount='" + product_discount + "' proName='" + prdName + "'  isvat='"+isNewVat+"' isnbt='"+isNewNbt+"' nbtRatio='"+newNbtRatio+"' proVat='"+proVat+"' proNbt='"+proNbt+"'>\n\
-                <td class='text-center'>" + i + "</td><td class='text-left'>" + itemCode + "</td><td>" + prdName + "</td><td>" + unit + "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty) + "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + "</td><td class='text-center'>" + discount_precent + "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + "</td><td>" + serialNo + "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
+                    $("#tbl_item tbody").append("<tr ri=" + i + 
+                        " id=" + i + 
+                        " proCode='" + itemCode + 
+                        "' uc='" + unit + 
+                        "' qty='" + qty + 
+                        "' unit_price='" + sellingPrice + 
+                        "' upc='" + upc + 
+                        "' caseCost='" + casecost + 
+                        "' isSerial='" + is_serail + 
+                        "' serial='" + serialNo + 
+                        "' discount_percent='" + discount_precent + 
+                        "' cPrice='" + costPrice + 
+                        "' pL='" + priceLevel + 
+                        "' fQ='" + freeQty + 
+                        "' nonDisTotalNet='" + totalNet2 + 
+                        "' netAmount='" + totalNet + 
+                        "' proDiscount='" + product_discount + 
+                        "' proName='" + prdName + 
+                        "'  isvat='"+isNewVat+
+                        "' isnbt='"+isNewNbt+
+                        "' nbtRatio='"+newNbtRatio+
+                        "' proVat='"+proVat+
+                        "' proNbt='"+proNbt+"'>\n\
+                <td class='text-center'>" + i + 
+                "</td><td class='text-left'>" + itemCode + 
+                "</td><td>" + prdName + 
+                "</td><td>" + unit + 
+                "</td><td class='qty" + i + "'>" + accounting.formatNumber(qty) + 
+                "</td><td class='text-right'>" + accounting.formatNumber(sellingPrice) + 
+                "</td><td class='text-center'>" + discount_precent + 
+                "</td><td class='text-right' >" + accounting.formatMoney(totalNet) + 
+                "</td><td>" + serialNo + "</td><td class='rem" + i + "'><a href='#' class='remove btn btn-xs btn-danger'><i class='fa fa-remove'></i></a></td></tr>");
 
                     if (is_serail != 1) {
                         clear_gem_data();

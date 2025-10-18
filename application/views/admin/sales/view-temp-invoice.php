@@ -211,14 +211,16 @@
                         <tbody>
                             <tr style="lline-height:18px;;background-color:#5d5858 !important;">
                                 <td style="font-weight:bold;width:20px;color:#fff !important;">#</td>
-                                <td colspan="2" style="font-weight:bold;width:300px;color:#fff !important;">Item &
+                                <td colspan="" style="font-weight:bold;width:300px;color:#fff !important;">
+                                    Item Code</td>
+                                <td colspan="1" style="font-weight:bold;width:300px;color:#fff !important;">Item &
                                     Description</td>
                                 <!-- <td style="width:150px;border-top: 1px solid #000;border-left: 1px solid #000;border-right: 1px solid #000;"></td> -->
-                                <td style="font-weight:bold;width:60px;color:#fff !important;">Qty</td>
+                                <td style="font-weight:bold;width:60px;color:#fff !important;">QTY/HRS </td>
                                 <td style="font-weight:bold;width:90px;color:#fff !important;" class='text-right'>Rate
                                 </td>
                                 <!-- <td style="width:50px;border-top: 1px solid #000;border-left: 1px solid #000;border-right: 1px solid #000;" class='text-right'></td> -->
-                                <td colspan="2" style="width:100px;font-weight:bold;color:#fff !important;"
+                                <td colspan="3" style="width:100px;font-weight:bold;color:#fff !important;"
                                     class='text-right'>Amount</td>
                             </tr>
                             <?php $i=1;
@@ -230,18 +232,21 @@
                                 <td colspan="2" style=""><b><?php echo $key?></b></td>
                                 <td style=""></td>
                                 <td style=""></td>
+                                <td style=""></td>
                                 <td colspan="2" style=""></td>
                             </tr>
                             <?php  foreach ($invdata AS $inv) { ?>
                             <tr style="lline-height:18px;">
                                 <td style="border-bottom:1px dotted #e4dbdb;"><?php echo $i?></td>
-                                <td colspan="2" style="border-bottom:1px dotted #e4dbdb;">
+                                <td colspan="" style="border-bottom:1px dotted #e4dbdb;">
+                                    <?php echo $inv->JobCode?></td>
+                                <td colspan="1" style="border-bottom:1px dotted #e4dbdb;">
                                     <?php echo $inv->JobDescription?></td>
                                 <td class='text-right' style="border-bottom:1px dotted #e4dbdb;">
                                     <?php echo number_format($inv->JobQty,3)?></td>
                                 <td class='text-right' style="border-bottom:1px dotted #e4dbdb;">
                                     <?php echo number_format($inv->JobPrice,2)?></td>
-                                <td class='text-right' colspan="2" style="border-bottom:1px dotted #e4dbdb;">
+                                <td class='text-right' colspan="3" style="border-bottom:1px dotted #e4dbdb;">
                                     <?php echo number_format($inv->JobTotalAmount,2)?></td>
                             </tr>
                             <?php $i++; } ?>
@@ -252,9 +257,9 @@
                                 <th colspan="4"
                                     style='text-align:right;border-left:1px #fff solid;border-bottom:1px #fff solid;font-size: 10px;font-weight: normal;text-align: left;'>
                                     Any Inquiries please contact service manager</th>
-                                <th style='text-align:right;border-left:1px #fff solid;'>SUB TOTAL &nbsp;&nbsp;</th>
+                                <th style='text-align:right;border-left:1px #fff solid;font-size: 11px;'>SUB TOTAL &nbsp;&nbsp;</th>
                                 <th style="border-right: 1px solid #fff;">Rs.</th>
-                                <th id="totalAmount" style='text-align:right;'>
+                                <th colspan="1" id="totalAmount" style='text-align:right;'>
                                     <?php if($invHed->InvoiceType==1){echo number_format($invHed->JobTotalAmount,2); }elseif($invHed->InvoiceType==2){echo number_format($invHed->JobTotalAmount,2);}?>
                                 </th>
                             </tr>
@@ -266,7 +271,7 @@
                                 <th style='text-align:right;border-left:1px #fff solid;border-bottom:1px #fff solid;'>
                                     DISCOUNT &nbsp;&nbsp;</th>
                                 <th style="border-right: 1px solid #fff;">Rs.</th>
-                                <th id="totalDiscount" style='text-align:right'><span style="text-align: left;"></span>
+                                <th colspan="1" id="totalDiscount" style='text-align:right'><span style="text-align: left;"></span>
                                     <?php echo number_format($invHed->JobTotalDiscount,2);?></th>
                             </tr>
                             <?php } ?>
@@ -278,7 +283,7 @@
                                 <th style='text-align:right;border-left:1px #fff solid;border-bottom:1px #fff solid;'>
                                     ADVANCE &nbsp;&nbsp;</th>
                                 <th style="border-right: 1px solid #fff;">Rs.</th>
-                                <th id="totalAdvance" style='text-align:right'>
+                                <th colspan="1" id="totalAdvance" style='text-align:right'>
                                     <?php echo number_format($invHed->JobAdvance,2);?></th>
                             </tr>
                             <?php }?>
@@ -290,7 +295,7 @@
                                 <th style='text-align:right;border-left:1px #fff solid;border-bottom:1px #fff solid;'>
                                     VAT &nbsp;&nbsp;</th>
                                 <th style="border-right: 1px solid #fff;">Rs.</th>
-                                <th id="totalAdvance" style='text-align:right'>
+                                <th colspan="1" id="totalAdvance" style='text-align:right'>
                                     <?php echo number_format($invHed->JobVatAmount,2);?></th>
                             </tr>
                             <?php }?>
@@ -302,7 +307,7 @@
                                 <th style='text-align:right;border-left:1px #fff solid;border-bottom:1px #fff solid;'>
                                     NBT &nbsp;&nbsp;</th>
                                 <th style="border-right: 1px solid #fff;">Rs.</th>
-                                <th id="totalAdvance" style='text-align:right'>
+                                <th colspan="1" id="totalAdvance" style='text-align:right'>
                                     <?php echo number_format($invHed->JobNbtAmount,2);?></th>
                             </tr>
                             <?php } ?>
@@ -312,8 +317,8 @@
                                 </th>
                                 <th style='text-align:right;border-left:1px #fff solid;border-bottom:1px #fff solid;'>
                                     TOTAL &nbsp;&nbsp;</th>
-                                <th style="border-right: 1px solid #fff;">Rs.</th>
-                                <th id="netAmount" style='text-align:right'>
+                                <th colspan="" style="border-right: 1px solid #fff;">Rs.</th>
+                                <th colspan="1" id="netAmount" style='text-align:right'>
                                     <?php echo number_format($invHed->JobNetAmount-$invHed->JobAdvance,2) ?></th>
                             </tr>
 

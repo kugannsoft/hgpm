@@ -37,7 +37,7 @@ $(document).ready(function() {
 
     var discount_precent = 0;
     var discount_amount = 0;
-    var product_discount = 0;
+    let product_discount = 0;
     var total_discount = 0;
     var total_item_discount = 0;
     var discount = 0;
@@ -928,7 +928,7 @@ $(document).ready(function() {
         }else{
             costprice=costprice;
         }
-        if((workId ==1) || (workId ==4) || (workId ==5) || (workId ==5) || (workId ==6) || (workId ==7) || (workId ==9) || (workId ==10) || (workId ==11)){
+        if((workId ==1) || (workId ==4) || (workId ==5) || (workId ==5) || (workId ==6) || (workId ==7) || (workId ==9) || (workId ==10) || (workId ==11 || workId ==12)){
             if( flatQty==''||isNaN(flatQty) == true){
                 $.notify("Flat Qty Can not be empty or zero.", "warning");return false;
             }
@@ -1383,6 +1383,7 @@ $(document).ready(function() {
         totalInvDiscount=0;
         discount_precent = parseFloat($("#disPercent").val());
         discount_amount = parseFloat($("#disAmount").val());
+        console.log('discount_amount',discount_amount);
         discount = $("input[name='discount']:checked").val();
         discount_type = $("input[name='discount_type']:checked").val();
         var total_amount3 = parseFloat($("#totalWithOutDiscount").val());
@@ -1482,9 +1483,10 @@ $(document).ready(function() {
             totalNetAmount -= parseFloat($(this).parent().parent().attr('netprice'));
             totalProVAT -= parseFloat($(this).parent().parent().attr('proVat'));
             totalProNBT -= parseFloat($(this).parent().parent().attr('proNbt'));
-            disPrecent= parseFloat($(this).parent().parent().attr('disPrecent'));
-            // product_discount= parseFloat($(this).parent().parent().attr('proDiscount'));
-            product_discount= parseFloat(((disPrecent/100)*totalPrice));
+            //disPrecent= parseFloat($(this).parent().parent().attr('disPrecent'));
+            //var disPrecent = $(this).parent().parent().attr('proDiscount');
+             product_discount= parseFloat($(this).parent().parent().attr('proDiscount'));
+            // product_discount= parseFloat(((disPrecent/100)*totalPrice));
             totalProWiseDiscount -= product_discount;
             total_discount-= product_discount;
             totalVat=addTotalVat(totalAmount,isTotalVat,isTotalNbt,nbtRatio);
@@ -2090,12 +2092,13 @@ $(document).ready(function() {
         $("#product").val('');
         $('#isInsurance').iCheck('uncheck');
         $("#insurance").val('');
-        $('#disPercent').val(0);
-        $('#disAmount').val(0);
+        $('#disPercent').val('');
+        $('#disAmount').val('');
         $("#estlineno").val('');
         $("#estPrice").val('');
         $("#jobdesc").val('');
-
+        // $('input[name="discount"][value="1"]').iCheck('uncheck'); 
+        // $('input[name="discount"][value="2"]').iCheck('uncheck');
         proName = 0;
         proCode = 0;
         netprice = 0;
@@ -2592,7 +2595,9 @@ $(document).ready(function() {
         var proVat = $(this).parent().parent().attr('proVat');
         var proNbt = $(this).parent().parent().attr('proNbt');
         var proDiscount = $(this).parent().parent().attr('proDiscount');
+        // console.log('editdis',proDiscount);
         var disPrecent = $(this).parent().parent().attr('disPrecent');
+        //  console.log('disPrecentedit',disPrecent);
         var estPrice = $(this).parent().parent().attr('est_price');
         var estLine = $(this).parent().parent().attr('estlineno');
         var totalflatPrice = $(this).parent().parent().attr('totalflatPrice'); 
@@ -3414,10 +3419,12 @@ $(document).ready(function() {
         //product wise discount
         if (discount_type == 1) {
             if (discount == 1) {
+                console.log('disAmountsdfsfd',disPercent);
                 //discount by percent
                 product_discount = totalNet3 * (disPercent / 100);
                discount_amount = product_discount;
             } else if (discount == 2) {
+                 console.log('Amountsdfsfd',disAmount);
                 //discount by amount
                 product_discount = disAmount;
                 disPercent = product_discount * 100 / totalNet3;
@@ -3426,6 +3433,10 @@ $(document).ready(function() {
         } else if (discount_type == 2) {
             //total item wise discount
             total_discount = 0;
+            product_discount = 0;
+            disPercent = 0;
+        }else{
+            
             product_discount = 0;
             disPercent = 0;
         }

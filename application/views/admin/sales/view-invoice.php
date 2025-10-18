@@ -104,7 +104,7 @@
                     </div>
                     <div class="table-content">
 
-                        <table id="tbl_est_data"
+                     <table id="tbl_est_data"
                             style="font-family: Arial, Helvetica, sans-serif;border-collapse:collapse;width:700px;padding:1px;font-size:11px;"
                             align="center" border="0">
                             <thead style="display: table-header-group;">
@@ -117,7 +117,166 @@
                                         <?php echo !empty($invCus->DocNo) ? 'TAX INVOICE' : 'INVOICE'; ?>
                                     </td>
                                 </tr>
-                                <tr style="text-align:left;font-size:13px;">
+                </thead>
+                </table>
+                <br>
+                 <table align="center" 
+                            style="font-family: Arial, Helvetica, sans-serif; border-collapse: collapse; width: 700px; font-size: 11px; margin-bottom: 10px;">
+                            
+                            <tr>
+                                <!-- Left Section -->
+                                <td style="width: 57%; vertical-align: top; border: 1px solid #000; padding: 4px;">
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                                    
+                                        <tr>
+                                            <td colspan="" style="">Customer Code</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invCus->CusCode; ?></td> 
+                                        
+                                
+                                        </tr>
+                                        <tr>
+                                            <td colspan="" style="">Customer Name</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;">
+                                            <a href="<?php echo base_url('admin/payment/view_customer/') . $invCus->CusCode; ?>">
+                                            <?php echo $invCus->DisplayName; ?>
+                                            </a>
+                                            </td> 
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="" style=""> Customer Address</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invCus->Address01; ?>,<?php echo $invCus->Address02; ?>,<?php echo $invCus->Address03; ?></td> 
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="" style=""> Tel</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invCus->LanLineNo; ?></td> 
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="" style="">  Mobile</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invCus->MobileNo; ?></td> 
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="" style="">Customer VAT No:</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invCus->DocNo; ?></td> 
+
+                                        </tr>
+
+                                    
+
+                                        <tr>
+                                            <td colspan="" style="">Payment Type</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;">
+                                                <?php if ($invHed->JobBankAmount > 0): ?>
+                                                Bank,
+                                                <?php endif; ?>
+                                                <?php if ($invHed->JobCashAmount > 0): ?>
+                                                Cash,
+                                                <?php endif; ?>
+                                                <?php if ($invHed->JobCreditAmount > 0): ?>
+                                                Credit,
+                                                <?php endif; ?>
+                                                <?php if ($invHed->JobChequeAmount > 0): ?>
+                                                Cheque,
+                                                <?php endif; ?>
+                                                <?php if ($invHed->JobCardAmount > 0): ?>
+                                                Card,
+                                                <?php endif; ?>
+                                            </td> 
+
+                                        </tr>
+                                
+
+                                        
+                                        <!-- Add more rows as needed -->
+                                    </table>
+                                </td>
+
+                                <!-- Gap between sections -->
+                                <td style="width: 7%;"></td>
+
+                                <!-- Right Section -->
+                                <td style="width: 35%; vertical-align: top; border: 1px solid #000; padding: 4px;">
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                                        
+                                        <tr>
+                                            <td colspan="" style="">Date and Time</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo (new DateTime($invHed->date))->format('d-m-Y H:i:s'); ?></td> 
+                                        
+                                
+                                        </tr>
+                                        <tr>
+                                            <td colspan="" style="">Estimate No</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invHed->JobEstimateNo ?></td> 
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="" style=""> Invoice No</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invHed->JobInvNo ?></td> 
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="" style=""> Job No</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invHed->jobcardNo ?></td> 
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="" style="">  Vehicle No</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invHed->regNo; ?></td> 
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="" style="">Make</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invVehi->make; ?></td> 
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="" style="">Model</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $invVehi->model; ?> </td> 
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="" style="">ODO Meter</td>  
+                                            <td style="">:</td>  
+                                            <td colspan="" style="text-align: left;"><?php echo $jobtype->OdoIn; ?> Km</td> 
+
+                                        </tr>
+                                        
+
+                                    
+                                       
+                                    </table>
+                                </td>
+                            </tr>
+                        </table> 
+
+                       
+                                <!-- <tr style="text-align:left;font-size:13px;">
                                     <td colspan="3" rowspan="5"
                                         style="border:1px solid #000; font-size:13px; width:100px; padding:5px; vertical-align: top;">
                                         <?php if (!empty($invHed->JInsCompany)) : ?>
@@ -177,7 +336,9 @@
                                     <td>&nbsp;&nbsp;</td>
                                     <td style="font-size:12px;text-align: left;border-left: 1px solid #000;border-top: 1px solid #000;width:200px;"
                                         colspan="4">&nbsp;&nbsp;Date and
-                                        Time:<?php echo (new DateTime($invHed->date))->format('d-m-Y H:i:s'); ?></td>
+                                        Time:<?php echo (new DateTime($invHed->date))->format('d-m-Y H:i:s'); ?>
+                                        <br>
+                                    </td>
                                     <td style="font-size:12px;text-align: left;border-top: 1px solid #000;border-right: 1px solid #000;"
                                         colspan="1"></td>
                                 </tr>
@@ -225,18 +386,25 @@
                                 </tr>
                                 <tr>
                                     <td colspan="7" style="height: 15px; border: none;"></td>
-                                </tr>
-
+                                </tr> -->
+                                <table id="tbl_est_data"
+                                    style="font-family: Arial, Helvetica, sans-serif;border-collapse:collapse;width:700px;padding:1px;font-size:11px;"
+                                    align="center" border="0">
+                                    <thead style="display: table-header-group;">
                                 <tr style="line-height: 20px;!important;">
                                     <th
                                         style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center; width:3%;">
                                         No</th>
-                                    <th colspan="2"
+                                    <th colspan=""
+                                        style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width:10%; ">
+                                        Item code</th>
+
+                                    <th colspan="1"
                                         style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width:48%; ">
                                         Item & Description</th>
                                     <th
                                         style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;width:8%; ">
-                                        Qty</th>
+                                        QTY/HRS </th>
                                     <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center; width:12%;"
                                         class='text-right'>Rate</th>
                                     <th style="font-weight:bold;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center; width:12%;"
@@ -254,12 +422,16 @@
                                     <td
                                         style="border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;">
                                     </td>
-                                    <td colspan="2"
+                                    <td
+                                        style="border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;">
+                                    </td>
+                                    <td colspan="1"
                                         style="border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;">
                                         <b>&nbsp;&nbsp;<?php echo $key?></b></td>
                                     <td
                                         style="border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;">
                                     </td>
+                                    
                                     <td
                                         style="border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;">
                                     </td>
@@ -275,7 +447,10 @@
                                     <td
                                         style="border-bottom:1px solid #000;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;text-align:center;">
                                         &nbsp;&nbsp;<?php echo $i?></td>
-                                    <td colspan="2"
+                                    <td colspan=""
+                                        style="border-bottom:1px solid #000 ;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;">
+                                        &nbsp;&nbsp;<?php echo ($inv->JobCode == 0 || $inv->JobCode == '' || $inv->JobCode === null) ? '' : $inv->JobCode; ?></td>
+                                    <td colspan="1"
                                         style="border-bottom:1px solid #000 ;border-left: 1px solid #000;border-top:1px solid #000;border-right: 1px solid #000;">
                                         &nbsp;&nbsp;<?php echo $inv->JobDescription?></td>
                                     <td class='text-right'
